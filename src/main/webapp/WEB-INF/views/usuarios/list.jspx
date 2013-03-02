@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_br_ufpb_dce_bloomer_core_model_Usuario" items="${usuarios}" z="bUbYUzHY7eNkxZjdxXCn88Z80V8=">
+        <table:table data="${usuarios}" id="l_br_ufpb_dce_bloomer_core_model_Usuario" path="/usuarios" z="p1xuuof9yM4bmqNMVDC8qIFws9M=">
+            <table:column id="c_br_ufpb_dce_bloomer_core_model_Usuario_nome" property="nome" z="/59JjbnQKMScG3wkJC+NtIwGiJY="/>
+            <table:column calendar="true" dateTimePattern="${usuario_datanascimento_date_format}" id="c_br_ufpb_dce_bloomer_core_model_Usuario_dataNascimento" property="dataNascimento" z="PD60GbQ9jGiAo+kJaryzu1VPrXM="/>
+            <table:column id="c_br_ufpb_dce_bloomer_core_model_Usuario_sexo" property="sexo" z="UWszAtZAB7+jUpaKharPVBOc1lM="/>
+            <table:column id="c_br_ufpb_dce_bloomer_core_model_Usuario_senha" property="senha" z="E7VGTPGveakymBK5zf54CWSxwdg="/>
+            <table:column id="c_br_ufpb_dce_bloomer_core_model_Usuario_login" property="login" z="APR0biv4rsdsTn8MUWIN7oxhkS4="/>
+        </table:table>
+    </page:list>
+</div>
