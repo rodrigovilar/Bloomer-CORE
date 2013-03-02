@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_br_ufpb_dce_bloomer_core_model_TipoJogo" modelAttribute="tipoJogo" path="/tipojogoes" versionField="Version" z="kisZ0vRfR6meFIG6z8efBOmMdEs=">
+        <field:textarea field="nome" id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_nome" required="true" z="Z58CfIReR48DbNMZmsFPXO0Kxbs="/>
+        <field:textarea field="descricao" id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_descricao" required="true" z="R+wEcm1tHb555dgtk5h9khXOlw0="/>
+        <field:textarea field="autor" id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_autor" required="true" z="ECyJNG/UiVge61NB6BaiMzTA9zE="/>
+        <field:select field="plataforma" id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_plataforma" items="${plafatormas}" path="plafatormas" z="X/ixvXjeew9ail7r4KuWy4gxut0="/>
+        <field:simple field="jogos" id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_jogos" messageCode="entity_reference_not_managed" messageCodeAttribute="Jogo" z="FyA0S27YxdCJcxxv+Qjuep3AZkg="/>
+        <field:select field="niveisTaxonomia" id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_niveisTaxonomia" items="${niveltaxonomias}" path="niveltaxonomias" z="kRPMKJUkg6MU9oj5Vs2m4v8oJ3o="/>
+        <field:simple field="questoes" id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_questoes" messageCode="entity_reference_not_managed" messageCodeAttribute="Tipo Questao" z="m7HYbmOlFCj5Xzh4z0Q8cy9Fl0g="/>
+    </form:update>
+</div>

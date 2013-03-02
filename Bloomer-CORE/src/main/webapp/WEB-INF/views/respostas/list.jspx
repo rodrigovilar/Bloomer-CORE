@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_br_ufpb_dce_bloomer_core_model_Resposta" items="${respostas}" z="UEpk60xQKifa3Xou9uNKr8h+pKo=">
+        <table:table data="${respostas}" id="l_br_ufpb_dce_bloomer_core_model_Resposta" path="/respostas" z="9XbxG4Q10jnvSl42JIcH2UBkmG8=">
+            <table:column id="c_br_ufpb_dce_bloomer_core_model_Resposta_conteudo" property="conteudo" z="uCGBD/gvHDgmvX7hTSj1CzpY8Z0="/>
+            <table:column id="c_br_ufpb_dce_bloomer_core_model_Resposta_partida" property="partida" z="2Bcc18NNoN6Y1WziMgDtOuLRhko="/>
+            <table:column id="c_br_ufpb_dce_bloomer_core_model_Resposta_questao" property="questao" z="nHhjQOede/OBimD1Ct++oPbsXGo="/>
+        </table:table>
+    </page:list>
+</div>

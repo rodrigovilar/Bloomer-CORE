@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_br_ufpb_dce_bloomer_core_model_Partida" object="${partida}" path="/partidas" z="IZmI9qCAVtUkE0sXJgUlcNeiNIU=">
+        <field:display calendar="true" dateTimePattern="${partida_datahora_date_format}" field="dataHora" id="s_br_ufpb_dce_bloomer_core_model_Partida_dataHora" object="${partida}" z="/aZAKpbJjVk9N2aUbykIj6/yFPI="/>
+        <field:display field="acerto" id="s_br_ufpb_dce_bloomer_core_model_Partida_acerto" object="${partida}" z="GvfdPvtNwankREDVv5dwz8i9wCc="/>
+        <field:display field="concluiu" id="s_br_ufpb_dce_bloomer_core_model_Partida_concluiu" object="${partida}" z="P1Aenbl55BxoulOywUlDbKAzxao="/>
+        <field:display field="escore" id="s_br_ufpb_dce_bloomer_core_model_Partida_escore" object="${partida}" z="ifwBQrUaptfwmygvwHBtXt3jX7w="/>
+        <field:display field="usuario" id="s_br_ufpb_dce_bloomer_core_model_Partida_usuario" object="${partida}" z="TjCDIZPpF1c2GgIy9asdmL8jTqk="/>
+        <field:display field="jogo" id="s_br_ufpb_dce_bloomer_core_model_Partida_jogo" object="${partida}" z="nnnymshJVZlJGrvt6MNkUmMlXLk="/>
+    </page:show>
+</div>

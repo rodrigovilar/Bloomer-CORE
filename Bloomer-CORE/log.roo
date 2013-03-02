@@ -1,0 +1,105 @@
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2013-03-02 09:23:52
+project --topLevelPackage br.ufpb.dce.bloomer.core --projectName Bloomer-CORE --java 6 --packaging JAR
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2013-03-02 09:24:10
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2013-03-02 09:24:19
+jpa setup --database DERBY_EMBEDDED --provider HIBERNATE 
+entity jpa --class br.ufpb.dce.bloomer.core.model.TipoJogo --testAutomatically 
+field string --fieldName nome --notNull --sizeMax 100 --sizeMin 2
+field string --fieldName descricao --sizeMax 2000
+// [failed] field string --fieldName descricao --sizeMax 2000 --notNull 
+field string --fieldName descricao --sizeMax 2000 --notNull 
+field string --fieldName autor --notNull --sizeMax 100
+web mvc setup 
+hint 
+hint web mvc scaffold
+hint web mvc
+web mvc scaffold --class ~.web.TipoJogoController --backingType ~.model.TipoJogo
+json all --deepSerialize 
+web mvc json all 
+entity jpa --class ~.model.Usuario --testAutomatically 
+focus --class ~.model.TipoJogo
+enum type --class ~.model.Plafatorma
+enum constant --name Unity3D
+enum constant --name Construct2D
+enum constant --name Construct2
+enum constant --name Flash
+enum constant --name Flex
+enum constant --name Pygame
+enum constant --name Other
+focus --class ~.model.TipoJogo
+field enum --type ~.model.Plafatorma --fieldName plataforma
+focus --class ~.model.Usuario
+field string --fieldName nome --notNull --sizeMin 2 --sizeMax 150
+field date --fieldName dataNascimento --type java.util.Calendar --past 
+enum type --class ~.model.Sexo
+enum constant --name Masculino
+enum constant --name Feminino
+focus --class ~.model.Usuario
+field enum --fieldName sexo --type ~.model.Sexo --enumType ORDINAL 
+field string --fieldName senha --notNull --sizeMin 6 --sizeMax 30
+field string --fieldName login --notNull --regexp "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+entity jpa --class ~.model.Jogo --testAutomatically 
+field string --fieldName nome --notNull --sizeMin 2 --sizeMax 100
+field reference --fieldName tipo --type ~.model.TipoJogo --cardinality MANY_TO_ONE 
+focus --class ~.model.TipoJogo
+field set --fieldName jogos --type ~.model.Jogo --cardinality ONE_TO_MANY --mappedBy tipo
+web mvc scaffold --class ~.web.UsuarioController --backingType ~.model.Usuario --path usuarios
+web mvc scaffold --class ~.web.JogoController --backingType ~.model.Jogo --path jogos
+focus --class ~.model.Jogo
+field reference --fieldName configurador --type ~.model.Usuario --cardinality MANY_TO_ONE 
+focus --class ~.model.Usuario 
+field set --fieldName jogos --type ~.model.Jogo --cardinality ONE_TO_MANY --mappedBy configurador
+entity jpa --class ~.model.Questao --testAutomatically 
+entity jpa --class ~.model.TipoQuestao --testAutomatically
+field string --fieldName nome --notNull --sizeMax 100
+focus --class ~.model.Questao
+enum type --class ~.model.NivelTaxonomia 
+enum constant --name Conhecimento
+enum constant --name Compreensao
+enum constant --name Aplicacao
+enum constant --name Analise
+enum constant --name Sintese
+enum constant --name Avaliacao
+focus --class ~.model.TipoQuestao
+field string --fieldName descricao --sizeMax 2000 --notNull
+focus --class ~.model.TipoJogo
+field set --fieldName niveisTaxonomia --type ~.model.NivelTaxonomia
+field set --fieldName questoes --type ~.model.TipoQuestao --cardinality ONE_TO_MANY
+focus --class ~.model.TipoQuestao
+field reference --fieldName jogo --type ~.model.TipoJogo --cardinality MANY_TO_ONE 
+focus --class ~.model.Questao
+field string --fieldName gabarito
+field reference --fieldName jogo --type ~.model.Jogo --cardinality MANY_TO_ONE 
+field reference --fieldName tipo --type ~.model.TipoQuestao --cardinality MANY_TO_ONE 
+focus --class ~.model.Jogo
+field set --fieldName questoes --type ~.model.Questao --cardinality ONE_TO_MANY --mappedBy jogo
+focus --class ~.model.TipoQuestao
+field set --fieldName questoes --type ~.model.Questao --cardinality ONE_TO_MANY --mappedBy tipo
+entity jpa --class ~.model.Partida --testAutomatically 
+field date --fieldName dataHora --type java.util.Calendar --notNull 
+field number --fieldName acerto --type int --max 100 --min 0 --notNull 
+field boolean --fieldName concluiu --notNull 
+field number --fieldName escore --type int --notNull 
+field reference --fieldName usuario --type ~.model.Usuario --cardinality MANY_TO_ONE
+field reference --fieldName jogo --type ~.model.Jogo --cardinality MANY_TO_ONE
+focus --class ~.model.Usuario
+field set --fieldName partidas --type ~.model.Partida --cardinality ONE_TO_MANY --mappedBy usuario
+focus --class ~.model.Jogo
+field set --fieldName partidas --type ~.model.Partida --cardinality ONE_TO_MANY --mappedBy jogo
+entity jpa --class ~.model.Resposta --testAutomatically 
+field string --fieldName conteudo
+field reference --fieldName partida --type ~.model.Partida --cardinality MANY_TO_ONE
+field reference --fieldName questao --type ~.model.Questao --cardinality MANY_TO_ONE
+focus --class ~.model.Partida
+field set --fieldName respostas --type ~.model.Resposta --cardinality ONE_TO_MANY --mappedBy partida
+focus --class ~.model.Questao
+field set --fieldName respostas --type ~.model.Resposta --cardinality ONE_TO_MANY --mappedBy questao
+web mvc scaffold all
+web mvc scaffold --class ~.web.JogoController --backingType ~.model.Jogo
+web mvc scaffold --class ~.web.PartidaController --backingType ~.model.Partida
+web mvc scaffold --class ~.web.QuestaoController --backingType ~.model.Questao
+web mvc scaffold --class ~.web.RespostaController --backingType ~.model.Resposta
+web mvc scaffold --class ~.web.TipoQuestaoController --backingType ~.model.TipoQuestao
+web mvc scaffold --class ~.web.UsuarioController --backingType ~.model.Usuario
+web mvc scaffold --class ~.web.QuestaoController --backingType ~.model.Questao
+json all 
