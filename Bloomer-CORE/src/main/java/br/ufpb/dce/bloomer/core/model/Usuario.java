@@ -11,7 +11,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.javabean.RooJavaBean;
@@ -49,4 +48,11 @@ public class Usuario {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Set<Partida> partidas = new HashSet<Partida>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "destino")
+    private Set<Relacao> quemMeSegue = new HashSet<Relacao>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "origem")
+    private Set<Relacao> quemEuSigo = new HashSet<Relacao>();
 }
+

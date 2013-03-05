@@ -103,3 +103,12 @@ web mvc scaffold --class ~.web.TipoQuestaoController --backingType ~.model.TipoQ
 web mvc scaffold --class ~.web.UsuarioController --backingType ~.model.Usuario
 web mvc scaffold --class ~.web.QuestaoController --backingType ~.model.Questao
 json all 
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2013-03-02 12:04:50
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2013-03-05 14:20:21
+entity jpa --class ~.model.Relacao --testAutomatically 
+field date --fieldName dataInicio --type java.util.Calendar --notNull 
+field reference --fieldName destino --type ~.model.Usuario --cardinality MANY_TO_ONE 
+field reference --fieldName origem --type ~.model.Usuario --cardinality MANY_TO_ONE 
+focus --class ~.model.Usuario
+field set --fieldName quemMeSegue --type ~.model.Relacao --cardinality ONE_TO_MANY --mappedBy destino
+field set --fieldName quemEuSigo --type ~.model.Relacao --cardinality ONE_TO_MANY --mappedBy origem

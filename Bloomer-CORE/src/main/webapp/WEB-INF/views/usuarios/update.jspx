@@ -10,5 +10,7 @@
         <field:input field="login" id="c_br_ufpb_dce_bloomer_core_model_Usuario_login" required="true" z="B/NB5nwufTwI5AgM4u+mf67gCkc="/>
         <field:simple field="jogos" id="c_br_ufpb_dce_bloomer_core_model_Usuario_jogos" messageCode="entity_reference_not_managed" messageCodeAttribute="Jogo" z="k02fhdIjtugydFelrPEWbhYgnnM="/>
         <field:simple field="partidas" id="c_br_ufpb_dce_bloomer_core_model_Usuario_partidas" messageCode="entity_reference_not_managed" messageCodeAttribute="Partida" z="P8iFNRoIrDlxXmRb2ut4WDjoF+w="/>
+        <field:simple field="quemMeSegue" id="c_br_ufpb_dce_bloomer_core_model_Usuario_quemMeSegue" messageCode="entity_reference_not_managed" messageCodeAttribute="Relacao" z="D14FrVe2tcMVPQ1XLsZ5+ZSgUsE="/>
+        <field:simple field="quemEuSigo" id="c_br_ufpb_dce_bloomer_core_model_Usuario_quemEuSigo" messageCode="entity_reference_not_managed" messageCodeAttribute="Relacao" z="RZhbU5RKC47Huiu1h1h5HjjvhwA="/>
     </form:update>
 </div>

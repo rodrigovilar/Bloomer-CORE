@@ -5,6 +5,7 @@ package br.ufpb.dce.bloomer.core.web;
 
 import br.ufpb.dce.bloomer.core.model.Jogo;
 import br.ufpb.dce.bloomer.core.model.Partida;
+import br.ufpb.dce.bloomer.core.model.Relacao;
 import br.ufpb.dce.bloomer.core.model.Sexo;
 import br.ufpb.dce.bloomer.core.model.Usuario;
 import br.ufpb.dce.bloomer.core.web.UsuarioController;
@@ -101,6 +102,7 @@ privileged aspect UsuarioController_Roo_Controller {
         addDateTimeFormatPatterns(uiModel);
         uiModel.addAttribute("jogoes", Jogo.findAllJogoes());
         uiModel.addAttribute("partidas", Partida.findAllPartidas());
+        uiModel.addAttribute("relacaos", Relacao.findAllRelacaos());
         uiModel.addAttribute("sexoes", Arrays.asList(Sexo.values()));
     }
     
