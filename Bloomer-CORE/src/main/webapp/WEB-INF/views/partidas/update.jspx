@@ -8,7 +8,7 @@
         <field:checkbox field="concluiu" id="c_br_ufpb_dce_bloomer_core_model_Partida_concluiu" z="OrkpXvvWJOttVtw6yqLRGdsgTJE="/>
         <field:input field="escore" id="c_br_ufpb_dce_bloomer_core_model_Partida_escore" required="true" z="3oaYxGGSMfbN5e6zjNhRyRZRnC8="/>
         <field:select field="usuario" id="c_br_ufpb_dce_bloomer_core_model_Partida_usuario" itemValue="id" items="${usuarios}" path="/usuarios" z="NfiqOeJM9r1oYpax9L8I6tWkXj8="/>
-        <field:select field="jogo" id="c_br_ufpb_dce_bloomer_core_model_Partida_jogo" itemValue="id" items="${jogoes}" path="/jogoes" z="hW25XwfDWxLSOTjRfKCe7Zo6JA8="/>
+        <field:select field="jogo" id="c_br_ufpb_dce_bloomer_core_model_Partida_jogo" itemValue="id" items="${jogoes}" path="/jogos" z="6ChXWJBYsD2oLz2mxOmczbRzCu0="/>
         <field:simple field="respostas" id="c_br_ufpb_dce_bloomer_core_model_Partida_respostas" messageCode="entity_reference_not_managed" messageCodeAttribute="Resposta" z="5Kq3A75S1BRr02hmvdN8307AcEs="/>
     </form:update>
 </div>

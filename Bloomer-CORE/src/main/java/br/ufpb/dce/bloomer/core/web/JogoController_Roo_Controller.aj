@@ -29,11 +29,11 @@ privileged aspect JogoController_Roo_Controller {
     public String JogoController.create(@Valid Jogo jogo, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, jogo);
-            return "jogoes/create";
+            return "jogos/create";
         }
         uiModel.asMap().clear();
         jogo.persist();
-        return "redirect:/jogoes/" + encodeUrlPathSegment(jogo.getId().toString(), httpServletRequest);
+        return "redirect:/jogos/" + encodeUrlPathSegment(jogo.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(params = "form", produces = "text/html")
@@ -44,14 +44,14 @@ privileged aspect JogoController_Roo_Controller {
             dependencies.add(new String[] { "tipojogo", "tipojogoes" });
         }
         uiModel.addAttribute("dependencies", dependencies);
-        return "jogoes/create";
+        return "jogos/create";
     }
     
     @RequestMapping(value = "/{id}", produces = "text/html")
     public String JogoController.show(@PathVariable("id") Long id, Model uiModel) {
         uiModel.addAttribute("jogo", Jogo.findJogo(id));
         uiModel.addAttribute("itemId", id);
-        return "jogoes/show";
+        return "jogos/show";
     }
     
     @RequestMapping(produces = "text/html")
@@ -65,24 +65,24 @@ privileged aspect JogoController_Roo_Controller {
         } else {
             uiModel.addAttribute("jogoes", Jogo.findAllJogoes());
         }
-        return "jogoes/list";
+        return "jogos/list";
     }
     
     @RequestMapping(method = RequestMethod.PUT, produces = "text/html")
     public String JogoController.update(@Valid Jogo jogo, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest) {
         if (bindingResult.hasErrors()) {
             populateEditForm(uiModel, jogo);
-            return "jogoes/update";
+            return "jogos/update";
         }
         uiModel.asMap().clear();
         jogo.merge();
-        return "redirect:/jogoes/" + encodeUrlPathSegment(jogo.getId().toString(), httpServletRequest);
+        return "redirect:/jogos/" + encodeUrlPathSegment(jogo.getId().toString(), httpServletRequest);
     }
     
     @RequestMapping(value = "/{id}", params = "form", produces = "text/html")
     public String JogoController.updateForm(@PathVariable("id") Long id, Model uiModel) {
         populateEditForm(uiModel, Jogo.findJogo(id));
-        return "jogoes/update";
+        return "jogos/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "text/html")
@@ -92,7 +92,7 @@ privileged aspect JogoController_Roo_Controller {
         uiModel.asMap().clear();
         uiModel.addAttribute("page", (page == null) ? "1" : page.toString());
         uiModel.addAttribute("size", (size == null) ? "10" : size.toString());
-        return "redirect:/jogoes";
+        return "redirect:/jogos";
     }
     
     void JogoController.populateEditForm(Model uiModel, Jogo jogo) {

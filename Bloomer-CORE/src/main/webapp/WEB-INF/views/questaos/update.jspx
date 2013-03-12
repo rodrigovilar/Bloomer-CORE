@@ -4,7 +4,7 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_br_ufpb_dce_bloomer_core_model_Questao" modelAttribute="questao" path="/questaos" versionField="Version" z="o60exYteLL8Vs1c9aEeyoY/mvNI=">
         <field:textarea field="gabarito" id="c_br_ufpb_dce_bloomer_core_model_Questao_gabarito" z="J5KlpuID61d0vBrfKgEB66PTusc="/>
-        <field:select field="jogo" id="c_br_ufpb_dce_bloomer_core_model_Questao_jogo" itemValue="id" items="${jogoes}" path="/jogoes" z="mNiWli0aCcPM9CqLSZHiL2rBPv4="/>
+        <field:select field="jogo" id="c_br_ufpb_dce_bloomer_core_model_Questao_jogo" itemValue="id" items="${jogoes}" path="/jogos" z="HKJGZg0u/9jZYUcE7Eyl2WEtq0I="/>
         <field:select field="tipo" id="c_br_ufpb_dce_bloomer_core_model_Questao_tipo" itemValue="id" items="${tipoquestaos}" path="/tipoquestaos" z="nfFxi2CM36dC70Gp/lhV8iVdJtY="/>
         <field:simple field="respostas" id="c_br_ufpb_dce_bloomer_core_model_Questao_respostas" messageCode="entity_reference_not_managed" messageCodeAttribute="Resposta" z="lyVmNz+PZrEimHepZs5sHO9TNas="/>
     </form:update>

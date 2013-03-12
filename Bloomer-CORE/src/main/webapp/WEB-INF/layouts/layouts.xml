@@ -16,4 +16,6 @@
     <put-attribute name="footer" value="/WEB-INF/views/footer.jspx" />
   </definition>
 
+  <definition name="relatorioDesempenho" template="/relatorio/desempenho.html"/>
+
 </tiles-definitions>

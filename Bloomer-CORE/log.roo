@@ -112,3 +112,8 @@ field reference --fieldName origem --type ~.model.Usuario --cardinality MANY_TO_
 focus --class ~.model.Usuario
 field set --fieldName quemMeSegue --type ~.model.Relacao --cardinality ONE_TO_MANY --mappedBy destino
 field set --fieldName quemEuSigo --type ~.model.Relacao --cardinality ONE_TO_MANY --mappedBy origem
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2013-03-05 14:49:30
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2013-03-12 14:05:21
+json all 
+// [failed] hint json
+web mvc json all 
