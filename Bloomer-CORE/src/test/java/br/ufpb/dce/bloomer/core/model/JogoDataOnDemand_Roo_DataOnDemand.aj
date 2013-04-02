@@ -27,10 +27,10 @@ privileged aspect JogoDataOnDemand_Roo_DataOnDemand {
     private List<Jogo> JogoDataOnDemand.data;
     
     @Autowired
-    private UsuarioDataOnDemand JogoDataOnDemand.usuarioDataOnDemand;
+    UsuarioDataOnDemand JogoDataOnDemand.usuarioDataOnDemand;
     
     @Autowired
-    private TipoJogoDataOnDemand JogoDataOnDemand.tipoJogoDataOnDemand;
+    TipoJogoDataOnDemand JogoDataOnDemand.tipoJogoDataOnDemand;
     
     public Jogo JogoDataOnDemand.getNewTransientJogo(int index) {
         Jogo obj = new Jogo();

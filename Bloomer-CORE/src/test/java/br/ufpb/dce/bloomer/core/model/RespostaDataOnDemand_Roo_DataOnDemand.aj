@@ -26,10 +26,10 @@ privileged aspect RespostaDataOnDemand_Roo_DataOnDemand {
     private List<Resposta> RespostaDataOnDemand.data;
     
     @Autowired
-    private PartidaDataOnDemand RespostaDataOnDemand.partidaDataOnDemand;
+    PartidaDataOnDemand RespostaDataOnDemand.partidaDataOnDemand;
     
     @Autowired
-    private QuestaoDataOnDemand RespostaDataOnDemand.questaoDataOnDemand;
+    QuestaoDataOnDemand RespostaDataOnDemand.questaoDataOnDemand;
     
     public Resposta RespostaDataOnDemand.getNewTransientResposta(int index) {
         Resposta obj = new Resposta();
@@ -39,6 +39,9 @@ privileged aspect RespostaDataOnDemand_Roo_DataOnDemand {
     
     public void RespostaDataOnDemand.setConteudo(Resposta obj, int index) {
         String conteudo = "conteudo_" + index;
+        if (conteudo.length() > 4000) {
+            conteudo = conteudo.substring(0, 4000);
+        }
         obj.setConteudo(conteudo);
     }
     

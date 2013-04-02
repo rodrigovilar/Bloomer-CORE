@@ -117,3 +117,33 @@ field set --fieldName quemEuSigo --type ~.model.Relacao --cardinality ONE_TO_MAN
 json all 
 // [failed] hint json
 web mvc json all 
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2013-03-18 13:57:18
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2013-03-18 18:34:51
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2013-03-26 10:45:33
+focus --class ~.model.Partida
+finder list
+finder list --depth  2
+finder add findPartidasByJogoAndUsuario
+focus --class ~.model.Usuario
+finder list
+finder list --depth 2
+focus --class ~.model.Relacao
+finder list --depth 2
+finder list
+finder add findRelacaoByDestino
+finder add findRelacaoByDestino
+finder add --finderName findRelacaoByDestino
+finder add --finderName findRelacaosByDestino
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2013-03-26 12:24:28
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-04-02 09:43:02
+jpa setup --database HYPERSONIC_PERSISTENT --provider HIBERNATE 
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-04-02 09:59:58
+jpa setup --provider HIBERNATE --database MYSQL 
+exit
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-04-02 10:00:21
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-04-02 10:25:15
+exit
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-04-02 10:25:29
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-04-02 10:27:42
+exit
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-04-02 10:27:56

@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.json.RooJson;
@@ -17,7 +18,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJson
 public class Questao {
 
-    @Lob
+    @Size(max = 4000)
     private String gabarito;
 
     @ManyToOne
