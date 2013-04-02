@@ -1,0 +1,37 @@
+<aspectj>
+<aspects>
+<aspect name="br.ufpb.dce.bloomer.core.model.PartidaDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.QuestaoIntegrationTest_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.RespostaIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.TipoJogoDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.UsuarioIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.TipoQuestaoDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.UsuarioDataOnDemand_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.RelacaoIntegrationTest_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.TipoQuestaoIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.JogoIntegrationTest_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.TipoJogoDataOnDemand_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.UsuarioIntegrationTest_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.TipoJogoIntegrationTest_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.PartidaDataOnDemand_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.QuestaoIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.PartidaIntegrationTest_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.RelacaoDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.JogoIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.RelacaoIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.TipoQuestaoIntegrationTest_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.TipoJogoIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.RelacaoDataOnDemand_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.JogoDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.RespostaDataOnDemand_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.RespostaIntegrationTest_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.TipoQuestaoDataOnDemand_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.PartidaIntegrationTest_Roo_IntegrationTest"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.QuestaoDataOnDemand_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.RespostaDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.JogoDataOnDemand_Roo_Configurable"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.QuestaoDataOnDemand_Roo_DataOnDemand"/>
+<aspect name="br.ufpb.dce.bloomer.core.model.UsuarioDataOnDemand_Roo_DataOnDemand"/>
+</aspects>
+</aspectj>
+

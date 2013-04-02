@@ -11,4 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RooWebScaffold(path = "usuarios", formBackingObject = Usuario.class)
 @RooWebJson(jsonObject = Usuario.class)
 public class UsuarioController {
+	//TODO
+	//Jogos configurados por esse cara
+	//Seguidores desse cara
+	
+	
 }

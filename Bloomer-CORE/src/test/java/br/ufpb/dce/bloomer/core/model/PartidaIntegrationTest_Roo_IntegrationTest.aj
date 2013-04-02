@@ -24,7 +24,7 @@ privileged aspect PartidaIntegrationTest_Roo_IntegrationTest {
     declare @type: PartidaIntegrationTest: @Transactional;
     
     @Autowired
-    private PartidaDataOnDemand PartidaIntegrationTest.dod;
+    PartidaDataOnDemand PartidaIntegrationTest.dod;
     
     @Test
     public void PartidaIntegrationTest.testCountPartidas() {
