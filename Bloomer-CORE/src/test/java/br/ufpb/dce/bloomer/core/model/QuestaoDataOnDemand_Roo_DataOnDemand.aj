@@ -26,10 +26,10 @@ privileged aspect QuestaoDataOnDemand_Roo_DataOnDemand {
     private List<Questao> QuestaoDataOnDemand.data;
     
     @Autowired
-    private JogoDataOnDemand QuestaoDataOnDemand.jogoDataOnDemand;
+    JogoDataOnDemand QuestaoDataOnDemand.jogoDataOnDemand;
     
     @Autowired
-    private TipoQuestaoDataOnDemand QuestaoDataOnDemand.tipoQuestaoDataOnDemand;
+    TipoQuestaoDataOnDemand QuestaoDataOnDemand.tipoQuestaoDataOnDemand;
     
     public Questao QuestaoDataOnDemand.getNewTransientQuestao(int index) {
         Questao obj = new Questao();
@@ -39,6 +39,9 @@ privileged aspect QuestaoDataOnDemand_Roo_DataOnDemand {
     
     public void QuestaoDataOnDemand.setGabarito(Questao obj, int index) {
         String gabarito = "gabarito_" + index;
+        if (gabarito.length() > 4000) {
+            gabarito = gabarito.substring(0, 4000);
+        }
         obj.setGabarito(gabarito);
     }
     

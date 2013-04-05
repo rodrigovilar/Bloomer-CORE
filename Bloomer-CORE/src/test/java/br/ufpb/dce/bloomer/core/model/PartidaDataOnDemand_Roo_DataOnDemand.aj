@@ -28,10 +28,10 @@ privileged aspect PartidaDataOnDemand_Roo_DataOnDemand {
     private List<Partida> PartidaDataOnDemand.data;
     
     @Autowired
-    private JogoDataOnDemand PartidaDataOnDemand.jogoDataOnDemand;
+    JogoDataOnDemand PartidaDataOnDemand.jogoDataOnDemand;
     
     @Autowired
-    private UsuarioDataOnDemand PartidaDataOnDemand.usuarioDataOnDemand;
+    UsuarioDataOnDemand PartidaDataOnDemand.usuarioDataOnDemand;
     
     public Partida PartidaDataOnDemand.getNewTransientPartida(int index) {
         Partida obj = new Partida();

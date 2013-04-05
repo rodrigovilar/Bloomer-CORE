@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_br_ufpb_dce_bloomer_core_model_Partida" modelAttribute="partida" path="/partidas" versionField="Version" z="QPJtcTlZh9kcJGBBYaqGKFFeC0Q=">
+        <field:datetime dateTimePattern="${partida_datahora_date_format}" field="dataHora" id="c_br_ufpb_dce_bloomer_core_model_Partida_dataHora" required="true" z="2o/wA5NqlWtpU2OV7YsNRBXaxMU="/>
+        <field:input field="acerto" id="c_br_ufpb_dce_bloomer_core_model_Partida_acerto" max="100" min="0" required="true" z="fxF0XDEDI6CEqwZfzty/Lys9RUc="/>
+        <field:checkbox field="concluiu" id="c_br_ufpb_dce_bloomer_core_model_Partida_concluiu" z="OrkpXvvWJOttVtw6yqLRGdsgTJE="/>
+        <field:input field="escore" id="c_br_ufpb_dce_bloomer_core_model_Partida_escore" required="true" z="3oaYxGGSMfbN5e6zjNhRyRZRnC8="/>
+        <field:select field="usuario" id="c_br_ufpb_dce_bloomer_core_model_Partida_usuario" itemValue="id" items="${usuarios}" path="/usuarios" z="NfiqOeJM9r1oYpax9L8I6tWkXj8="/>
+        <field:select field="jogo" id="c_br_ufpb_dce_bloomer_core_model_Partida_jogo" itemValue="id" items="${jogoes}" path="/jogos" z="6ChXWJBYsD2oLz2mxOmczbRzCu0="/>
+        <field:simple field="respostas" id="c_br_ufpb_dce_bloomer_core_model_Partida_respostas" messageCode="entity_reference_not_managed" messageCodeAttribute="Resposta" z="5Kq3A75S1BRr02hmvdN8307AcEs="/>
+    </form:update>
+</div>

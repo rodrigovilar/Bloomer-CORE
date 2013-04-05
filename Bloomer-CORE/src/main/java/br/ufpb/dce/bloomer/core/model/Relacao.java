@@ -13,8 +13,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
 @RooJson
+@RooJpaActiveRecord(finders = { "findRelacaosByDestino" })
 public class Relacao {
 
     @NotNull
@@ -24,7 +24,7 @@ public class Relacao {
 
     @ManyToOne
     private Usuario destino;
-
+    
     @ManyToOne
     private Usuario origem;
 }

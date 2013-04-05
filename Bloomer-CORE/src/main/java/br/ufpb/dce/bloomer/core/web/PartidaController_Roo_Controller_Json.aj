@@ -3,7 +3,9 @@
 
 package br.ufpb.dce.bloomer.core.web;
 
+import br.ufpb.dce.bloomer.core.model.Jogo;
 import br.ufpb.dce.bloomer.core.model.Partida;
+import br.ufpb.dce.bloomer.core.model.Usuario;
 import br.ufpb.dce.bloomer.core.web.PartidaController;
 import java.util.List;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 privileged aspect PartidaController_Roo_Controller_Json {
@@ -90,6 +93,14 @@ privileged aspect PartidaController_Roo_Controller_Json {
         }
         partida.remove();
         return new ResponseEntity<String>(headers, HttpStatus.OK);
+    }
+    
+    @RequestMapping(params = "find=ByJogoAndUsuario", headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> PartidaController.jsonFindPartidasByJogoAndUsuario(@RequestParam("jogo") Jogo jogo, @RequestParam("usuario") Usuario usuario) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        return new ResponseEntity<String>(Partida.toJsonArray(Partida.findPartidasByJogoAndUsuario(jogo, usuario).getResultList()), headers, HttpStatus.OK);
     }
     
 }

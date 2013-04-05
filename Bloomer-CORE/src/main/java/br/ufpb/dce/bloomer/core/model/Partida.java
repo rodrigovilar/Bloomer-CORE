@@ -19,8 +19,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
 @RooJson
+@RooJpaActiveRecord(finders = { "findPartidasByJogoAndUsuario" })
 public class Partida {
 
     @NotNull

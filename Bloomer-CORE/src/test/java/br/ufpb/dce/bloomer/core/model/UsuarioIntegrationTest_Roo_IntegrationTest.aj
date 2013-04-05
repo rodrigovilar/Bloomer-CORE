@@ -24,7 +24,7 @@ privileged aspect UsuarioIntegrationTest_Roo_IntegrationTest {
     declare @type: UsuarioIntegrationTest: @Transactional;
     
     @Autowired
-    private UsuarioDataOnDemand UsuarioIntegrationTest.dod;
+    UsuarioDataOnDemand UsuarioIntegrationTest.dod;
     
     @Test
     public void UsuarioIntegrationTest.testCountUsuarios() {
