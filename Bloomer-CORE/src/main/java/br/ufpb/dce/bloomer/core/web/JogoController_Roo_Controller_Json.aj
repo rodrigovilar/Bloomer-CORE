@@ -16,80 +16,77 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 privileged aspect JogoController_Roo_Controller_Json {
-    
-    @RequestMapping(value = "/{id}", headers = "Accept=application/json")
-    @ResponseBody
-    public ResponseEntity<String> JogoController.showJson(@PathVariable("id") Long id) {
-        Jogo jogo = Jogo.findJogo(id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-        if (jogo == null) {
-            return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<String>(jogo.toJson(), headers, HttpStatus.OK);
-    }
-    
-    @RequestMapping(headers = "Accept=application/json")
-    @ResponseBody
-    public ResponseEntity<String> JogoController.listJson() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-        List<Jogo> result = Jogo.findAllJogoes();
-        return new ResponseEntity<String>(Jogo.toJsonArray(result), headers, HttpStatus.OK);
-    }
-    
-    @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity<String> JogoController.createFromJson(@RequestBody String json) {
-        Jogo jogo = Jogo.fromJsonToJogo(json);
-        jogo.persist();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-    }
-    
-    @RequestMapping(value = "/jsonArray", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity<String> JogoController.createFromJsonArray(@RequestBody String json) {
-        for (Jogo jogo: Jogo.fromJsonArrayToJogoes(json)) {
-            jogo.persist();
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-    }
-    
-    @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
-    public ResponseEntity<String> JogoController.updateFromJson(@RequestBody String json) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        Jogo jogo = Jogo.fromJsonToJogo(json);
-        if (jogo.merge() == null) {
-            return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<String>(headers, HttpStatus.OK);
-    }
-    
-    @RequestMapping(value = "/jsonArray", method = RequestMethod.PUT, headers = "Accept=application/json")
-    public ResponseEntity<String> JogoController.updateFromJsonArray(@RequestBody String json) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        for (Jogo jogo: Jogo.fromJsonArrayToJogoes(json)) {
-            if (jogo.merge() == null) {
-                return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-            }
-        }
-        return new ResponseEntity<String>(headers, HttpStatus.OK);
-    }
-    
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-    public ResponseEntity<String> JogoController.deleteFromJson(@PathVariable("id") Long id) {
-        Jogo jogo = Jogo.findJogo(id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        if (jogo == null) {
-            return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-        }
-        jogo.remove();
-        return new ResponseEntity<String>(headers, HttpStatus.OK);
-    }
-    
+
+	@RequestMapping(value = "/{id}", headers = "Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<String> JogoController.showJson(
+			@PathVariable("id") Long id) {
+		Jogo jogo = Jogo.findJogo(id);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=utf-8");
+		if (jogo == null) {
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String>(jogo.toJson(), headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<String> JogoController.createFromJson(
+			@RequestBody String json) {
+		Jogo jogo = Jogo.fromJsonToJogo(json);
+		jogo.persist();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/jsonArray", method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<String> JogoController.createFromJsonArray(
+			@RequestBody String json) {
+		for (Jogo jogo : Jogo.fromJsonArrayToJogoes(json)) {
+			jogo.persist();
+		}
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
+	public ResponseEntity<String> JogoController.updateFromJson(
+			@RequestBody String json) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		Jogo jogo = Jogo.fromJsonToJogo(json);
+		if (jogo.merge() == null) {
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String>(headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/jsonArray", method = RequestMethod.PUT, headers = "Accept=application/json")
+	public ResponseEntity<String> JogoController.updateFromJsonArray(
+			@RequestBody String json) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		for (Jogo jogo : Jogo.fromJsonArrayToJogoes(json)) {
+			if (jogo.merge() == null) {
+				return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+			}
+		}
+		return new ResponseEntity<String>(headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public ResponseEntity<String> JogoController.deleteFromJson(
+			@PathVariable("id") Long id) {
+		Jogo jogo = Jogo.findJogo(id);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		if (jogo == null) {
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+		}
+		jogo.remove();
+		return new ResponseEntity<String>(headers, HttpStatus.OK);
+	}
+
 }

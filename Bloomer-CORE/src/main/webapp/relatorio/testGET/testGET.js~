@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	ajax("localhost:8080/Bloomer-CORE/jogos/1/desempenho/1");
+	ajax("http://localhost:8080/Bloomer-CORE/jogos/1/desempenho/1");
+	//"http://localhost:8080/Bloomer-CORE/jogos/1/desempenho/1"
 });
 
 function ajax(path){

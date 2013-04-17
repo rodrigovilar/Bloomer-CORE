@@ -26,10 +26,10 @@ privileged aspect RespostaDataOnDemand_Roo_DataOnDemand {
     private List<Resposta> RespostaDataOnDemand.data;
     
     @Autowired
-    PartidaDataOnDemand RespostaDataOnDemand.partidaDataOnDemand;
+    private PartidaDataOnDemand RespostaDataOnDemand.partidaDataOnDemand;
     
     @Autowired
-    QuestaoDataOnDemand RespostaDataOnDemand.questaoDataOnDemand;
+    private QuestaoDataOnDemand RespostaDataOnDemand.questaoDataOnDemand;
     
     public Resposta RespostaDataOnDemand.getNewTransientResposta(int index) {
         Resposta obj = new Resposta();
