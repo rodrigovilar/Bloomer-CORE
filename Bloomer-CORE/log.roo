@@ -161,3 +161,6 @@ focus --class ~.model.Usuario
 finder list
 finder list --depth 2
 finder add --finderName findUsuariosByPartidas
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2013-04-17 20:30:43
+exit
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2013-04-17 20:31:37
