@@ -20,8 +20,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord
 @RooJson
+@RooJpaActiveRecord(finders = { "findUsuariosByPartidas" })
 public class Usuario {
 
     @NotNull
@@ -55,4 +55,3 @@ public class Usuario {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "origem")
     private Set<Relacao> quemEuSigo = new HashSet<Relacao>();
 }
-

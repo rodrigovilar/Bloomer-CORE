@@ -1,0 +1,138 @@
+{
+    "questoes": [
+        {
+            "id": 1,
+            "gabarito": "new Table();"
+        },
+        {
+            "id": 2,
+            "gabarito": "private"
+        },
+        {
+            "id": 3,
+            "gabarito": "c++"
+        },
+        {
+            "id": 4,
+            "gabarito": "ruby"
+        }
+    ],
+    "partidas": [
+        {
+            "idPartida": 1,
+            "dataHora": "13/03/2012 21:00",
+            "acerto": 100,
+            "concluiu": "TRUE",
+            "escore": 1030,
+            "respostas": [
+                {
+                    "id": 1,
+                    "conteudo": "Fachada",
+                    "idQuestao": 1
+                },
+                {
+                    "id": 2,
+                    "conteudo": "string",
+                    "idQuestao": 2
+                },
+                {
+                    "id": 3,
+                    "conteudo": "private",
+                    "idQuestao": 3
+                },
+                {
+                    "id": 4,
+                    "conteudo": "construct",
+                    "idQuestao": 4
+                }
+            ]
+        },
+        {
+            "idPartida": 2,
+            "dataHora": "14/03/2012 21:00",
+            "acerto": 90,
+            "concluiu": "TRUE",
+            "escore": 900,
+            "respostas": [
+                {
+                    "id": 1,
+                    "conteudo": "Fachada",
+                    "idQuestao": 1
+                },
+                {
+                    "id": 2,
+                    "conteudo": "string",
+                    "idQuestao": 2
+                },
+                {
+                    "id": 3,
+                    "conteudo": "private",
+                    "idQuestao": 3
+                },
+                {
+                    "id": 4,
+                    "conteudo": "construct",
+                    "idQuestao": 4
+                }
+            ]
+        },
+        {
+            "idPartida": 3,
+            "dataHora": "15/03/2012 21:00",
+            "acerto": 100,
+            "concluiu": "FALSE",
+            "escore": 1200,
+            "respostas": [
+                {
+                    "id": 1,
+                    "conteudo": "Fachada",
+                    "idQuestao": 1
+                },
+                {
+                    "id": 2,
+                    "conteudo": "string",
+                    "idQuestao": 2
+                },
+                {
+                    "id": 3,
+                    "conteudo": "private",
+                    "idQuestao": 3
+                },
+                {
+                    "id": 4,
+                    "conteudo": "construct",
+                    "idQuestao": 4
+                }
+            ]
+        },
+        {
+            "idPartida": 4,
+            "dataHora": "16/03/2012 21:00",
+            "acerto": 70,
+            "concluiu": "TRUE",
+            "escore": 700,
+            "respostas": [
+                {
+                    "id": 1,
+                    "conteudo": "Fachada",
+                    "idQuestao": 1
+                },
+                {
+                    "id": 2,
+                    "conteudo": "string",
+                    "idQuestao": 2
+                },
+                {
+                    "id": 3,
+                    "conteudo": "private",
+                    "idQuestao": 3
+                },
+                {
+                    "id": 4,
+                    "conteudo": "construct",
+                    "idQuestao": 4
+                }
+            ]
+        }
+    ]
+}

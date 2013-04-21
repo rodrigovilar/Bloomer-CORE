@@ -1,13 +1,9 @@
 package br.ufpb.dce.bloomer.core.web;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
@@ -34,88 +30,246 @@ import br.ufpb.dce.bloomer.core.model.Usuario;
 @RooWebJson(jsonObject = Jogo.class)
 public class JogoController {
 
-	@RequestMapping(value = "/{idJogo}/desempenho/{idUsuario}", headers = "Accept=application/json")
+	// ESSE É O listAllJogos do .aj, VOLTA PRO .aj???(DÚVIDA)
+	/*
+	 * @RequestMapping(headers = "Accept=application/json")
+	 * 
+	 * @ResponseBody public ResponseEntity<String> JogoController.listJson() {
+	 * HttpHeaders headers = new HttpHeaders(); headers.add("Content-Type",
+	 * "application/json; charset=utf-8"); List<Jogo> result =
+	 * Jogo.findAllJogoes(); return new
+	 * ResponseEntity<String>(Jogo.toJsonArray(result), headers, HttpStatus.OK);
+	 * }
+	 */
+
+	@RequestMapping(headers = "Accept=application/json")
 	@ResponseBody
-	public ResponseEntity<String> desempenhoUnico(@PathVariable("idJogo") Long idJogo,
-			@PathVariable("idUsuario") Long idUsuario, Model uiModel) {
-		
+	public ResponseEntity<String> listAllJogos() {
+		List<Jogo> listaDeJogos = Jogo.findAllJogoes();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=utf-8");
+		if (listaDeJogos.size() == 0) {
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+		}
+		ArrayNode arrayDeJogos = JsonNodeFactory.instance.arrayNode();
+
+		for (Jogo jogo : listaDeJogos) {
+			ObjectNode noJogo = JsonNodeFactory.instance.objectNode();
+			noJogo.put("id", jogo.getId());
+			noJogo.put("nome", jogo.getNome());
+
+			arrayDeJogos.add(noJogo);
+		}
+
+		return new ResponseEntity<String>(arrayDeJogos.toString(), headers,
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{idJogo}/usuarios", headers = "Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<String> listUsuariosQueJogaramUmJogo(
+			@PathVariable("idJogo") Long idJogo) {
 		Jogo jogo = Jogo.findJogo(idJogo);
-		Usuario usuario = Usuario.findUsuario(idUsuario);
-		
-		
-		List<Partida> partidas = 
-				Partida.findPartidasByJogoAndUsuario(jogo, usuario).getResultList();
-		
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=utf-8");
+		if (jogo == null) {
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+		}
+
+		List<Partida> partidasDoJogo = Partida.findPartidasByJogo(jogo)
+				.getResultList();
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+
+		for (Partida partida : partidasDoJogo) {
+			Usuario usuarioDestaPartida = partida.getUsuario();
+			if (!usuarios.contains(usuarioDestaPartida)) {
+				usuarios.add(usuarioDestaPartida);
+			}
+		}
+
+		ArrayNode noArrayDeUsuarios = JsonNodeFactory.instance.arrayNode();
+
+		for (Usuario usuario : usuarios) {
+			ObjectNode noUsuario = JsonNodeFactory.instance.objectNode();
+			noUsuario.put("id", usuario.getId());
+			noUsuario.put("nome", usuario.getNome());
+
+			noArrayDeUsuarios.add(noUsuario);
+		}
+
+		return new ResponseEntity<String>(noArrayDeUsuarios.toString(),
+				headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{idJogo}/partidas", headers = "Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<String> listPartidasDeUmJogo(
+			@PathVariable("idJogo") Long idJogo) {
+
+		Jogo jogo = Jogo.findJogo(idJogo);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=utf-8");
+		if (jogo == null) {
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+		}
+
+		List<Partida> partidasDoJogo = Partida.findPartidasByJogo(jogo)
+				.getResultList();
+
 		ObjectNode noJogo = JsonNodeFactory.instance.objectNode();
-		noJogo.put("nomeJogo", jogo.getNome());
 
 		ArrayNode noQuestoes = JsonNodeFactory.instance.arrayNode();
 		noJogo.put("questoes", noQuestoes);
-		
+
 		ArrayNode noPartidas = JsonNodeFactory.instance.arrayNode();
 		noJogo.put("partidas", noPartidas);
-		
-		
+
 		for (Questao questao : jogo.getQuestoes()) {
 			ObjectNode noQuestao = JsonNodeFactory.instance.objectNode();
 			noQuestao.put("id", questao.getId());
 			noQuestao.put("gabarito", questao.getGabarito());
 			noQuestoes.add(noQuestao);
 		}
-		
-		for (Partida partida : partidas) {
+
+		for (Partida partida : partidasDoJogo) {
 			ObjectNode noPartida = JsonNodeFactory.instance.objectNode();
 			noPartida.put("idPartida", partida.getId());
-			
-			String formatoData = "dd/MM/yyyy";  
-			String formatoHora = "h:mm - a";  
-			String dataFormatada, horaFormatada;  
-			  
-			dataFormatada = new SimpleDateFormat(formatoData).format(partida.getDataHora().getTime());
-			horaFormatada = new SimpleDateFormat(formatoHora).format(partida.getDataHora().getTime());
-		
+
+			String formatoData = "dd/MM/yyyy";
+			String formatoHora = "h:mm - a";
+			String dataFormatada, horaFormatada;
+
+			dataFormatada = new SimpleDateFormat(formatoData).format(partida
+					.getDataHora().getTime());
+			horaFormatada = new SimpleDateFormat(formatoHora).format(partida
+					.getDataHora().getTime());
+
 			noPartida.put("dataHora", dataFormatada + " " + horaFormatada);
 			noPartida.put("acerto", partida.getAcerto());
 			noPartida.put("concluiu", partida.getConcluiu());
 			noPartida.put("escore", partida.getEscore());
-			
+
 			ArrayNode noRespostas = JsonNodeFactory.instance.arrayNode();
 			noPartida.put("respostas", noRespostas);
-			
-			for (Resposta resposta : partida.getRespostas()){
+
+			for (Resposta resposta : partida.getRespostas()) {
 				ObjectNode noResposta = JsonNodeFactory.instance.objectNode();
-				noResposta.put("id",resposta.getId());
+				noResposta.put("id", resposta.getId());
 				noResposta.put("conteudo", resposta.getConteudo());
 				noResposta.put("idQuestao", resposta.getQuestao().getId());
 				noRespostas.add(noResposta);
 			}
-			
+
 			noPartidas.add(noPartida);
-			
+
 		}
-		//Pesquisar as partidas por idJogo e idUsuario
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", "application/json; charset=utf-8");
-		
+
 		return new ResponseEntity<String>(noJogo.toString(), headers,
 				HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/{idJogo}/desempenho", headers = "Accept=application/json")
-	@ResponseBody
-	public ResponseEntity<String> desempenhoGeral(@PathVariable("idJogo") Long idJogo, Model uiModel) {
-		
-		Jogo jogo = Jogo.findJogo(idJogo);
-		String json = "{ \"nomeJogo\": \"" + jogo.getNome() + "\"}";
 
-		//Pesquisar as partidas por idJogo
+	// JÁ VOLTOU PRO .aj
+	/*
+	 * @RequestMapping(value = "/{id}", headers = "Accept=application/json")
+	 * 
+	 * @ResponseBody public ResponseEntity<String>
+	 * getJogoById(@PathVariable("id") Long id) { Jogo jogo = Jogo.findJogo(id);
+	 * HttpHeaders headers = new HttpHeaders(); headers.add("Content-Type",
+	 * "application/json; charset=utf-8"); if (jogo == null) { return new
+	 * ResponseEntity<String>(headers, HttpStatus.NOT_FOUND); } ObjectNode
+	 * noJogo = JsonNodeFactory.instance.objectNode(); noJogo.put("id",
+	 * jogo.getId()); noJogo.put("nomeJogo", jogo.getNome());
+	 * 
+	 * return new ResponseEntity<String>(noJogo.toString(), headers,
+	 * HttpStatus.OK); }
+	 */
+
+	@RequestMapping(value = "/{idJogo}/desempenho/{idUsuario}", headers = "Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<String> desempenhoUnico(
+			@PathVariable("idJogo") Long idJogo,
+			@PathVariable("idUsuario") Long idUsuario, Model uiModel) {
+
+		Jogo jogo = Jogo.findJogo(idJogo);
+		Usuario usuario = Usuario.findUsuario(idUsuario);
+
+		List<Partida> partidas = Partida.findPartidasByJogoAndUsuario(jogo,
+				usuario).getResultList();
+
+		ObjectNode noJogo = JsonNodeFactory.instance.objectNode();
+		noJogo.put("nomeJogo", jogo.getNome());
+
+		ArrayNode noQuestoes = JsonNodeFactory.instance.arrayNode();
+		noJogo.put("questoes", noQuestoes);
+
+		ArrayNode noPartidas = JsonNodeFactory.instance.arrayNode();
+		noJogo.put("partidas", noPartidas);
+
+		for (Questao questao : jogo.getQuestoes()) {
+			ObjectNode noQuestao = JsonNodeFactory.instance.objectNode();
+			noQuestao.put("id", questao.getId());
+			noQuestao.put("gabarito", questao.getGabarito());
+			noQuestoes.add(noQuestao);
+		}
+
+		for (Partida partida : partidas) {
+			ObjectNode noPartida = JsonNodeFactory.instance.objectNode();
+			noPartida.put("idPartida", partida.getId());
+
+			String formatoData = "dd/MM/yyyy";
+			String formatoHora = "h:mm - a";
+			String dataFormatada, horaFormatada;
+
+			dataFormatada = new SimpleDateFormat(formatoData).format(partida
+					.getDataHora().getTime());
+			horaFormatada = new SimpleDateFormat(formatoHora).format(partida
+					.getDataHora().getTime());
+
+			noPartida.put("dataHora", dataFormatada + " " + horaFormatada);
+			noPartida.put("acerto", partida.getAcerto());
+			noPartida.put("concluiu", partida.getConcluiu());
+			noPartida.put("escore", partida.getEscore());
+
+			ArrayNode noRespostas = JsonNodeFactory.instance.arrayNode();
+			noPartida.put("respostas", noRespostas);
+
+			for (Resposta resposta : partida.getRespostas()) {
+				ObjectNode noResposta = JsonNodeFactory.instance.objectNode();
+				noResposta.put("id", resposta.getId());
+				noResposta.put("conteudo", resposta.getConteudo());
+				noResposta.put("idQuestao", resposta.getQuestao().getId());
+				noRespostas.add(noResposta);
+			}
+
+			noPartidas.add(noPartida);
+
+		}
+		// Pesquisar as partidas por idJogo e idUsuario
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json; charset=utf-8");
-		
-		return new ResponseEntity<String>(json, headers,
+
+		return new ResponseEntity<String>(noJogo.toString(), headers,
 				HttpStatus.OK);
 	}
-		
+
+	@RequestMapping(value = "/{idJogo}/desempenho", headers = "Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<String> desempenhoGeral(
+			@PathVariable("idJogo") Long idJogo, Model uiModel) {
+
+		Jogo jogo = Jogo.findJogo(idJogo);
+		String json = "{ \"nomeJogo\": \"" + jogo.getNome() + "\"}";
+
+		// Pesquisar as partidas por idJogo
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=utf-8");
+
+		return new ResponseEntity<String>(json, headers, HttpStatus.OK);
+	}
+
 }

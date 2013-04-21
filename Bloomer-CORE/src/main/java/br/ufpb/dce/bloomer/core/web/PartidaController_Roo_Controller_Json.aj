@@ -95,6 +95,14 @@ privileged aspect PartidaController_Roo_Controller_Json {
         return new ResponseEntity<String>(headers, HttpStatus.OK);
     }
     
+    @RequestMapping(params = "find=ByJogo", headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> PartidaController.jsonFindPartidasByJogo(@RequestParam("jogo") Jogo jogo) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        return new ResponseEntity<String>(Partida.toJsonArray(Partida.findPartidasByJogo(jogo).getResultList()), headers, HttpStatus.OK);
+    }
+    
     @RequestMapping(params = "find=ByJogoAndUsuario", headers = "Accept=application/json")
     @ResponseBody
     public ResponseEntity<String> PartidaController.jsonFindPartidasByJogoAndUsuario(@RequestParam("jogo") Jogo jogo, @RequestParam("usuario") Usuario usuario) {

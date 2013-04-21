@@ -25,7 +25,7 @@ privileged aspect TipoQuestaoDataOnDemand_Roo_DataOnDemand {
     private List<TipoQuestao> TipoQuestaoDataOnDemand.data;
     
     @Autowired
-    TipoJogoDataOnDemand TipoQuestaoDataOnDemand.tipoJogoDataOnDemand;
+    private TipoJogoDataOnDemand TipoQuestaoDataOnDemand.tipoJogoDataOnDemand;
     
     public TipoQuestao TipoQuestaoDataOnDemand.getNewTransientTipoQuestao(int index) {
         TipoQuestao obj = new TipoQuestao();
