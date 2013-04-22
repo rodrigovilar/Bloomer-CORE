@@ -24,7 +24,7 @@ privileged aspect RelacaoIntegrationTest_Roo_IntegrationTest {
     declare @type: RelacaoIntegrationTest: @Transactional;
     
     @Autowired
-    RelacaoDataOnDemand RelacaoIntegrationTest.dod;
+    private RelacaoDataOnDemand RelacaoIntegrationTest.dod;
     
     @Test
     public void RelacaoIntegrationTest.testCountRelacaos() {

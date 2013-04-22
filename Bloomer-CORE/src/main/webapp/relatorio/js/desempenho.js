@@ -2,147 +2,105 @@
 * Bloomer - Desempenho
 */
 
+var idJogo;
+
 /* Selectors */
 
-var nomeJogador; 
-var nomeJogo; 
-
-
 $(document).ready(function(){
-	$("#jump_menu_jogos").hide();
-	$("#montar_tabela").hide();
-	$("#montar_grafico").hide();
-	getSeguidores();
-});
-
-$("#jump_menu_usuarios").ready(function(){
-	$("#jump_menu_usuarios").change(function(){
-
-		var path;
-
-		switch($(this).val()){
-				case "1":
-					path = "json/rodrigo/jogos.json";
-				break;
-
-				case "2":
-					path = "json/vandhuy/jogos.json";
-				break;
-
-				case "3":
-					path = "json/anderson/jogos.json";
-				break;
-		}
-
-		ajax(path);
-	});
+	$("#jump_menu_usuarios").hide();
+	getJogos();
 });
 
 $("#jump_menu_jogos").ready(function(){
 	$("#jump_menu_jogos").change(function(){
-		$("#montar_tabela").show('slow');
-		$("#montar_grafico").show('slow');
-	});
-});
 
-$("#montar_tabela").ready(function(){
-	$("#montar_tabela").click(function(){
-		$.getJSON(getDesempenho($("#jump_menu_jogos").val()), function(json){
+		idJogo = $("#jump_menu_jogos").val();
+		
+		$.getJSON("http://localhost:8080/Bloomer-CORE/jogos/" + idJogo +"/partidas", function(json){ 
+		
+		// GET http://localhost/Bloomer-CORE/jogos/{idJogo}/partidas
 			montarTabela(json);
-
-		});
-	});
-});
-
-$("#montar_grafico").ready(function(){
-	$("#montar_grafico").click(function(){
-		$.getJSON(getDesempenho($("#jump_menu_jogos").val()), function(json){
 			montarGrafico(json);
 		});
+
+		ajax();
+	});
+});
+
+$("#jump_menu_usuarios").ready(function(){
+	$("#jump_menu_usuarios").change(function(){
 		
+		idUsuario = $("#jump_menu_usuarios").val();
+		
+		$.getJSON("http://localhost:8080/Bloomer-CORE/jogos/"+idJogo+"/desempenho/" + idUsuario, function(json){ 
+
+			// GET http://localhost/Bloomer-CORE/jogos/{idJogo}/partidas/{idUsuario}
+			montarTabela(json);
+			montarGrafico(json);
+		});
 	});
 });
 
 /* Functions */
 
-function getSeguidores(){
+function getJogos(){
 
-	$.getJSON('json/usuarios.json', function(json){
+		$.getJSON("http://localhost:8080/Bloomer-CORE/jogos", function(json){ 
+		// GET "http://localhost:8080/Bloomer-CORE/jogos"
 
-
-
-		var options = '<option value="null">Escolha um usuário...</option>';
+		var options = '<option value="null">Escolha um jogo...</option>';
 
 		for (i = 0; i < json.length; i++){
 			options += '<option value="' + json[i].id + '">' + json[i].nome + '</option>';
-			nomeJogador = json[i].nome; 
 		}
 
-		$("#jump_menu_usuarios").html(options);
+		$("#jump_menu_jogos").html(options);
 	});
 };
 
-function getDesempenho(value){
-
-	switch(value){
-				case "1":
-					var path = "json/rodrigo/desempenho.json";
-				break;
-
-				case "2":
-					var path = "json/vandhuy/desempenho.json";
-				break;
-
-				case "3":
-					var path = "json/anderson/desempenho.json";
-				break;
-	}
-
-	return path;
-};
-
-function ajax(path){
+function ajax(){
 
 	$.ajax({
 		//type: "GET",
-		url: path,
+		url: "http://localhost:8080/Bloomer-CORE/jogos/" + idJogo + "/usuarios", 
+		
+		// GET http://localhost/Bloomer-CORE/jogos/{idJogo}/usuarios
 		//data: {nome: value},
 		dataType: "json",
 		success: function(json){
 
-			var options = '<option value="null">Escolha um jogo...</option>';
+			var options = '<option value="null">Escolha um usuário...</option>';
 
 			for (i = 0; i < json.length; i++){
 				options += '<option value="' + json[i].id + '">' + json[i].nome + '</option>';
-				nomeJogo = json[i].nome; 
 			}
 
-			$("#jump_menu_jogos").html(options);
+			$("#jump_menu_usuarios").html(options);
 		}
 	});
 
-	if($('#jump_menu_jogos').is(':hidden')) {
-    	$("#jump_menu_jogos").show('slow');
+	if($('#jump_menu_usuarios').is(':hidden')) {
+    	$("#jump_menu_usuarios").show();
 	};
 };
 
 function montarTabela(json){
 
-	if(document.getElementById("tabela_usuario") !== null){
-		$("#tabela_usuario").remove();
-	}
+	ifExistsRemove($("#tabela"));
 
-	var table = $('<table widtd="1000" border="1" cellspacing="0" style="text-align:center"></table>').attr('id', 'tabela_usuario');
+	var $div = $('<div /></br>').appendTo('body');
+	$div.attr('id', 'tabela_desempenho');
+
+	var table = $('<table widtd="1000" border="1" cellspacing="0" style="text-align:center"></table>').attr('id', 'tabela');
 
 	var header = '<tr><th rowspan="2">Data/Hora</th><th rowspan="2">Acertos (%)</th><th rowspan="2">Concluiu</th><th rowspan="2">Escore</th>';
 
 	for (h = 0; h < json.questoes.length; h++){
-		header += '<th style="line-height:0" rowspan="2"><h5>Questão ' + (h + 1) + '</h4><h5>Gabarito: ' + json.questoes[h].gabarito + '</h4></th>';
+		header += '<th style="line-height:0" rowspan="2"><h4>Questão ' + (h + 1) + '</h4><h4>Gabarito: ' + json.questoes[h].gabarito + '</h4></th>';
 	}
 
 	header += '</tr><tr></tr>';
 	table.append(header);
-
 
 	for (j=0; j < json.partidas.length; j++){
 	    var row = '<tr><td>' + json.partidas[j].dataHora + '</td><td>' + json.partidas[j].acerto +
@@ -159,87 +117,124 @@ function montarTabela(json){
 	$("#tabela_desempenho").append(table);
 };
 
-
-
 function montarGrafico(json){
 
-	if(document.getElementById("grafico") !== null){
-		$("#grafico").remove();
-	}
+	ifExistsRemove($("#grafico"));
 
-	var $div = $('<div /> <br/><br/>').appendTo('body');
+	var $div = $('<div />').appendTo('body');
 	$div.attr('id', 'grafico');
 	$div.css('height', '500px');
 	$div.css('width', '700px');
 
-
-// Alocando os arrays  
-	var lineX = new Array(json.partidas.length);
-	var lineY = new Array(json.partidas.length); 
+	// Alocando os arrays
+	var score = new Array(json.partidas.length);
+	var acertos = new Array(json.partidas.length);
 
 		for (var i = 0; i < json.partidas.length; i++) {
-			lineX[i] = new Array(2); 
-			lineY[i] = new Array(2);
+			score[i] = new Array(2);
+			acertos[i] = new Array(2);
 		}
 
 	for (var j=0; j < json.partidas.length; j++){
 
-				lineX [j][0] = json.partidas[j].dataHora; 
-				lineX [j][1] = json.partidas[j].escore;
-				lineY [j][0] = j + 1;
-				lineY [j][1] = json.partidas[j].acerto; 
-	}	
+				score [j][0] = json.partidas[j].idPartida;
+				score [j][1] = json.partidas[j].escore;
 
+				acertos [j][0] = json.partidas[j].idPartida;
+				acertos [j][1] = json.partidas[j].acerto;
+	}
 
-	var title = 'Gráfico do Desempenho </br>';
-	title += 'Usuário: '+ nomeJogador + '  - Jogo: ' + nomeJogo ;
-
-	var line = [['DataPartida', 7], ['DataPartida1', 9], ['DataPartida2', 15],
-    ['DataPartida3', 12], ['DataPartida4', 3], ['DataPartida5', 6], ['DataPartida6', 18]];
-
-    var line2 = [['Nickle', 28], ['Aluminum', 13], ['Xenon', 74], ['Silver', 47],
-    ['Sulfer', 16], ['Silicon', 14], ['Vanadium', 23]];
-
-    var plot4 = $.jqplot('grafico', [lineX, lineY], {
-        title: title,
-        series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
-        axes: {
-            xaxis: {
-                renderer: $.jqplot.CategoryAxisRenderer,
-                label: 'Data das Partidas',
-                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
-                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-                tickOptions: {
-                    angle: 20
+    plot1 = $.jqplot("grafico", [score, acertos], {
+        // Turns on animatino for all series in this plot.
+        animate: true,
+        // Will animate plot on calls to plot1.replot({resetAxes:true})
+        animateReplot: true,
+        cursor: {
+            show: true,
+            zoom: true,
+            looseZoom: true,
+            showTooltip: false
+        },
+        series:[
+            {
+                pointLabels: {
+                    show: true
+                },
+                renderer: $.jqplot.BarRenderer,
+                showHighlight: false,
+                yaxis: 'y2axis',
+                rendererOptions: {
+                    // Speed up the animation a little bit.
+                    // This is a number of milliseconds.
+                    // Default for bar series is 3000.
+                    animation: {
+                        speed: 2500
+                    },
+                    barWidth: 30,
+                    barPadding: 0,
+                    barMargin: 0,
+                    highlightMouseOver: false
                 }
             },
-            x2axis: {
-                renderer: $.jqplot.CategoryAxisRenderer,
-                label: 'Partida',
-                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
-                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-                tickOptions: {
-                    angle: 0
+            {
+                rendererOptions: {
+                    // speed up the animation a little bit.
+                    // This is a number of milliseconds.
+                    // Default for a line series is 2500.
+                    animation: {
+                        speed: 2000
+                    }
                 }
+            }
+        ],
+        axesDefaults: {
+            pad: 0
+        },
+        axes: {
+            // These options will set up the x axis like a category axis.
+            xaxis: {
+                tickInterval: 1,
+                drawMajorGridlines: false,
+                drawMinorGridlines: true,
+                drawMajorTickMarks: false,
+                tickOptions: {
+                    formatString: "%'s"
+                },
+                rendererOptions: {
+                tickInset: 0.5,
+                minorTicks: 1
+            }
             },
             yaxis: {
-                autoscale:true,
-                label: 'Acertos',
-                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
-                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
                 tickOptions: {
-                    angle: 30
+                    formatString: "%'s"
+                },
+                rendererOptions: {
+                    forceTickAt0: true
                 }
             },
             y2axis: {
-                autoscale:true,
-                label: 'Score',
-                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
-                tickRenderer: $.jqplot.CanvasAxisTickRenderer,
                 tickOptions: {
-                    angle: 30
+                    formatString: "%'s"
+                },
+                rendererOptions: {
+                    // align the ticks on the y2 axis with the y axis.
+                    alignTicks: true,
+                    forceTickAt0: true
                 }
             }
+        },
+        highlighter: {
+            show: true,
+            showLabel: true,
+            tooltipAxes: 'y',
+            sizeAdjust: 7.5 , tooltipLocation : 'ne'
         }
     });
+};
+
+function ifExistsRemove(element){
+	if(element !== null){
+		element.remove();
+	}
 };

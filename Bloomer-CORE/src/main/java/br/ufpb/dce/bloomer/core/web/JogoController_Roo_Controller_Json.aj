@@ -29,14 +29,14 @@ privileged aspect JogoController_Roo_Controller_Json {
         return new ResponseEntity<String>(jogo.toJson(), headers, HttpStatus.OK);
     }
     
-    @RequestMapping(headers = "Accept=application/json")
+    /*@RequestMapping(headers = "Accept=application/json")
     @ResponseBody
     public ResponseEntity<String> JogoController.listJson() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         List<Jogo> result = Jogo.findAllJogoes();
         return new ResponseEntity<String>(Jogo.toJsonArray(result), headers, HttpStatus.OK);
-    }
+    }*/
     
     @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<String> JogoController.createFromJson(@RequestBody String json) {

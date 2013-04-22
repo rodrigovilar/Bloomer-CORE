@@ -147,3 +147,20 @@ exit
 // Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-04-02 10:27:42
 exit
 // Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-04-02 10:27:56
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2013-04-16 21:45:13
+focus --class ~.model.Partida
+finder list
+finder add --finderName findPartidasByJogo
+focus --class ~.model.Jogo
+finder list
+focus --class ~.model.Usuario
+finder list
+focus --class ~.model.Partida
+finder list
+focus --class ~.model.Usuario
+finder list
+finder list --depth 2
+finder add --finderName findUsuariosByPartidas
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2013-04-17 20:30:43
+exit
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2013-04-17 20:31:37

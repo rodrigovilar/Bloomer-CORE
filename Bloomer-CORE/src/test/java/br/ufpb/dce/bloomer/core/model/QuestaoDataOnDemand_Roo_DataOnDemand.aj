@@ -26,10 +26,10 @@ privileged aspect QuestaoDataOnDemand_Roo_DataOnDemand {
     private List<Questao> QuestaoDataOnDemand.data;
     
     @Autowired
-    JogoDataOnDemand QuestaoDataOnDemand.jogoDataOnDemand;
+    private JogoDataOnDemand QuestaoDataOnDemand.jogoDataOnDemand;
     
     @Autowired
-    TipoQuestaoDataOnDemand QuestaoDataOnDemand.tipoQuestaoDataOnDemand;
+    private TipoQuestaoDataOnDemand QuestaoDataOnDemand.tipoQuestaoDataOnDemand;
     
     public Questao QuestaoDataOnDemand.getNewTransientQuestao(int index) {
         Questao obj = new Questao();

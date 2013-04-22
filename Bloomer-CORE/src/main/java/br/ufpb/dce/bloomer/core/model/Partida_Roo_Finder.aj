@@ -11,6 +11,14 @@ import javax.persistence.TypedQuery;
 
 privileged aspect Partida_Roo_Finder {
     
+    public static TypedQuery<Partida> Partida.findPartidasByJogo(Jogo jogo) {
+        if (jogo == null) throw new IllegalArgumentException("The jogo argument is required");
+        EntityManager em = Partida.entityManager();
+        TypedQuery<Partida> q = em.createQuery("SELECT o FROM Partida AS o WHERE o.jogo = :jogo", Partida.class);
+        q.setParameter("jogo", jogo);
+        return q;
+    }
+    
     public static TypedQuery<Partida> Partida.findPartidasByJogoAndUsuario(Jogo jogo, Usuario usuario) {
         if (jogo == null) throw new IllegalArgumentException("The jogo argument is required");
         if (usuario == null) throw new IllegalArgumentException("The usuario argument is required");

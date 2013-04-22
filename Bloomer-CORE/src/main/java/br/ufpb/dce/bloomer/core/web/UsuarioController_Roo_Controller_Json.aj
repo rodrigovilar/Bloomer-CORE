@@ -3,9 +3,11 @@
 
 package br.ufpb.dce.bloomer.core.web;
 
+import br.ufpb.dce.bloomer.core.model.Partida;
 import br.ufpb.dce.bloomer.core.model.Usuario;
 import br.ufpb.dce.bloomer.core.web.UsuarioController;
 import java.util.List;
+import java.util.Set;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 privileged aspect UsuarioController_Roo_Controller_Json {
@@ -90,6 +93,14 @@ privileged aspect UsuarioController_Roo_Controller_Json {
         }
         usuario.remove();
         return new ResponseEntity<String>(headers, HttpStatus.OK);
+    }
+    
+    @RequestMapping(params = "find=ByPartidas", headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> UsuarioController.jsonFindUsuariosByPartidas(@RequestParam("partidas") Set<Partida> partidas) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        return new ResponseEntity<String>(Usuario.toJsonArray(Usuario.findUsuariosByPartidas(partidas).getResultList()), headers, HttpStatus.OK);
     }
     
 }
