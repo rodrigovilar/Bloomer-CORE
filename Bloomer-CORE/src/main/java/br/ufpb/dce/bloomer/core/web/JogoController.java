@@ -30,18 +30,6 @@ import br.ufpb.dce.bloomer.core.model.Usuario;
 @RooWebJson(jsonObject = Jogo.class)
 public class JogoController {
 
-	// ESSE É O listAllJogos do .aj, VOLTA PRO .aj???(DÚVIDA)
-	/*
-	 * @RequestMapping(headers = "Accept=application/json")
-	 * 
-	 * @ResponseBody public ResponseEntity<String> JogoController.listJson() {
-	 * HttpHeaders headers = new HttpHeaders(); headers.add("Content-Type",
-	 * "application/json; charset=utf-8"); List<Jogo> result =
-	 * Jogo.findAllJogoes(); return new
-	 * ResponseEntity<String>(Jogo.toJsonArray(result), headers, HttpStatus.OK);
-	 * }
-	 */
-
 	@RequestMapping(headers = "Accept=application/json")
 	@ResponseBody
 	public ResponseEntity<String> listAllJogos() {
