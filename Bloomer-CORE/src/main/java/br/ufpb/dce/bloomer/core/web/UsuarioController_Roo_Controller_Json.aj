@@ -32,15 +32,6 @@ privileged aspect UsuarioController_Roo_Controller_Json {
         return new ResponseEntity<String>(usuario.toJson(), headers, HttpStatus.OK);
     }
     
-    @RequestMapping(headers = "Accept=application/json")
-    @ResponseBody
-    public ResponseEntity<String> UsuarioController.listJson() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-        List<Usuario> result = Usuario.findAllUsuarios();
-        return new ResponseEntity<String>(Usuario.toJsonArray(result), headers, HttpStatus.OK);
-    }
-    
     @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<String> UsuarioController.createFromJson(@RequestBody String json) {
         Usuario usuario = Usuario.fromJsonToUsuario(json);
