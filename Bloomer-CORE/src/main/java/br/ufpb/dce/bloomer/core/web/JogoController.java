@@ -32,7 +32,7 @@ public class JogoController {
 
 	@RequestMapping(headers = "Accept=application/json")
 	@ResponseBody
-	public ResponseEntity<String> listAllJogos() {
+	public ResponseEntity<String> listJson() {
 		List<Jogo> listaDeJogos = Jogo.findAllJogoes();
 
 		HttpHeaders headers = new HttpHeaders();
