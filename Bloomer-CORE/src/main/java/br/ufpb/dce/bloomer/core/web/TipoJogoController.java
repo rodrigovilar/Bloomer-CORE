@@ -14,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.roo.addon.web.mvc.controller.json.RooWebJson;
 import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/tipojogoes")
@@ -29,24 +31,25 @@ public class TipoJogoController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json; charset=utf-8");
 		List<TipoJogo> listaDeTipoJogos = TipoJogo.findAllTipoJogoes();
-		
+
 		ArrayNode arrayDeTipoJogos = JsonNodeFactory.instance.arrayNode();
 
 		for (TipoJogo tipoJogo : listaDeTipoJogos) {
 			ObjectNode noTipoJogo = JsonNodeFactory.instance.objectNode();
-		
+
 			noTipoJogo.put("id", tipoJogo.getId());
 			noTipoJogo.put("nome", tipoJogo.getNome());
 			noTipoJogo.put("autor", tipoJogo.getAutor());
 			noTipoJogo.put("descricao", tipoJogo.getDescricao());
 			noTipoJogo.put("version", tipoJogo.getVersion());
-			noTipoJogo.put("niveisDaTaxonomia", tipoJogo.getNiveisTaxonomia().toString());
+			noTipoJogo.put("niveisDaTaxonomia", tipoJogo.getNiveisTaxonomia()
+					.toString());
 
 			arrayDeTipoJogos.add(noTipoJogo);
-		}	
-			
-		return new ResponseEntity<String>(arrayDeTipoJogos.toString(),
-				headers, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>(arrayDeTipoJogos.toString(), headers,
+				HttpStatus.OK);
 	}
 
 }

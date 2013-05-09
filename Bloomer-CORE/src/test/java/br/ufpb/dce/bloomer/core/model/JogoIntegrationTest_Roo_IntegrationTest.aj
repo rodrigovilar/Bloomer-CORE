@@ -24,7 +24,7 @@ privileged aspect JogoIntegrationTest_Roo_IntegrationTest {
     declare @type: JogoIntegrationTest: @Transactional;
     
     @Autowired
-    private JogoDataOnDemand JogoIntegrationTest.dod;
+    JogoDataOnDemand JogoIntegrationTest.dod;
     
     @Test
     public void JogoIntegrationTest.testCountJogoes() {

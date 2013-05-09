@@ -16,80 +16,90 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 privileged aspect TipoQuestaoController_Roo_Controller_Json {
-    
-    @RequestMapping(value = "/{id}", headers = "Accept=application/json")
-    @ResponseBody
-    public ResponseEntity<String> TipoQuestaoController.showJson(@PathVariable("id") Long id) {
-        TipoQuestao tipoQuestao = TipoQuestao.findTipoQuestao(id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-        if (tipoQuestao == null) {
-            return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<String>(tipoQuestao.toJson(), headers, HttpStatus.OK);
-    }
-    
-    @RequestMapping(headers = "Accept=application/json")
-    @ResponseBody
-    public ResponseEntity<String> TipoQuestaoController.listJson() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-        List<TipoQuestao> result = TipoQuestao.findAllTipoQuestaos();
-        return new ResponseEntity<String>(TipoQuestao.toJsonArray(result), headers, HttpStatus.OK);
-    }
-    
-    @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity<String> TipoQuestaoController.createFromJson(@RequestBody String json) {
-        TipoQuestao tipoQuestao = TipoQuestao.fromJsonToTipoQuestao(json);
-        tipoQuestao.persist();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-    }
-    
-    @RequestMapping(value = "/jsonArray", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity<String> TipoQuestaoController.createFromJsonArray(@RequestBody String json) {
-        for (TipoQuestao tipoQuestao: TipoQuestao.fromJsonArrayToTipoQuestaos(json)) {
-            tipoQuestao.persist();
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-    }
-    
-    @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
-    public ResponseEntity<String> TipoQuestaoController.updateFromJson(@RequestBody String json) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        TipoQuestao tipoQuestao = TipoQuestao.fromJsonToTipoQuestao(json);
-        if (tipoQuestao.merge() == null) {
-            return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<String>(headers, HttpStatus.OK);
-    }
-    
-    @RequestMapping(value = "/jsonArray", method = RequestMethod.PUT, headers = "Accept=application/json")
-    public ResponseEntity<String> TipoQuestaoController.updateFromJsonArray(@RequestBody String json) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        for (TipoQuestao tipoQuestao: TipoQuestao.fromJsonArrayToTipoQuestaos(json)) {
-            if (tipoQuestao.merge() == null) {
-                return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-            }
-        }
-        return new ResponseEntity<String>(headers, HttpStatus.OK);
-    }
-    
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-    public ResponseEntity<String> TipoQuestaoController.deleteFromJson(@PathVariable("id") Long id) {
-        TipoQuestao tipoQuestao = TipoQuestao.findTipoQuestao(id);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        if (tipoQuestao == null) {
-            return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-        }
-        tipoQuestao.remove();
-        return new ResponseEntity<String>(headers, HttpStatus.OK);
-    }
-    
+
+	@RequestMapping(value = "/{id}", headers = "Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<String> TipoQuestaoController.showJson(
+			@PathVariable("id") Long id) {
+		TipoQuestao tipoQuestao = TipoQuestao.findTipoQuestao(id);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=utf-8");
+		if (tipoQuestao == null) {
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String>(tipoQuestao.toJson(), headers,
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(headers = "Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<String> TipoQuestaoController.listJson() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=utf-8");
+		List<TipoQuestao> result = TipoQuestao.findAllTipoQuestaos();
+		return new ResponseEntity<String>(TipoQuestao.toJsonArray(result),
+				headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<String> TipoQuestaoController.createFromJson(
+			@RequestBody String json) {
+		TipoQuestao tipoQuestao = TipoQuestao.fromJsonToTipoQuestao(json);
+		tipoQuestao.persist();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/jsonArray", method = RequestMethod.POST, headers = "Accept=application/json")
+	public ResponseEntity<String> TipoQuestaoController.createFromJsonArray(
+			@RequestBody String json) {
+		for (TipoQuestao tipoQuestao : TipoQuestao
+				.fromJsonArrayToTipoQuestaos(json)) {
+			tipoQuestao.persist();
+		}
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
+	public ResponseEntity<String> TipoQuestaoController.updateFromJson(
+			@RequestBody String json) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		TipoQuestao tipoQuestao = TipoQuestao.fromJsonToTipoQuestao(json);
+		if (tipoQuestao.merge() == null) {
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String>(headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/jsonArray", method = RequestMethod.PUT, headers = "Accept=application/json")
+	public ResponseEntity<String> TipoQuestaoController.updateFromJsonArray(
+			@RequestBody String json) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		for (TipoQuestao tipoQuestao : TipoQuestao
+				.fromJsonArrayToTipoQuestaos(json)) {
+			if (tipoQuestao.merge() == null) {
+				return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+			}
+		}
+		return new ResponseEntity<String>(headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	public ResponseEntity<String> TipoQuestaoController.deleteFromJson(
+			@PathVariable("id") Long id) {
+		TipoQuestao tipoQuestao = TipoQuestao.findTipoQuestao(id);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+		if (tipoQuestao == null) {
+			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+		}
+		tipoQuestao.remove();
+		return new ResponseEntity<String>(headers, HttpStatus.OK);
+	}
+
 }
