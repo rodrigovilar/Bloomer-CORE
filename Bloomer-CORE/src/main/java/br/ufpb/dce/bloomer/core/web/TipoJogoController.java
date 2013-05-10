@@ -42,7 +42,7 @@ public class TipoJogoController {
 			noTipoJogo.put("autor", tipoJogo.getAutor());
 			noTipoJogo.put("descricao", tipoJogo.getDescricao());
 			noTipoJogo.put("version", tipoJogo.getVersion());
-			noTipoJogo.put("niveisDaTaxonomia", tipoJogo.getNiveisTaxonomia()
+			noTipoJogo.put("niveisTaxonomia", tipoJogo.getNiveisTaxonomia()
 					.toString());
 
 			arrayDeTipoJogos.add(noTipoJogo);
