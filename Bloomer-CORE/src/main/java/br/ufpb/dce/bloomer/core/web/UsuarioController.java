@@ -3,9 +3,6 @@ package br.ufpb.dce.bloomer.core.web;
 import java.util.Calendar;
 import java.util.List;
 
-import br.ufpb.dce.bloomer.core.model.Jogo;
-import br.ufpb.dce.bloomer.core.model.Usuario;
-
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
@@ -17,6 +14,8 @@ import org.springframework.roo.addon.web.mvc.controller.scaffold.RooWebScaffold;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import br.ufpb.dce.bloomer.core.model.Usuario;
 
 @RequestMapping("/usuarios")
 @Controller
@@ -52,7 +51,7 @@ public class UsuarioController {
 			strBuilder.append(usuario.getDataNascimento().get(Calendar.MONTH) + "/");
 			strBuilder.append(usuario.getDataNascimento().get(Calendar.YEAR));
 			
-			noUsuario.put("dataDeNascimento", strBuilder.toString());
+			noUsuario.put("dataNascimento", strBuilder.toString());
 			noUsuario.put("version", usuario.getVersion());
 
 			arrayDeUsuarios.add(noUsuario);

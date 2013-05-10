@@ -30,7 +30,7 @@ privileged aspect TipoJogoController_Roo_Controller_Json {
     
     @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<String> TipoJogoController.createFromJson(@RequestBody String json) {
-        TipoJogo tipoJogo = TipoJogo.fromJsonToTipoJogo(json);
+        TipoJogo tipoJogo = TipoJogo.fromJsonToTipoJogo(json);        
         tipoJogo.persist();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -45,6 +45,29 @@ privileged aspect TipoJogoController_Roo_Controller_Json {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    }
+    
+    @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
+    public ResponseEntity<String> TipoJogoController.updateFromJson(@RequestBody String json) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        TipoJogo tipoJogo = TipoJogo.fromJsonToTipoJogo(json);
+        if (tipoJogo.merge() == null) {
+            return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<String>(headers, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/jsonArray", method = RequestMethod.PUT, headers = "Accept=application/json")
+    public ResponseEntity<String> TipoJogoController.updateFromJsonArray(@RequestBody String json) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        for (TipoJogo tipoJogo: TipoJogo.fromJsonArrayToTipoJogoes(json)) {
+            if (tipoJogo.merge() == null) {
+                return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+            }
+        } 
+        return new ResponseEntity<String>(headers, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
