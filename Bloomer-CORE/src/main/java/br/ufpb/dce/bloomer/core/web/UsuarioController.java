@@ -52,7 +52,7 @@ public class UsuarioController {
 			strBuilder.append(usuario.getDataNascimento().get(Calendar.MONTH) + "/");
 			strBuilder.append(usuario.getDataNascimento().get(Calendar.YEAR));
 			
-			noUsuario.put("dataDeNascimento", strBuilder.toString());
+			noUsuario.put("dataNascimento", strBuilder.toString());
 			noUsuario.put("version", usuario.getVersion());
 
 			arrayDeUsuarios.add(noUsuario);
