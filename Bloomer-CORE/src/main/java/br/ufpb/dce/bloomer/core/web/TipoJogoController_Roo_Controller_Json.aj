@@ -30,7 +30,7 @@ privileged aspect TipoJogoController_Roo_Controller_Json {
     
     @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<String> TipoJogoController.createFromJson(@RequestBody String json) {
-        TipoJogo tipoJogo = TipoJogo.fromJsonToTipoJogo(json);        
+        TipoJogo tipoJogo = TipoJogo.fromJsonToTipoJogo(json);
         tipoJogo.persist();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -66,7 +66,7 @@ privileged aspect TipoJogoController_Roo_Controller_Json {
             if (tipoJogo.merge() == null) {
                 return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
             }
-        } 
+        }
         return new ResponseEntity<String>(headers, HttpStatus.OK);
     }
     

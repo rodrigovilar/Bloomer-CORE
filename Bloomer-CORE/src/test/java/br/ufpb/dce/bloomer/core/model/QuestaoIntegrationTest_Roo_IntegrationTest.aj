@@ -24,7 +24,7 @@ privileged aspect QuestaoIntegrationTest_Roo_IntegrationTest {
     declare @type: QuestaoIntegrationTest: @Transactional;
     
     @Autowired
-    QuestaoDataOnDemand QuestaoIntegrationTest.dod;
+    private QuestaoDataOnDemand QuestaoIntegrationTest.dod;
     
     @Test
     public void QuestaoIntegrationTest.testCountQuestaos() {
