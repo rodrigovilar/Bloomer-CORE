@@ -58,18 +58,6 @@ privileged aspect TipoJogoController_Roo_Controller_Json {
         return new ResponseEntity<String>(headers, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/jsonArray", method = RequestMethod.PUT, headers = "Accept=application/json")
-    public ResponseEntity<String> TipoJogoController.updateFromJsonArray(@RequestBody String json) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        for (TipoJogo tipoJogo: TipoJogo.fromJsonArrayToTipoJogoes(json)) {
-            if (tipoJogo.merge() == null) {
-                return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-            }
-        }
-        return new ResponseEntity<String>(headers, HttpStatus.OK);
-    }
-    
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public ResponseEntity<String> TipoJogoController.deleteFromJson(@PathVariable("id") Long id) {
         TipoJogo tipoJogo = TipoJogo.findTipoJogo(id);

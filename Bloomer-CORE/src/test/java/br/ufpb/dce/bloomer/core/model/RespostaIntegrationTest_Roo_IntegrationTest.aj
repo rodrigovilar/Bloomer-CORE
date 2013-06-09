@@ -24,7 +24,7 @@ privileged aspect RespostaIntegrationTest_Roo_IntegrationTest {
     declare @type: RespostaIntegrationTest: @Transactional;
     
     @Autowired
-    private RespostaDataOnDemand RespostaIntegrationTest.dod;
+    RespostaDataOnDemand RespostaIntegrationTest.dod;
     
     @Test
     public void RespostaIntegrationTest.testCountRespostas() {

@@ -27,7 +27,7 @@ privileged aspect RelacaoDataOnDemand_Roo_DataOnDemand {
     private List<Relacao> RelacaoDataOnDemand.data;
     
     @Autowired
-    private UsuarioDataOnDemand RelacaoDataOnDemand.usuarioDataOnDemand;
+    UsuarioDataOnDemand RelacaoDataOnDemand.usuarioDataOnDemand;
     
     public Relacao RelacaoDataOnDemand.getNewTransientRelacao(int index) {
         Relacao obj = new Relacao();
