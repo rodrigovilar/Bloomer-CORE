@@ -4,13 +4,14 @@
 
 var entity = "tipojogoes";
 var global_id = " ";
+var get_version = " ";
+var temp = 0;
 
 $(document).ready(function(){
 	Read();
 });
 
 function Create (){
-
 	$.ajax({
 		type: "POST",
 		url: "http://localhost:8080/Bloomer-CORE/"+ entity,
@@ -30,13 +31,14 @@ function Create (){
 
 function Read (){
 
+
 	if_exists_remove("#list_table");
 	if_exists_remove("#form");
 
 	$.getJSON("http://localhost:8080/Bloomer-CORE/"+ entity,
-
 		function(json){
 
+		
 			var $div = $('<div />').appendTo('body');
 			$div.attr('id', 'list');
 
@@ -106,11 +108,19 @@ function buildJSON(){
 	});
 
 	var id = " ";
+	var versao = " ";
+
+	alert('"temp é: "' + temp);
+
+	if(get_version!= " " && temp == 2){
+		versao = '"version": ' + get_version + ', ';
+	}
+
 	if(global_id != " "){
 		id = '"id" : '+global_id+', '; 
 	}
 
-	var the_json = '{'+ id +'"nome":"'+ $('input[name="nome"]').val() +
+	var the_json = '{'+ id + versao + '"nome":"'+ $('input[name="nome"]').val() +
 	'", "descricao":"'+ $('input[name="descricao"]').val() +
 	'", "autor":"'+ $('input[name="autor"]').val() +
 	'", "plataforma":"'+ $('select[name="plataforma"]').val() +
@@ -120,6 +130,8 @@ function buildJSON(){
 		(i == niveis.length - 1) ? the_json += '"'+niveis[i]+'"' : the_json += '"'+niveis[i] + '", ';
 
 	the_json += ']}';
+
+	console.log(the_json);
 
 	return the_json;
 }
@@ -134,9 +146,11 @@ function Form (type){
 	if (type == 1){
 		action = "javascript:Create()";
 		submit_button = "Save";
+		temp = 1;
 	} else if (type == 2){
 		action = "javascript:Update()";
 		submit_button = "Edit";
+		temp = 2;
 	}
 
 	var $div = $('<div />').appendTo('body');
@@ -181,6 +195,10 @@ function fill (id){
 	$.getJSON("http://localhost:8080/Bloomer-CORE/" +entity+ "/" +id,
 
 		function(json){
+
+				get_version = json.version;
+				alert('"O que vem é "' + get_version);
+
 			$("input[name='nome']").val(json.nome);
 			$("input[name='descricao']").val(json.descricao);
 			$("input[name='autor']").val(json.autor);
@@ -202,4 +220,5 @@ function if_exists_remove(element){
 	if($(element) !== null){
 		$(element).remove();
 	}
+
 }
