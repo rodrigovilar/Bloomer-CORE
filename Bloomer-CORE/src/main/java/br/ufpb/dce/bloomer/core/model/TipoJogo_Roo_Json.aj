@@ -5,24 +5,11 @@ package br.ufpb.dce.bloomer.core.model;
 
 import br.ufpb.dce.bloomer.core.model.TipoJogo;
 import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 privileged aspect TipoJogo_Roo_Json {
-    
-    public String TipoJogo.toJson() {
-        return new JSONSerializer().exclude("*.class").deepSerialize(this);
-    }
-    
-    public static TipoJogo TipoJogo.fromJsonToTipoJogo(String json) {
-        return new JSONDeserializer<TipoJogo>().use(null, TipoJogo.class).deserialize(json);
-    }
-    
-    public static String TipoJogo.toJsonArray(Collection<TipoJogo> collection) {
-        return new JSONSerializer().exclude("*.class").deepSerialize(collection);
-    }
     
     public static Collection<TipoJogo> TipoJogo.fromJsonArrayToTipoJogoes(String json) {
         return new JSONDeserializer<List<TipoJogo>>().use(null, ArrayList.class).use("values", TipoJogo.class).deserialize(json);

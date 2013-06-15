@@ -1,5 +1,5 @@
 /*
-* Bloomer - CRUD - Usuário
+* Bloomer - CRUD - Jogos
 */
 
 var entity = "jogos";
@@ -41,7 +41,7 @@ function Read (){
 		function(json){
 
 			console.log(json);
-		
+
 			var $div = $('<div />').appendTo('body');
 			$div.attr('id', 'list');
 
@@ -69,7 +69,6 @@ function Read (){
 
 function Update(){
 
-	
 	alert($('select[name="autor"]').val());
 
 	$.ajax({
@@ -89,8 +88,8 @@ function Update(){
 	});
 }
 
-function Delete (id){	
-	
+function Delete (id){
+
 	var answer = confirm("Delete Jogo id: "+id+"?");
 
 	if (answer){
@@ -111,19 +110,20 @@ function buildJSON(){
 	var ver = " ";
 
 	if(version_json != " "){
-		ver = ',"version" : '+ver; 
+		ver = ',"version" : '+ver;
 	}
+
 	if(global_id != " "){
-		id = '"id" : '+global_id+', '; 
+		id = '"id" : '+global_id+', ';
 	}
 
 	var the_json = '{'+id +'"nome":"'+ $('input[name="nome"]').val() +
 	'", "autor":"'+ $('select[name="autor"]').val() +
 	'", "plataforma":"'+ $('select[name="tipo"]').val()+'"'+ ver + '}';
 
-	console.log(the_json); // testando formato do json
+	alert(the_json); // testando formato do json
 
-	return the_json;
+	//return the_json;
 }
 
 function Form (type){
@@ -157,15 +157,15 @@ function Form (type){
 			}
 			$("#autor").html(options);
 		});
-	
+
 	var $div = $('<div />').appendTo('body');
 	$div.attr('id', 'form');
 
 	var form = $('<form action="'+action+'"><br>' +
 					 '<spam><strong>Formulário de Jogos</strong></spam><br>' +
 					 '<input name="nome" type="text" placeholder="Nome" /><br>' +
-					 '<spam><strong>Tipo</strong></spam><br>' + 
-					 '<select id="tipo" name="tipo"></select><br>' +		             
+					 '<spam><strong>Tipo</strong></spam><br>' +
+					 '<select id="tipo" name="tipo"></select><br>' +
 					 '<spam><strong>Autor</strong></spam><br>' +
 					 '<select id="autor" name="autor"></select><br>' +
 					 '<input value="'+submit_button+'" type="submit" />' +
@@ -175,7 +175,7 @@ function Form (type){
 
 };
 
-function fill (id,version){
+function fill (id, version){
 
 	if_exists_remove("#form");
 	Form(2);
@@ -184,11 +184,10 @@ function fill (id,version){
 	version_json = version; // teste passando o version
 
 	$.getJSON("http://localhost:8080/Bloomer-CORE/" +entity+ "/" +id,
-		
+
 		function(json){
-			
-			$('select[name="tipo"]').val(json.tipo); // não vai preencher pois não vem nd do back 
-			$('select[name="autor"]').val(json.autor); // mesma coisa não vai preencher 
+			$('select[name="tipo"]').val(json.tipo); // não vai preencher pois não vem nd do back
+			$('select[name="autor"]').val(json.autor); // mesma coisa não vai preencher
 		}
 	);
 };

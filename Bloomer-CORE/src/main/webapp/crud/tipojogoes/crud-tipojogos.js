@@ -131,7 +131,7 @@ function buildJSON(){
 
 	the_json += ']}';
 
-	console.log(the_json);
+	alert(the_json);
 
 	return the_json;
 }
