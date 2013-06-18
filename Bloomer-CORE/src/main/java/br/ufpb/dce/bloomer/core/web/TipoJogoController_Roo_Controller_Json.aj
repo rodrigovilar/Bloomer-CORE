@@ -5,6 +5,7 @@ package br.ufpb.dce.bloomer.core.web;
 
 import br.ufpb.dce.bloomer.core.model.TipoJogo;
 import br.ufpb.dce.bloomer.core.web.TipoJogoController;
+import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,15 @@ privileged aspect TipoJogoController_Roo_Controller_Json {
             return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<String>(tipoJogo.toJson(), headers, HttpStatus.OK);
+    }
+    
+    @RequestMapping(headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> TipoJogoController.listJson() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        List<TipoJogo> result = TipoJogo.findAllTipoJogoes();
+        return new ResponseEntity<String>(TipoJogo.toJsonArray(result), headers, HttpStatus.OK);
     }
     
     @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
@@ -54,6 +64,18 @@ privileged aspect TipoJogoController_Roo_Controller_Json {
         TipoJogo tipoJogo = TipoJogo.fromJsonToTipoJogo(json);
         if (tipoJogo.merge() == null) {
             return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<String>(headers, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/jsonArray", method = RequestMethod.PUT, headers = "Accept=application/json")
+    public ResponseEntity<String> TipoJogoController.updateFromJsonArray(@RequestBody String json) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        for (TipoJogo tipoJogo: TipoJogo.fromJsonArrayToTipoJogoes(json)) {
+            if (tipoJogo.merge() == null) {
+                return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+            }
         }
         return new ResponseEntity<String>(headers, HttpStatus.OK);
     }
