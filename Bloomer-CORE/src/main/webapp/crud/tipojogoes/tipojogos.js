@@ -1,17 +1,18 @@
 /*
-* Bloomer - CRUD - Usuário
+* Bloomer - CRUD - Tipo Jogos
 */
 
-var entity = "tipojogoes";
-var global_id = " ";
-var get_version = " ";
-var temp = 0;
+
+var entity = "tipojogoes"; // O string referente a entidade fica armazenado em uma variável global.
+var global_id = " "; // O valor do ID atual fica armazenado em uma variável global.
+var get_version = " "; // O valor do version atual fica armazenado em uma variável global.
+var action; // Responsável por definir se o parâmetro action irá chamar CREATE ou UPDATE.
 
 $(document).ready(function(){
-	Read();
+	READ();
 });
 
-function Create (){
+function CREATE(){
 	$.ajax({
 		type: "POST",
 		url: "http://localhost:8080/Bloomer-CORE/"+ entity,
@@ -23,28 +24,27 @@ function Create (){
           Accept: "application/json"
         },
 		complete: function(json){
-			alert("Tipo de Jogo Criado.");
-			Read();
+			alert("Tipo de Jogo Criado com Sucesso.");
+			READ();
 		}
 	});
 };
 
-function Read (){
+function READ(){
 
-
-	if_exists_remove("#list_table");
-	if_exists_remove("#form");
+	ifExistRemove("#list_table");
+	ifExistRemove("#form");
 
 	$.getJSON("http://localhost:8080/Bloomer-CORE/"+ entity,
 		function(json){
 
-		
 			var $div = $('<div />').appendTo('body');
 			$div.attr('id', 'list');
 
 			var table = $('<table border="1" cellspacing="0" style="text-align:center"></table>').attr('id', 'list_table');
 
-			var title = '<tr><td colspan="8"><a href="#" onclick="Form(1);"><img src="../images/create.png"/>Add</a></td></tr>';
+			// In buildForm function, 1 its a parameter who means CREATE.
+			var title = '<tr><td colspan="8"><a href="#" onclick="buildForm(1);"><img src="../images/create.png"/>Add</a></td></tr>';
 			table.append(title);
 
 			var header = '<tr><th>ID</th><th>Nome</th><th>Descrição</th><th>Autor</th><th>Plataforma</th><th>Nível de Taxonomia</th><th>Edit</th><th>Delete</th></tr>';
@@ -52,9 +52,9 @@ function Read (){
 
 			for (i=0; i < json.length; i++){
 			    var row = '<tr><td>' + json[i].id + '</td><td>' + json[i].nome + '</td><td>' + json[i].descricao +
-			    		  '</td><td>' + json[i].autor + '</td><td>' + json[i].plataforma + '</td><td>' + json[i].niveisDaTaxonomia +
-			    		  '</td><td><a href="#" onclick="fill(' + json[i].id + ');"><img src="../images/update.png"/></a>' +
-			    		  '</td><td><a href="#" onclick="Delete(' + json[i].id + ');"><img src="../images/delete.png"/></a>' +
+			    		  '</td><td>' + json[i].autor + '</td><td>' + json[i].plataforma + '</td><td>' + json[i].niveisTaxonomia +
+			    		  '</td><td><a href="#" onclick="fillForm(' + json[i].id + ');"><img src="../images/update.png"/></a>' +
+			    		  '</td><td><a href="#" onclick="DELETE(' + json[i].id + ');"><img src="../images/delete.png"/></a>' +
 			    		  '</td></tr>';
 
 			    table.append(row);
@@ -65,7 +65,7 @@ function Read (){
 	);
 };
 
-function Update(){
+function UPDATE(){
 	$.ajax({
 		type: "PUT",
 		url: "http://localhost:8080/Bloomer-CORE/"+ entity,
@@ -77,15 +77,15 @@ function Update(){
           Accept: "application/json"
         },
 		complete: function(json){
-			alert("Tipo de Jogo Editado.");
-			Read();
+			alert("Tipo de Jogo Editado com Sucesso.");
+			READ();
 		}
 	});
 }
 
-function Delete (id){	
-	
-	var answer = confirm("Delete user id: "+id+"?");
+function DELETE(id){
+
+	var answer = confirm("Delete register id: "+id+"?");
 
 	if (answer){
 		$.ajax({
@@ -93,7 +93,7 @@ function Delete (id){
 			url: "http://localhost:8080/Bloomer-CORE/" +entity+ "/" +id,
 			dataType: "json",
 			success: function(json){
-				Read();
+				READ();
 			}
 		});
 	}
@@ -101,63 +101,58 @@ function Delete (id){
 
 function buildJSON(){
 
-	var niveis = [];
+	var niveis = []; // Responsável por armazenar o(s) valor(es) dos níveis de taxonomia.
+	var id = ''; // Responsável por armazenar o valor do id a ser enviado no JSON.
+	var version = ''; // Responsável por armazenar o valor do version a ser enviado no JSON.
 
 	$("#niveisTaxonomia :checked").each(function(){
 		niveis.push($(this).val());
 	});
 
-	var id = " ";
-	var versao = " ";
+	// Condição para verificar se já existe um global_id
+	if(global_id == " ")
+		id = '';
+	else
+		id = '"id":' + global_id + ', ';
 
-	alert('"temp é: "' + temp);
-
-	if(get_version!= " " && temp == 2){
-		versao = '"version": ' + get_version + ', ';
+	// Caso o usuário esteja editando um registro, esta condição adiciona a variável 'version' ao JSON.
+	if(action == "javascript:UPDATE()"){
+		version = '"version": ' + get_version + ', ';
 	}
 
-	if(global_id != " "){
-		id = '"id" : '+global_id+', '; 
-	}
-
-	var the_json = '{'+ id + versao + '"nome":"'+ $('input[name="nome"]').val() +
+	var the_json = '{' + id + version + '"nome":"'+ $('input[name="nome"]').val() +
 	'", "descricao":"'+ $('input[name="descricao"]').val() +
 	'", "autor":"'+ $('input[name="autor"]').val() +
 	'", "plataforma":"'+ $('select[name="plataforma"]').val() +
 	'", "niveisTaxonomia":[';
 
-	for(var i=0; i<niveis.length; i++)
+	for(var i=0; i < niveis.length; i++)
 		(i == niveis.length - 1) ? the_json += '"'+niveis[i]+'"' : the_json += '"'+niveis[i] + '", ';
 
 	the_json += ']}';
 
-	alert(the_json);
-
 	return the_json;
 }
 
-function Form (type){
+function buildForm(type){
 
-	if_exists_remove("#form");
+	ifExistRemove("#form");
 
-	var action;
-	var submit_button;
+	var submit_button; // Responsável por editar o label do botão.
 
 	if (type == 1){
-		action = "javascript:Create()";
+		action = "javascript:CREATE()";
 		submit_button = "Save";
-		temp = 1;
 	} else if (type == 2){
-		action = "javascript:Update()";
+		action = "javascript:UPDATE()";
 		submit_button = "Edit";
-		temp = 2;
 	}
 
 	var $div = $('<div />').appendTo('body');
 	$div.attr('id', 'form');
 
 	var form = $('<form action="'+action+'"><br>' +
-					 '<spam><strong>Formulário Tipo Jogos</strong></spam><br>' +
+					 '<spam><strong>Formulário de Tipo Jogos</strong></spam><br>' +
 					 '<input name="nome" type="text" placeholder="Nome" /><br>' +
 					 '<input name="descricao" type="text" placeholder="Descrição" /><br>' +
 					 '<input name="autor" type="text" placeholder="Autor" /><br>' +
@@ -185,40 +180,43 @@ function Form (type){
 	$("#form").append(form);
 };
 
-function fill (id){
+function fillForm(id){
 
-	if_exists_remove("#form");
-	Form(2);
+	ifExistRemove("#form");
+	// In buildForm function, 2 its a parameter who means update.
+	buildForm(2);
 
-	global_id = id;
+	global_id = id; // Atribui o valor do ID atual a uma variável global.
 
 	$.getJSON("http://localhost:8080/Bloomer-CORE/" +entity+ "/" +id,
 
 		function(json){
-
-				get_version = json.version;
-				alert('"O que vem é "' + get_version);
 
 			$("input[name='nome']").val(json.nome);
 			$("input[name='descricao']").val(json.descricao);
 			$("input[name='autor']").val(json.autor);
 			$('select[name="plataforma"]').val(json.plataforma);
 
-			for(var i=0; i < json.niveisTaxonomia.length; i++){
-				(json.niveisTaxonomia[i] == $("#niveisTaxonomia").children("#Conhecimento").val()) ? $("#niveisTaxonomia").children("#Conhecimento").attr('checked', true) : $("#niveisTaxonomia");
-				(json.niveisTaxonomia[i] == $("#niveisTaxonomia").children("#Compreensao").val()) ? $("#niveisTaxonomia").children("#Compreensao").attr('checked', true) : $("#niveisTaxonomia");
-				(json.niveisTaxonomia[i] == $("#niveisTaxonomia").children("#Aplicacao").val()) ? $("#niveisTaxonomia").children("#Aplicacao").attr('checked', true) : $("#niveisTaxonomia");
-				(json.niveisTaxonomia[i] == $("#niveisTaxonomia").children("#Analise").val()) ? $("#niveisTaxonomia").children("#Analise").attr('checked', true) : $("#niveisTaxonomia");
-				(json.niveisTaxonomia[i] == $("#niveisTaxonomia").children("#Sintese").val()) ? $("#niveisTaxonomia").children("#Sintese").attr('checked', true) : $("#niveisTaxonomia");
-				(json.niveisTaxonomia[i] == $("#niveisTaxonomia").children("#Avaliacao").val()) ? $("#niveisTaxonomia").children("#Avaliacao").attr('checked', true) : $("#niveisTaxonomia");
+			get_version = json.version; // Atribui o valor do version a uma variável global.
+
+			// O back-end está retornando um string em vez de um array em niveisTaxonomia,
+			// portanto, retiro o primeiro e o último caractere e transformo em array.
+			var arrayNiveisTaxonomia = json.niveisTaxonomia.slice(1, json.niveisTaxonomia.length - 1).split(', ');
+
+			for(var i=0; i < arrayNiveisTaxonomia.length; i++){
+				if (arrayNiveisTaxonomia[i] == $("#niveisTaxonomia").children("#Conhecimento").val()) { $("#niveisTaxonomia").children("#Conhecimento").attr('checked', true) };
+				if (arrayNiveisTaxonomia[i] == $("#niveisTaxonomia").children("#Compreensao").val()) { $("#niveisTaxonomia").children("#Compreensao").attr('checked', true) };
+				if (arrayNiveisTaxonomia[i] == $("#niveisTaxonomia").children("#Aplicacao").val()) { $("#niveisTaxonomia").children("#Aplicacao").attr('checked', true) };
+				if (arrayNiveisTaxonomia[i] == $("#niveisTaxonomia").children("#Analise").val()) { $("#niveisTaxonomia").children("#Analise").attr('checked', true) };
+				if (arrayNiveisTaxonomia[i] == $("#niveisTaxonomia").children("#Sintese").val()) { $("#niveisTaxonomia").children("#Sintese").attr('checked', true) };
+				if (arrayNiveisTaxonomia[i] == $("#niveisTaxonomia").children("#Avaliacao").val()) { $("#niveisTaxonomia").children("#Avaliacao").attr('checked', true) };''
 			}
 		}
 	);
 };
 
-function if_exists_remove(element){
+function ifExistRemove(element){
 	if($(element) !== null){
 		$(element).remove();
 	}
-
 }
