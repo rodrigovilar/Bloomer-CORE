@@ -5,24 +5,11 @@ package br.ufpb.dce.bloomer.core.model;
 
 import br.ufpb.dce.bloomer.core.model.TipoQuestao;
 import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 privileged aspect TipoQuestao_Roo_Json {
-    
-    public String TipoQuestao.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
-    }
-    
-    public static TipoQuestao TipoQuestao.fromJsonToTipoQuestao(String json) {
-        return new JSONDeserializer<TipoQuestao>().use(null, TipoQuestao.class).deserialize(json);
-    }
-    
-    public static String TipoQuestao.toJsonArray(Collection<TipoQuestao> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
-    }
     
     public static Collection<TipoQuestao> TipoQuestao.fromJsonArrayToTipoQuestaos(String json) {
         return new JSONDeserializer<List<TipoQuestao>>().use(null, ArrayList.class).use("values", TipoQuestao.class).deserialize(json);

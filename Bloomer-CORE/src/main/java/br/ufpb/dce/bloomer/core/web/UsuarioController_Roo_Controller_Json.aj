@@ -6,6 +6,7 @@ package br.ufpb.dce.bloomer.core.web;
 import br.ufpb.dce.bloomer.core.model.Partida;
 import br.ufpb.dce.bloomer.core.model.Usuario;
 import br.ufpb.dce.bloomer.core.web.UsuarioController;
+import java.util.List;
 import java.util.Set;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,15 @@ privileged aspect UsuarioController_Roo_Controller_Json {
             return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<String>(usuario.toJson(), headers, HttpStatus.OK);
+    }
+    
+    @RequestMapping(headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> UsuarioController.listJson() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        List<Usuario> result = Usuario.findAllUsuarios();
+        return new ResponseEntity<String>(Usuario.toJsonArray(result), headers, HttpStatus.OK);
     }
     
     @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")

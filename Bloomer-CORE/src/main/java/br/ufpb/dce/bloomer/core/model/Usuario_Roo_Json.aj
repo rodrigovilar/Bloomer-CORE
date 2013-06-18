@@ -5,24 +5,11 @@ package br.ufpb.dce.bloomer.core.model;
 
 import br.ufpb.dce.bloomer.core.model.Usuario;
 import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 privileged aspect Usuario_Roo_Json {
-    
-    public String Usuario.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
-    }
-    
-    public static Usuario Usuario.fromJsonToUsuario(String json) {
-        return new JSONDeserializer<Usuario>().use(null, Usuario.class).deserialize(json);
-    }
-    
-    public static String Usuario.toJsonArray(Collection<Usuario> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
-    }
     
     public static Collection<Usuario> Usuario.fromJsonArrayToUsuarios(String json) {
         return new JSONDeserializer<List<Usuario>>().use(null, ArrayList.class).use("values", Usuario.class).deserialize(json);

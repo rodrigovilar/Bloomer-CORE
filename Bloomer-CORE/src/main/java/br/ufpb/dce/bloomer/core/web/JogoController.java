@@ -30,30 +30,6 @@ import br.ufpb.dce.bloomer.core.model.Usuario;
 @RooWebJson(jsonObject = Jogo.class)
 public class JogoController {
 
-	@RequestMapping(headers = "Accept=application/json")
-	@ResponseBody
-	public ResponseEntity<String> listJson() {
-		List<Jogo> listaDeJogos = Jogo.findAllJogoes();
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", "application/json; charset=utf-8");
-		if (listaDeJogos.size() == 0) {
-			return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-		}
-		ArrayNode arrayDeJogos = JsonNodeFactory.instance.arrayNode();
-
-		for (Jogo jogo : listaDeJogos) {
-			ObjectNode noJogo = JsonNodeFactory.instance.objectNode();
-			noJogo.put("id", jogo.getId());
-			noJogo.put("nome", jogo.getNome());
-
-			arrayDeJogos.add(noJogo);
-		}
-
-		return new ResponseEntity<String>(arrayDeJogos.toString(), headers,
-				HttpStatus.OK);
-	}
-
 	@RequestMapping(value = "/{idJogo}/usuarios", headers = "Accept=application/json")
 	@ResponseBody
 	public ResponseEntity<String> listUsuariosQueJogaramUmJogo(
@@ -159,22 +135,6 @@ public class JogoController {
 				HttpStatus.OK);
 	}
 
-	// JÁ VOLTOU PRO .aj
-	/*
-	 * @RequestMapping(value = "/{id}", headers = "Accept=application/json")
-	 * 
-	 * @ResponseBody public ResponseEntity<String>
-	 * getJogoById(@PathVariable("id") Long id) { Jogo jogo = Jogo.findJogo(id);
-	 * HttpHeaders headers = new HttpHeaders(); headers.add("Content-Type",
-	 * "application/json; charset=utf-8"); if (jogo == null) { return new
-	 * ResponseEntity<String>(headers, HttpStatus.NOT_FOUND); } ObjectNode
-	 * noJogo = JsonNodeFactory.instance.objectNode(); noJogo.put("id",
-	 * jogo.getId()); noJogo.put("nomeJogo", jogo.getNome());
-	 * 
-	 * return new ResponseEntity<String>(noJogo.toString(), headers,
-	 * HttpStatus.OK); }
-	 */
-
 	@RequestMapping(value = "/{idJogo}/desempenho/{idUsuario}", headers = "Accept=application/json")
 	@ResponseBody
 	public ResponseEntity<String> desempenhoUnico(
@@ -259,5 +219,4 @@ public class JogoController {
 
 		return new ResponseEntity<String>(json, headers, HttpStatus.OK);
 	}
-
 }

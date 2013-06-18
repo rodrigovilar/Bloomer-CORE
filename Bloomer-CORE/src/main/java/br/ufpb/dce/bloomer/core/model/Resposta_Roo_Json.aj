@@ -5,24 +5,11 @@ package br.ufpb.dce.bloomer.core.model;
 
 import br.ufpb.dce.bloomer.core.model.Resposta;
 import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 privileged aspect Resposta_Roo_Json {
-    
-    public String Resposta.toJson() {
-        return new JSONSerializer().exclude("*.class").serialize(this);
-    }
-    
-    public static Resposta Resposta.fromJsonToResposta(String json) {
-        return new JSONDeserializer<Resposta>().use(null, Resposta.class).deserialize(json);
-    }
-    
-    public static String Resposta.toJsonArray(Collection<Resposta> collection) {
-        return new JSONSerializer().exclude("*.class").serialize(collection);
-    }
     
     public static Collection<Resposta> Resposta.fromJsonArrayToRespostas(String json) {
         return new JSONDeserializer<List<Resposta>>().use(null, ArrayList.class).use("values", Resposta.class).deserialize(json);
