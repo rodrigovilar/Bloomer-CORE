@@ -95,6 +95,14 @@ privileged aspect UsuarioController_Roo_Controller_Json {
         return new ResponseEntity<String>(headers, HttpStatus.OK);
     }
     
+    @RequestMapping(params = "find=ByLoginEqualsAndSenhaEquals", headers = "Accept=application/json")
+    @ResponseBody
+    public ResponseEntity<String> UsuarioController.jsonFindUsuariosByLoginEqualsAndSenhaEquals(@RequestParam("login") String login, @RequestParam("senha") String senha) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        return new ResponseEntity<String>(Usuario.toJsonArray(Usuario.findUsuariosByLoginEqualsAndSenhaEquals(login, senha).getResultList()), headers, HttpStatus.OK);
+    }
+    
     @RequestMapping(params = "find=ByPartidas", headers = "Accept=application/json")
     @ResponseBody
     public ResponseEntity<String> UsuarioController.jsonFindUsuariosByPartidas(@RequestParam("partidas") Set<Partida> partidas) {

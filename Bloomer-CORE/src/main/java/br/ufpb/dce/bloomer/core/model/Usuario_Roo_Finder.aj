@@ -11,6 +11,16 @@ import javax.persistence.TypedQuery;
 
 privileged aspect Usuario_Roo_Finder {
     
+    public static TypedQuery<Usuario> Usuario.findUsuariosByLoginEqualsAndSenhaEquals(String login, String senha) {
+        if (login == null || login.length() == 0) throw new IllegalArgumentException("The login argument is required");
+        if (senha == null || senha.length() == 0) throw new IllegalArgumentException("The senha argument is required");
+        EntityManager em = Usuario.entityManager();
+        TypedQuery<Usuario> q = em.createQuery("SELECT o FROM Usuario AS o WHERE o.login = :login  AND o.senha = :senha", Usuario.class);
+        q.setParameter("login", login);
+        q.setParameter("senha", senha);
+        return q;
+    }
+    
     public static TypedQuery<Usuario> Usuario.findUsuariosByPartidas(Set<Partida> partidas) {
         if (partidas == null) throw new IllegalArgumentException("The partidas argument is required");
         EntityManager em = Usuario.entityManager();

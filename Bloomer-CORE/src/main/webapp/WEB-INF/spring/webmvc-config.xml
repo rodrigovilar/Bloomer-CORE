@@ -11,7 +11,7 @@
     <mvc:annotation-driven conversion-service="applicationConversionService"/>
     
 
-     <mvc:resources mapping="/relatorio/**" location="/relatorio/" />
+     <mvc:resources location="/relatorio/" mapping="/relatorio/**"/>
 
     <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources -->
     <mvc:resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
@@ -27,6 +27,7 @@
     </mvc:interceptors>
 
     <!-- Selects a static view for rendering without the need for an explicit controller -->
+    <mvc:view-controller path="/login"/>
     <mvc:view-controller path="/" view-name="index"/>
     <mvc:view-controller path="/uncaughtException"/>
     <mvc:view-controller path="/resourceNotFound"/>

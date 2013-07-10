@@ -171,3 +171,9 @@ exit
 // Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-06-12 01:07:31
 // Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-06-14 10:37:17
 // Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log closed at 2013-06-15 02:47:45
+// Spring Roo 1.2.3.RELEASE [rev 7fd62b6] log opened at 2013-07-09 20:18:11
+security setup
+focus --class ~.model.Usuario
+finder list
+finder list --depth 2
+finder add  findUsuariosByLoginEqualsAndSenhaEquals
