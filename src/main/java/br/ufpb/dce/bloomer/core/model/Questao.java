@@ -29,6 +29,9 @@ import flexjson.JSONSerializer;
 @RooJson
 public class Questao {
 
+    @Size(max = 1000)
+    private String pergunta;
+    
     @Size(max = 4000)
     private String gabarito;
 
@@ -61,6 +64,7 @@ public class Questao {
 		ObjectNode noQuestao = JsonNodeFactory.instance.objectNode();
 		
 		noQuestao.put("id", questao.getId());
+		noQuestao.put("pergunta", questao.getPergunta());
 		noQuestao.put("gabarito", questao.getGabarito());
 		noQuestao.put("jogo", questao.getJogo().getId());
 		noQuestao.put("tipoquestao", questao.getTipo().getId());
@@ -86,6 +90,10 @@ public class Questao {
 				questao.setGabarito(questaoJSON.get("gabarito").asText());
 			}
 
+			if (questaoJSON.has("pergunta")) {
+				questao.setPergunta(questaoJSON.get("pergunta").asText());
+			}
+			
 			if (questaoJSON.has("jogo")) {
 				Jogo jogo = Jogo.findJogo(questaoJSON.get("jogo").asLong());
 				questao.setJogo(jogo);

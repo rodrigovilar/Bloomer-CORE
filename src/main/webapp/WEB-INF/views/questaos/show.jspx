@@ -6,5 +6,6 @@
         <field:display field="gabarito" id="s_br_ufpb_dce_bloomer_core_model_Questao_gabarito" object="${questao}" z="V5Jt94/3SB1TCQDcmiUaK4NwlwU="/>
         <field:display field="jogo" id="s_br_ufpb_dce_bloomer_core_model_Questao_jogo" object="${questao}" z="XVUFbMc5TttNa9C+9sYm4OoVsuY="/>
         <field:display field="tipo" id="s_br_ufpb_dce_bloomer_core_model_Questao_tipo" object="${questao}" z="NhXTzm8wTbkS1RrlhGQBL618E2A="/>
+        <field:display field="pergunta" id="s_br_ufpb_dce_bloomer_core_model_Questao_pergunta" object="${questao}" z="W44JT2PboaHZzDWn/gM87wvYqjQ="/>
     </page:show>
 </div>

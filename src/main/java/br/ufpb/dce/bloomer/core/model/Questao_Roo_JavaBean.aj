@@ -11,6 +11,14 @@ import java.util.Set;
 
 privileged aspect Questao_Roo_JavaBean {
     
+    public String Questao.getPergunta() {
+        return this.pergunta;
+    }
+    
+    public void Questao.setPergunta(String pergunta) {
+        this.pergunta = pergunta;
+    }
+    
     public String Questao.getGabarito() {
         return this.gabarito;
     }

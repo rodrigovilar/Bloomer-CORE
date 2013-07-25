@@ -34,6 +34,7 @@ privileged aspect QuestaoDataOnDemand_Roo_DataOnDemand {
     public Questao QuestaoDataOnDemand.getNewTransientQuestao(int index) {
         Questao obj = new Questao();
         setGabarito(obj, index);
+        setPergunta(obj, index);
         return obj;
     }
     
@@ -43,6 +44,14 @@ privileged aspect QuestaoDataOnDemand_Roo_DataOnDemand {
             gabarito = gabarito.substring(0, 4000);
         }
         obj.setGabarito(gabarito);
+    }
+    
+    public void QuestaoDataOnDemand.setPergunta(Questao obj, int index) {
+        String pergunta = "pergunta_" + index;
+        if (pergunta.length() > 1000) {
+            pergunta = pergunta.substring(0, 1000);
+        }
+        obj.setPergunta(pergunta);
     }
     
     public Questao QuestaoDataOnDemand.getSpecificQuestao(int index) {

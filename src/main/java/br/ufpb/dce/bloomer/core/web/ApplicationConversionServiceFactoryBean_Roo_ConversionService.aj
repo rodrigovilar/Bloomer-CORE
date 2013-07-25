@@ -70,7 +70,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<Questao, String> ApplicationConversionServiceFactoryBean.getQuestaoToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<br.ufpb.dce.bloomer.core.model.Questao, java.lang.String>() {
             public String convert(Questao questao) {
-                return new StringBuilder().append(questao.getGabarito()).toString();
+                return new StringBuilder().append(questao.getPergunta()).append(' ').append(questao.getGabarito()).toString();
             }
         };
     }

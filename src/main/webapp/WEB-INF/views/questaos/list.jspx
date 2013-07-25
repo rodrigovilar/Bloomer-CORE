@@ -7,6 +7,7 @@
             <table:column id="c_br_ufpb_dce_bloomer_core_model_Questao_gabarito" property="gabarito" z="p12KOFxIKHDpBFEjDp9uwINrEqY="/>
             <table:column id="c_br_ufpb_dce_bloomer_core_model_Questao_jogo" property="jogo" z="pR0l8cZxAzzMdAzCaIgNjTk5NVw="/>
             <table:column id="c_br_ufpb_dce_bloomer_core_model_Questao_tipo" property="tipo" z="gM40zUAUgyNdUbo/Kxn4lV8NgZc="/>
+            <table:column id="c_br_ufpb_dce_bloomer_core_model_Questao_pergunta" property="pergunta" z="XFzkKBbZl+la04u2PLBQ3i0Z8yw="/>
         </table:table>
     </page:list>
 </div>
