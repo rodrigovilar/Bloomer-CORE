@@ -4,6 +4,7 @@
 package br.ufpb.dce.bloomer.core.web;
 
 import br.ufpb.dce.bloomer.core.model.Jogo;
+import br.ufpb.dce.bloomer.core.model.NivelTaxonomia;
 import br.ufpb.dce.bloomer.core.model.Partida;
 import br.ufpb.dce.bloomer.core.model.Questao;
 import br.ufpb.dce.bloomer.core.model.TipoJogo;
@@ -11,6 +12,7 @@ import br.ufpb.dce.bloomer.core.model.Usuario;
 import br.ufpb.dce.bloomer.core.web.JogoController;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -97,6 +99,7 @@ privileged aspect JogoController_Roo_Controller {
     
     void JogoController.populateEditForm(Model uiModel, Jogo jogo) {
         uiModel.addAttribute("jogo", jogo);
+        uiModel.addAttribute("niveltaxonomias", Arrays.asList(NivelTaxonomia.values()));
         uiModel.addAttribute("partidas", Partida.findAllPartidas());
         uiModel.addAttribute("questaos", Questao.findAllQuestaos());
         uiModel.addAttribute("tipojogoes", TipoJogo.findAllTipoJogoes());

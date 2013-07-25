@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,9 +41,8 @@ public class TipoJogo {
     @Size(max = 2000)
     private String descricao;
 
-    @NotNull
-    @Size(max = 100)
-    private String autor;
+   @ManyToOne
+    private Usuario desenvolvedor;
 
     @Enumerated
     private Plafatorma plataforma;
@@ -50,9 +50,7 @@ public class TipoJogo {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipo")
     private Set<Jogo> jogos = new HashSet<Jogo>();
 
-    @ElementCollection
-    private Set<NivelTaxonomia> niveisTaxonomia = new HashSet<NivelTaxonomia>();
-
+  
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jogo")
     private Set<TipoQuestao> questoes = new HashSet<TipoQuestao>();
     
@@ -78,9 +76,9 @@ public class TipoJogo {
 		noTipoJogo.put("id", tipojogo.getId());
 		noTipoJogo.put("nome", tipojogo.getNome());
 		noTipoJogo.put("descricao", tipojogo.getDescricao());
-		noTipoJogo.put("autor", tipojogo.getAutor());
+		noTipoJogo.put("desenvolvedor", tipojogo.getDesenvolvedor().getId());
 		noTipoJogo.put("plataforma", tipojogo.getPlataforma().name());
-		noTipoJogo.put("niveisTaxonomia", tipojogo.getNiveisTaxonomia().toString());
+		
 		noTipoJogo.put("version", tipojogo.getVersion());
 		
 		return noTipoJogo;
@@ -106,21 +104,15 @@ public class TipoJogo {
 				tipojogo.setDescricao(tipojogoJSON.get("descricao").asText());
 			}
 
-			if (tipojogoJSON.has("autor")) {
-				tipojogo.setAutor(tipojogoJSON.get("autor").asText());
+			if (tipojogoJSON.has("desenvolvedor")) {
+				Usuario conf = Usuario.findUsuario(tipojogoJSON.get("desenvolvedor").asLong());
+				tipojogo.setDesenvolvedor(conf);
 			}
 			
 			if (tipojogoJSON.has("plataforma")) {
 				tipojogo.setPlataforma(Plafatorma.valueOf(tipojogoJSON.get("plataforma").asText()));
 			}
 			
-			if (tipojogoJSON.has("niveisTaxonomia")) {
-				Set<NivelTaxonomia> set = new HashSet<NivelTaxonomia>();
-				for (int i = 0; i < tipojogoJSON.get("niveisTaxonomia").size(); i++){
-					set.add(NivelTaxonomia.valueOf(tipojogoJSON.get("niveisTaxonomia").get(i).asText()));
-				}
-				tipojogo.setNiveisTaxonomia(set);
-			}
 			
 			if (tipojogoJSON.has("version")) {
 				tipojogo.setVersion(tipojogoJSON.get("version").asInt());

@@ -56,6 +56,9 @@ public class Usuario {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "configurador")
     private Set<Jogo> jogos = new HashSet<Jogo>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "desenvolvedor")
+    private Set<TipoJogo> tiposjogos = new HashSet<TipoJogo>();
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Set<Partida> partidas = new HashSet<Partida>();
 

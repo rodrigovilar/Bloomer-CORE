@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -44,6 +45,9 @@ public class Jogo {
 
     @ManyToOne
     private Usuario configurador;
+    
+    @ElementCollection
+    private Set<NivelTaxonomia> niveisTaxonomia = new HashSet<NivelTaxonomia>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jogo")
     private Set<Questao> questoes = new HashSet<Questao>();
@@ -74,6 +78,7 @@ public class Jogo {
 		noJogo.put("nome", jogo.getNome());			
 		noJogo.put("tipojogo", jogo.getTipo().getId());
 		noJogo.put("configurador", jogo.getConfigurador().getId());
+		noJogo.put("niveisTaxonomia", jogo.getNiveisTaxonomia().toString());
 		noJogo.put("version", jogo.getVersion());
 		
 		return noJogo;
@@ -108,6 +113,14 @@ public class Jogo {
 			if (jogoJSON.has("version")) {
 				jogo.setVersion(jogoJSON.get("version").asInt());
 			}
+			
+			if (jogoJSON.has("niveisTaxonomia")) {
+				Set<NivelTaxonomia> set = new HashSet<NivelTaxonomia>();
+				for (int i = 0; i < jogoJSON.get("niveisTaxonomia").size(); i++){
+					set.add(NivelTaxonomia.valueOf(jogoJSON.get("niveisTaxonomia").get(i).asText()));
+				}
+				jogo.setNiveisTaxonomia(set);
+			}
 
 			return jogo;
 			
@@ -116,4 +129,3 @@ public class Jogo {
 		}
     }
 }
-

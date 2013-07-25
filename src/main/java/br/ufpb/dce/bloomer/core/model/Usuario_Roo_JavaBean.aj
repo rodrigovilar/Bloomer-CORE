@@ -7,6 +7,7 @@ import br.ufpb.dce.bloomer.core.model.Jogo;
 import br.ufpb.dce.bloomer.core.model.Partida;
 import br.ufpb.dce.bloomer.core.model.Relacao;
 import br.ufpb.dce.bloomer.core.model.Sexo;
+import br.ufpb.dce.bloomer.core.model.TipoJogo;
 import br.ufpb.dce.bloomer.core.model.Usuario;
 import java.util.Calendar;
 import java.util.Set;
@@ -59,6 +60,14 @@ privileged aspect Usuario_Roo_JavaBean {
     
     public void Usuario.setJogos(Set<Jogo> jogos) {
         this.jogos = jogos;
+    }
+    
+    public Set<TipoJogo> Usuario.getTiposjogos() {
+        return this.tiposjogos;
+    }
+    
+    public void Usuario.setTiposjogos(Set<TipoJogo> tiposjogos) {
+        this.tiposjogos = tiposjogos;
     }
     
     public Set<Partida> Usuario.getPartidas() {

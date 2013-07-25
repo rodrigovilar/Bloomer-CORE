@@ -7,6 +7,7 @@ import br.ufpb.dce.bloomer.core.model.Jogo;
 import br.ufpb.dce.bloomer.core.model.Partida;
 import br.ufpb.dce.bloomer.core.model.Relacao;
 import br.ufpb.dce.bloomer.core.model.Sexo;
+import br.ufpb.dce.bloomer.core.model.TipoJogo;
 import br.ufpb.dce.bloomer.core.model.Usuario;
 import br.ufpb.dce.bloomer.core.web.UsuarioController;
 import java.io.UnsupportedEncodingException;
@@ -104,6 +105,7 @@ privileged aspect UsuarioController_Roo_Controller {
         uiModel.addAttribute("partidas", Partida.findAllPartidas());
         uiModel.addAttribute("relacaos", Relacao.findAllRelacaos());
         uiModel.addAttribute("sexoes", Arrays.asList(Sexo.values()));
+        uiModel.addAttribute("tipojogoes", TipoJogo.findAllTipoJogoes());
     }
     
     String UsuarioController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

@@ -6,5 +6,6 @@
         <field:display field="nome" id="s_br_ufpb_dce_bloomer_core_model_Jogo_nome" object="${jogo}" z="N1NH6Gd/OZafCfolmI0nHCHhrU4="/>
         <field:display field="tipo" id="s_br_ufpb_dce_bloomer_core_model_Jogo_tipo" object="${jogo}" z="+0SnmX7/RGIMrRrIxVGWCba3BR4="/>
         <field:display field="configurador" id="s_br_ufpb_dce_bloomer_core_model_Jogo_configurador" object="${jogo}" z="pxMy4fSOhnkeF9CNfOC4itDNDK0="/>
+        <field:display field="niveisTaxonomia" id="s_br_ufpb_dce_bloomer_core_model_Jogo_niveisTaxonomia" object="${jogo}" z="8A04qxYnypiibhVhOHVCjatlPRI="/>
     </page:show>
 </div>
