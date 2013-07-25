@@ -4,6 +4,7 @@
 package br.ufpb.dce.bloomer.core.web;
 
 import br.ufpb.dce.bloomer.core.model.Jogo;
+import br.ufpb.dce.bloomer.core.model.NivelTaxonomia;
 import br.ufpb.dce.bloomer.core.model.Plafatorma;
 import br.ufpb.dce.bloomer.core.model.TipoJogo;
 import br.ufpb.dce.bloomer.core.model.TipoQuestao;
@@ -92,6 +93,7 @@ privileged aspect TipoJogoController_Roo_Controller {
     void TipoJogoController.populateEditForm(Model uiModel, TipoJogo tipoJogo) {
         uiModel.addAttribute("tipoJogo", tipoJogo);
         uiModel.addAttribute("jogoes", Jogo.findAllJogoes());
+        uiModel.addAttribute("niveltaxonomias", Arrays.asList(NivelTaxonomia.values()));
         uiModel.addAttribute("plafatormas", Arrays.asList(Plafatorma.values()));
         uiModel.addAttribute("tipoquestaos", TipoQuestao.findAllTipoQuestaos());
         uiModel.addAttribute("usuarios", Usuario.findAllUsuarios());

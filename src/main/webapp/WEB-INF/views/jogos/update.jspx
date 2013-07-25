@@ -8,6 +8,5 @@
         <field:select field="configurador" id="c_br_ufpb_dce_bloomer_core_model_Jogo_configurador" itemValue="id" items="${usuarios}" path="/usuarios" z="eIAfRUTbcUQT82qLSbjjv65CsiI="/>
         <field:simple field="questoes" id="c_br_ufpb_dce_bloomer_core_model_Jogo_questoes" messageCode="entity_reference_not_managed" messageCodeAttribute="Questao" z="xkPaBJHTLXJfSQC9FwNU93fS3mM="/>
         <field:simple field="partidas" id="c_br_ufpb_dce_bloomer_core_model_Jogo_partidas" messageCode="entity_reference_not_managed" messageCodeAttribute="Partida" z="e0GaIee2AqQ+OJCgjWoAk6ipkZg="/>
-        <field:select field="niveisTaxonomia" id="c_br_ufpb_dce_bloomer_core_model_Jogo_niveisTaxonomia" items="${niveltaxonomias}" path="niveltaxonomias" z="g0CHNTe0GQImQL+PgiiCtaWTuTI="/>
     </form:update>
 </div>

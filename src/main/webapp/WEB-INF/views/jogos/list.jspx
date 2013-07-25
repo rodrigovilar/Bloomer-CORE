@@ -7,7 +7,6 @@
             <table:column id="c_br_ufpb_dce_bloomer_core_model_Jogo_nome" property="nome" z="aTpMo0oC0OpFeJbGgcBYG3pu2/w="/>
             <table:column id="c_br_ufpb_dce_bloomer_core_model_Jogo_tipo" property="tipo" z="QTeqbLhKqXpE76hAaMXxwPyfySs="/>
             <table:column id="c_br_ufpb_dce_bloomer_core_model_Jogo_configurador" property="configurador" z="UAHqksYnCh0//XS5X7iRjgLG4u8="/>
-            <table:column id="c_br_ufpb_dce_bloomer_core_model_Jogo_niveisTaxonomia" property="niveisTaxonomia" z="Dd18ATfg39Nhi/BLl2PYNNph0uI="/>
         </table:table>
     </page:list>
 </div>

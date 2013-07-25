@@ -4,6 +4,7 @@
 package br.ufpb.dce.bloomer.core.model;
 
 import br.ufpb.dce.bloomer.core.model.Jogo;
+import br.ufpb.dce.bloomer.core.model.NivelTaxonomia;
 import br.ufpb.dce.bloomer.core.model.Plafatorma;
 import br.ufpb.dce.bloomer.core.model.TipoJogo;
 import br.ufpb.dce.bloomer.core.model.TipoQuestao;
@@ -42,6 +43,14 @@ privileged aspect TipoJogo_Roo_JavaBean {
     
     public void TipoJogo.setPlataforma(Plafatorma plataforma) {
         this.plataforma = plataforma;
+    }
+    
+    public Set<NivelTaxonomia> TipoJogo.getNiveisTaxonomia() {
+        return this.niveisTaxonomia;
+    }
+    
+    public void TipoJogo.setNiveisTaxonomia(Set<NivelTaxonomia> niveisTaxonomia) {
+        this.niveisTaxonomia = niveisTaxonomia;
     }
     
     public Set<Jogo> TipoJogo.getJogos() {

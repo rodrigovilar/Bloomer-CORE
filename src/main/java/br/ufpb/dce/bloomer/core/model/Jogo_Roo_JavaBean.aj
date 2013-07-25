@@ -4,7 +4,6 @@
 package br.ufpb.dce.bloomer.core.model;
 
 import br.ufpb.dce.bloomer.core.model.Jogo;
-import br.ufpb.dce.bloomer.core.model.NivelTaxonomia;
 import br.ufpb.dce.bloomer.core.model.Partida;
 import br.ufpb.dce.bloomer.core.model.Questao;
 import br.ufpb.dce.bloomer.core.model.TipoJogo;
@@ -35,14 +34,6 @@ privileged aspect Jogo_Roo_JavaBean {
     
     public void Jogo.setConfigurador(Usuario configurador) {
         this.configurador = configurador;
-    }
-    
-    public Set<NivelTaxonomia> Jogo.getNiveisTaxonomia() {
-        return this.niveisTaxonomia;
-    }
-    
-    public void Jogo.setNiveisTaxonomia(Set<NivelTaxonomia> niveisTaxonomia) {
-        this.niveisTaxonomia = niveisTaxonomia;
     }
     
     public Set<Questao> Jogo.getQuestoes() {

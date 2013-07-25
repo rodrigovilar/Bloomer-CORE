@@ -47,6 +47,9 @@ public class TipoJogo {
     @Enumerated
     private Plafatorma plataforma;
 
+    @ElementCollection
+    private Set<NivelTaxonomia> niveisTaxonomia = new HashSet<NivelTaxonomia>();
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipo")
     private Set<Jogo> jogos = new HashSet<Jogo>();
 
@@ -78,6 +81,7 @@ public class TipoJogo {
 		noTipoJogo.put("descricao", tipojogo.getDescricao());
 		noTipoJogo.put("desenvolvedor", tipojogo.getDesenvolvedor().getId());
 		noTipoJogo.put("plataforma", tipojogo.getPlataforma().name());
+		noTipoJogo.put("niveisTaxonomia", tipojogo.getNiveisTaxonomia().toString());
 		
 		noTipoJogo.put("version", tipojogo.getVersion());
 		
@@ -113,6 +117,13 @@ public class TipoJogo {
 				tipojogo.setPlataforma(Plafatorma.valueOf(tipojogoJSON.get("plataforma").asText()));
 			}
 			
+			if (tipojogoJSON.has("niveisTaxonomia")) {
+				Set<NivelTaxonomia> set = new HashSet<NivelTaxonomia>();
+				for (int i = 0; i < tipojogoJSON.get("niveisTaxonomia").size(); i++){
+					set.add(NivelTaxonomia.valueOf(tipojogoJSON.get("niveisTaxonomia").get(i).asText()));
+				}
+				tipojogo.setNiveisTaxonomia(set);
+			}
 			
 			if (tipojogoJSON.has("version")) {
 				tipojogo.setVersion(tipojogoJSON.get("version").asInt());
