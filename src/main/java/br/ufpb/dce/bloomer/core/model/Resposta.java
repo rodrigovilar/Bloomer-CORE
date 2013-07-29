@@ -58,7 +58,7 @@ public class Resposta {
 		noResposta.put("id", resposta.getId());
 		noResposta.put("conteudo", resposta.getConteudo());
 		noResposta.put("partida", resposta.getPartida().getId());
-		noResposta.put("questao", resposta.getQuestao().getId());
+		noResposta.put("questao", resposta.getQuestao().getPergunta());
 		noResposta.put("version", resposta.getVersion());	
 		
 		return noResposta;

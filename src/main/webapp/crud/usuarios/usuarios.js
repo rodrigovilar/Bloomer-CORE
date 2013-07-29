@@ -38,11 +38,10 @@ function READ(){
 	$.getJSON("http://localhost:8080/Bloomer-CORE/"+ entity,
 		function(json){
 
-			var $div = $('<div />').appendTo('body');
+			var $div = $('<div />').appendTo('.container');
 			$div.attr('id', 'list');
 
-			var table = $('<table border="1" cellspacing="0" style="text-align:center"></table>').attr('id', 'list_table');
-
+			var table = $('<table></table>').attr('class', 'table table-striped');
 			// In buildForm function, 1 its a parameter who means CREATE.
 			var title = '<tr><td colspan="8"><a href="#" onclick="buildForm(1);"><img src="../images/create.png"/>Add</a></td></tr>';
 			table.append(title);

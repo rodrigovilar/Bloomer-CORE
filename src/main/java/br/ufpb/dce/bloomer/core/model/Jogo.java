@@ -73,8 +73,8 @@ public class Jogo {
 		
 		noJogo.put("id", jogo.getId());
 		noJogo.put("nome", jogo.getNome());			
-		noJogo.put("tipojogo", jogo.getTipo().getId());
-		noJogo.put("configurador", jogo.getConfigurador().getId());
+		noJogo.put("tipojogo", jogo.getTipo().getNome());
+		noJogo.put("configurador", jogo.getConfigurador().getNome());
 		noJogo.put("version", jogo.getVersion());
 		
 		return noJogo;

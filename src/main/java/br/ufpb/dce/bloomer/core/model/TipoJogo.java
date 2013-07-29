@@ -79,7 +79,7 @@ public class TipoJogo {
 		noTipoJogo.put("id", tipojogo.getId());
 		noTipoJogo.put("nome", tipojogo.getNome());
 		noTipoJogo.put("descricao", tipojogo.getDescricao());
-		noTipoJogo.put("desenvolvedor", tipojogo.getDesenvolvedor().getId());
+		noTipoJogo.put("desenvolvedor", tipojogo.getDesenvolvedor().getNome());
 		noTipoJogo.put("plataforma", tipojogo.getPlataforma().name());
 		noTipoJogo.put("niveisTaxonomia", tipojogo.getNiveisTaxonomia().toString());
 		

@@ -38,21 +38,21 @@ function READ(){
 	$.getJSON("http://localhost:8080/Bloomer-CORE/"+ entity,
 		function(json){
 
-			var $div = $('<div />').appendTo('body');
+			var $div = $('<div />').appendTo('.container');
 			$div.attr('id', 'list');
 
-			var table = $('<table border="1" cellspacing="0" style="text-align:center"></table>').attr('id', 'list_table');
+			var table =$('<table></table>').attr('class', 'table table-striped');
 
 			// In buildForm function, 1 its a parameter who means CREATE.
 			var title = '<tr><td colspan="8"><a href="#" onclick="buildForm(1);"><img src="../images/create.png"/>Add</a></td></tr>';
 			table.append(title);
 
-			var header = '<tr><th>ID</th><th>Nome</th><th>Descrição</th><th>Autor</th><th>Plataforma</th><th>Nível de Taxonomia</th><th>Edit</th><th>Delete</th></tr>';
+			var header = '<tr><th>ID</th><th>Nome</th><th>Descrição</th><th>Desenvolvedor</th><th>Plataforma</th><th>Nível de Taxonomia</th><th>Edit</th><th>Delete</th></tr>';
 			table.append(header);
 
 			for (i=0; i < json.length; i++){
 			    var row = '<tr><td>' + json[i].id + '</td><td>' + json[i].nome + '</td><td>' + json[i].descricao +
-			    		  '</td><td>' + json[i].autor + '</td><td>' + json[i].plataforma + '</td><td>' + json[i].niveisTaxonomia +
+			    		  '</td><td>' + json[i].desenvolvedor + '</td><td>' + json[i].plataforma + '</td><td>' + json[i].niveisTaxonomia +
 			    		  '</td><td><a href="#" onclick="fillForm(' + json[i].id + ');"><img src="../images/update.png"/></a>' +
 			    		  '</td><td><a href="#" onclick="DELETE(' + json[i].id + ');"><img src="../images/delete.png"/></a>' +
 			    		  '</td></tr>';

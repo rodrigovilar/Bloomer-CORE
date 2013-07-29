@@ -38,21 +38,26 @@ function READ(){
 	$.getJSON("http://localhost:8080/Bloomer-CORE/"+ entity,
 		function(json){
 
-			var $div = $('<div />').appendTo('body');
+			var $div = $('<div />').appendTo('.container');
 			$div.attr('id', 'list');
 
-			var table = $('<table border="1" cellspacing="0" style="text-align:center"></table>').attr('id', 'list_table');
+			var table = $('<table></table>').attr('class', 'table table-striped');
 
 			// In buildForm function, 1 its a parameter who means CREATE.
 			var title = '<tr><td colspan="9"><a href="#" onclick="buildForm(1);"><img src="../images/create.png"/>Add</a></td></tr>';
 			table.append(title);
 
-			var header = '<tr><th>ID</th><th>Data/Hora</th><th>Acerto</th><th>Concluiu</th><th>Escore</th><th>ID do Usuário</th><th>ID do Jogo</th><th>Edit</th><th>Delete</th></tr>';
+			var header = '<tr><th>ID</th><th>Data/Hora</th><th>Acerto</th><th>Concluiu</th><th>Escore</th><th>Usuário</th><th>Jogo</th><th>Edit</th><th>Delete</th></tr>';
 			table.append(header);
 
 			for (i=0; i < json.length; i++){
+
+					
+				var concluiu  = ((json[i].concluiu == true) ? "Sim" : "Não") ;
+
+
 			    var row = '<tr><td>' + json[i].id + '</td><td>' + json[i].dataHora + '</td><td>' + json[i].acerto +
-			    		  '</td><td>' + json[i].concluiu + '</td><td>' + json[i].escore + '</td><td>' + json[i].usuario + '</td><td>' + json[i].jogo +
+			    		  '</td><td>' + concluiu + '</td><td>' + json[i].escore + '</td><td>' + json[i].usuario + '</td><td>' + json[i].jogo +
 			    		  '</td><td><a href="#" onclick="fillForm(' + json[i].id + ');"><img src="../images/update.png"/></a>' +
 			    		  '</td><td><a href="#" onclick="DELETE(' + json[i].id + ');"><img src="../images/delete.png"/></a>' +
 			    		  '</td></tr>';
