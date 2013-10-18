@@ -6,7 +6,7 @@
         <field:display field="nome" id="s_br_ufpb_dce_bloomer_core_model_TipoJogo_nome" object="${tipojogo}" z="0qK3eWOafpkcNNqjq6YhtyRglJw="/>
         <field:display field="descricao" id="s_br_ufpb_dce_bloomer_core_model_TipoJogo_descricao" object="${tipojogo}" z="hYSSoqImiHPrRykQz3J8h9JwmG4="/>
         <field:display field="plataforma" id="s_br_ufpb_dce_bloomer_core_model_TipoJogo_plataforma" object="${tipojogo}" z="Tx6M/86ZbJd5TU17hrmR4Xirmhs="/>
+        <field:display field="desenvolvedor" id="s_br_ufpb_dce_bloomer_core_model_TipoJogo_desenvolvedor" object="${tipojogo}" z="4giFE6q8hA/9iBlbG0/Mn6oEtN0="/>
         <field:display field="niveisTaxonomia" id="s_br_ufpb_dce_bloomer_core_model_TipoJogo_niveisTaxonomia" object="${tipojogo}" z="mpsq8lF3kSwwxQU5KH+G3PVQd3c="/>
-        <field:display field="autor" id="s_br_ufpb_dce_bloomer_core_model_TipoJogo_autor" object="${tipojogo}" z="hoTavJernqSlBZm9Bvq3xWDc0l4="/>
     </page:show>
 </div>

@@ -1,0 +1,31 @@
+.container {
+	max-width: 800px;
+	margin-top: 40px;
+	margin-left: 20px;
+	}
+
+body { font-family:Lucida Sans, Arial, Helvetica, Sans-Serif; font-size:13px; margin:20px;}
+
+fieldset { border:none; width:100%;}
+
+legend { font-size:18px; margin:0px; padding:5px 0px; color:#1C86EE; font-weight:bold;}
+
+label { display:block; margin:5px 0 5px;}
+
+.criar, .prev, .next { background-color:#1C86EE; margin: 10px; padding:5px 10px; color:#fff; text-decoration:none;}
+
+.listQuestaos{
+    margin-top: 15px;
+}
+.prev:hover, .next:hover, .criar:hover { background-color:#A4D3EE; text-decoration:none;}
+.prev { float:right;}
+.next { float:right;}
+
+#steps { list-style:none; width:100%; overflow:hidden; margin:0px; padding:0px;}
+
+#steps li {font-size:24px; float:left; padding:10px; color:#b0b1b3;}
+
+#steps li span {font-size:11px; display:block;}
+
+#steps li.current { color:#000;}
+
