@@ -8,6 +8,7 @@ import br.ufpb.dce.bloomer.core.model.NivelTaxonomia;
 import br.ufpb.dce.bloomer.core.model.Plafatorma;
 import br.ufpb.dce.bloomer.core.model.TipoJogo;
 import br.ufpb.dce.bloomer.core.model.TipoQuestao;
+import br.ufpb.dce.bloomer.core.model.Usuario;
 import br.ufpb.dce.bloomer.core.web.TipoJogoController;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
@@ -95,6 +96,7 @@ privileged aspect TipoJogoController_Roo_Controller {
         uiModel.addAttribute("niveltaxonomias", Arrays.asList(NivelTaxonomia.values()));
         uiModel.addAttribute("plafatormas", Arrays.asList(Plafatorma.values()));
         uiModel.addAttribute("tipoquestaos", TipoQuestao.findAllTipoQuestaos());
+        uiModel.addAttribute("usuarios", Usuario.findAllUsuarios());
     }
     
     String TipoJogoController.encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {

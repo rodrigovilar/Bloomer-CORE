@@ -6,7 +6,10 @@ package br.ufpb.dce.bloomer.core.model;
 import br.ufpb.dce.bloomer.core.model.TipoJogo;
 import br.ufpb.dce.bloomer.core.model.TipoJogoDataOnDemand;
 import br.ufpb.dce.bloomer.core.model.TipoJogoIntegrationTest;
+import java.util.Iterator;
 import java.util.List;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,12 +22,12 @@ privileged aspect TipoJogoIntegrationTest_Roo_IntegrationTest {
     
     declare @type: TipoJogoIntegrationTest: @RunWith(SpringJUnit4ClassRunner.class);
     
-    declare @type: TipoJogoIntegrationTest: @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml");
+    declare @type: TipoJogoIntegrationTest: @ContextConfiguration(locations = "classpath*:/META-INF/spring/applicationContext*.xml");
     
     declare @type: TipoJogoIntegrationTest: @Transactional;
     
     @Autowired
-    private TipoJogoDataOnDemand TipoJogoIntegrationTest.dod;
+    TipoJogoDataOnDemand TipoJogoIntegrationTest.dod;
     
     @Test
     public void TipoJogoIntegrationTest.testCountTipoJogoes() {
@@ -101,7 +104,16 @@ privileged aspect TipoJogoIntegrationTest_Roo_IntegrationTest {
         TipoJogo obj = dod.getNewTransientTipoJogo(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'TipoJogo' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'TipoJogo' identifier to be null", obj.getId());
-        obj.persist();
+        try {
+            obj.persist();
+        } catch (final ConstraintViolationException e) {
+            final StringBuilder msg = new StringBuilder();
+            for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
+                final ConstraintViolation<?> cv = iter.next();
+                msg.append("[").append(cv.getRootBean().getClass().getName()).append(".").append(cv.getPropertyPath()).append(": ").append(cv.getMessage()).append(" (invalid value = ").append(cv.getInvalidValue()).append(")").append("]");
+            }
+            throw new IllegalStateException(msg.toString(), e);
+        }
         obj.flush();
         Assert.assertNotNull("Expected 'TipoJogo' identifier to no longer be null", obj.getId());
     }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_br_ufpb_dce_bloomer_core_model_Usuario" object="${usuario}" path="/usuarios" z="T49/fUC0S7eVxR9/vP1brnCYWKM=">
+        <field:display field="nome" id="s_br_ufpb_dce_bloomer_core_model_Usuario_nome" object="${usuario}" z="w/EP7Nufgk0ZNxw1ZnmEFWnt/rk="/>
+        <field:display calendar="true" dateTimePattern="${usuario_datanascimento_date_format}" field="dataNascimento" id="s_br_ufpb_dce_bloomer_core_model_Usuario_dataNascimento" object="${usuario}" z="er0QC0MzN13ltn5DkJ/HHMjxDBs="/>
+        <field:display field="sexo" id="s_br_ufpb_dce_bloomer_core_model_Usuario_sexo" object="${usuario}" z="iWcrdjmpzyVMFbCLYnayLLR4jVs="/>
+        <field:display field="senha" id="s_br_ufpb_dce_bloomer_core_model_Usuario_senha" object="${usuario}" z="BulIKKxva4v2V8y2Ub1OWcJt22U="/>
+        <field:display field="login" id="s_br_ufpb_dce_bloomer_core_model_Usuario_login" object="${usuario}" z="kCtq1b9iwiy3ZuyCv4ao6PM/tOQ="/>
+    </page:show>
+</div>

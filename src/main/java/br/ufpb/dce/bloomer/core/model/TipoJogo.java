@@ -1,13 +1,13 @@
 package br.ufpb.dce.bloomer.core.model;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,9 +23,6 @@ import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.json.RooJson;
 import org.springframework.roo.addon.tostring.RooToString;
 
-import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
-
 @RooJavaBean
 @RooToString
 @RooJpaActiveRecord
@@ -40,10 +37,9 @@ public class TipoJogo {
 	@Size(max = 2000)
 	private String descricao;
 
-	@NotNull
-	@Size(max = 100)
-	private String autor;
-
+	@ManyToOne
+    private Usuario desenvolvedor;
+	
 	@Enumerated
 	private Plafatorma plataforma;
 
@@ -78,7 +74,7 @@ public class TipoJogo {
 		noTipoJogo.put("id", tipojogo.getId());
 		noTipoJogo.put("nome", tipojogo.getNome());
 		noTipoJogo.put("descricao", tipojogo.getDescricao());
-		noTipoJogo.put("autor", tipojogo.getAutor());
+		noTipoJogo.put("desenvolvedor", tipojogo.getDesenvolvedor().getId());
 		noTipoJogo.put("plataforma", tipojogo.getPlataforma().name());
 		noTipoJogo.put("niveisTaxonomia", tipojogo.getNiveisTaxonomia()
 				.toString());
@@ -108,8 +104,9 @@ public class TipoJogo {
 				tipojogo.setDescricao(tipojogoJSON.get("descricao").asText());
 			}
 
-			if (tipojogoJSON.has("autor")) {
-				tipojogo.setAutor(tipojogoJSON.get("autor").asText());
+			if (tipojogoJSON.has("desenvolvedor")) {
+				Usuario conf = Usuario.findUsuario(tipojogoJSON.get("desenvolvedor").asLong());
+				tipojogo.setDesenvolvedor(conf);
 			}
 
 			if (tipojogoJSON.has("plataforma")) {
