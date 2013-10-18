@@ -27,10 +27,10 @@ privileged aspect JogoDataOnDemand_Roo_DataOnDemand {
     private List<Jogo> JogoDataOnDemand.data;
     
     @Autowired
-    UsuarioDataOnDemand JogoDataOnDemand.usuarioDataOnDemand;
+    private UsuarioDataOnDemand JogoDataOnDemand.usuarioDataOnDemand;
     
     @Autowired
-    TipoJogoDataOnDemand JogoDataOnDemand.tipoJogoDataOnDemand;
+    private TipoJogoDataOnDemand JogoDataOnDemand.tipoJogoDataOnDemand;
     
     public Jogo JogoDataOnDemand.getNewTransientJogo(int index) {
         Jogo obj = new Jogo();
@@ -92,13 +92,13 @@ privileged aspect JogoDataOnDemand_Roo_DataOnDemand {
             Jogo obj = getNewTransientJogo(i);
             try {
                 obj.persist();
-            } catch (final ConstraintViolationException e) {
-                final StringBuilder msg = new StringBuilder();
+            } catch (ConstraintViolationException e) {
+                StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
-                    final ConstraintViolation<?> cv = iter.next();
-                    msg.append("[").append(cv.getRootBean().getClass().getName()).append(".").append(cv.getPropertyPath()).append(": ").append(cv.getMessage()).append(" (invalid value = ").append(cv.getInvalidValue()).append(")").append("]");
+                    ConstraintViolation<?> cv = iter.next();
+                    msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
-                throw new IllegalStateException(msg.toString(), e);
+                throw new RuntimeException(msg.toString(), e);
             }
             obj.flush();
             data.add(obj);
