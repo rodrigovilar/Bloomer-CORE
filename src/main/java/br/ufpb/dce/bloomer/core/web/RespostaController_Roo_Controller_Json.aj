@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 privileged aspect RespostaController_Roo_Controller_Json {
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", headers = "Accept=application/json")
     @ResponseBody
     public ResponseEntity<String> RespostaController.showJson(@PathVariable("id") Long id) {
         Resposta resposta = Resposta.findResposta(id);
@@ -57,13 +57,25 @@ privileged aspect RespostaController_Roo_Controller_Json {
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
     
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, headers = "Accept=application/json")
-    public ResponseEntity<String> RespostaController.updateFromJson(@RequestBody String json, @PathVariable("id") Long id) {
+    @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
+    public ResponseEntity<String> RespostaController.updateFromJson(@RequestBody String json) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         Resposta resposta = Resposta.fromJsonToResposta(json);
         if (resposta.merge() == null) {
             return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<String>(headers, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/jsonArray", method = RequestMethod.PUT, headers = "Accept=application/json")
+    public ResponseEntity<String> RespostaController.updateFromJsonArray(@RequestBody String json) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        for (Resposta resposta: Resposta.fromJsonArrayToRespostas(json)) {
+            if (resposta.merge() == null) {
+                return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
+            }
         }
         return new ResponseEntity<String>(headers, HttpStatus.OK);
     }
