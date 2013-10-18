@@ -28,10 +28,10 @@ privileged aspect PartidaDataOnDemand_Roo_DataOnDemand {
     private List<Partida> PartidaDataOnDemand.data;
     
     @Autowired
-    private JogoDataOnDemand PartidaDataOnDemand.jogoDataOnDemand;
+    JogoDataOnDemand PartidaDataOnDemand.jogoDataOnDemand;
     
     @Autowired
-    private UsuarioDataOnDemand PartidaDataOnDemand.usuarioDataOnDemand;
+    UsuarioDataOnDemand PartidaDataOnDemand.usuarioDataOnDemand;
     
     public Partida PartidaDataOnDemand.getNewTransientPartida(int index) {
         Partida obj = new Partida();
@@ -105,13 +105,13 @@ privileged aspect PartidaDataOnDemand_Roo_DataOnDemand {
             Partida obj = getNewTransientPartida(i);
             try {
                 obj.persist();
-            } catch (ConstraintViolationException e) {
-                StringBuilder msg = new StringBuilder();
+            } catch (final ConstraintViolationException e) {
+                final StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
-                    ConstraintViolation<?> cv = iter.next();
-                    msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
+                    final ConstraintViolation<?> cv = iter.next();
+                    msg.append("[").append(cv.getRootBean().getClass().getName()).append(".").append(cv.getPropertyPath()).append(": ").append(cv.getMessage()).append(" (invalid value = ").append(cv.getInvalidValue()).append(")").append("]");
                 }
-                throw new RuntimeException(msg.toString(), e);
+                throw new IllegalStateException(msg.toString(), e);
             }
             obj.flush();
             data.add(obj);

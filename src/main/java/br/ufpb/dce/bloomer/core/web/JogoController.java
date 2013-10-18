@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.ufpb.dce.bloomer.core.model.Jogo;
@@ -29,6 +30,21 @@ import br.ufpb.dce.bloomer.core.model.Usuario;
 @RooWebScaffold(path = "jogos", formBackingObject = Jogo.class)
 @RooWebJson(jsonObject = Jogo.class)
 public class JogoController {
+
+	@RequestMapping(params = "loadtipojogo", headers = "Accept=application/json")
+	@ResponseBody
+	public ResponseEntity<String> listJson(
+			@RequestParam(value = "loadtipojogo", required = false) String loadtipojogo) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=utf-8");
+		ArrayNode noJogos = JsonNodeFactory.instance.arrayNode();
+		List<Jogo> result = Jogo.findAllJogoes();
+		for (Jogo jogo : result) {
+			noJogos.add(jogo.toJson(loadtipojogo));
+		}
+		return new ResponseEntity<String>(noJogos.toString(), headers,
+				HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/{idJogo}/usuarios", headers = "Accept=application/json")
 	@ResponseBody
