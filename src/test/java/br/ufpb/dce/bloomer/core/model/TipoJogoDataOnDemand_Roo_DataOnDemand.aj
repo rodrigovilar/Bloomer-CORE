@@ -6,7 +6,6 @@ package br.ufpb.dce.bloomer.core.model;
 import br.ufpb.dce.bloomer.core.model.Plafatorma;
 import br.ufpb.dce.bloomer.core.model.TipoJogo;
 import br.ufpb.dce.bloomer.core.model.TipoJogoDataOnDemand;
-import br.ufpb.dce.bloomer.core.model.UsuarioDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect TipoJogoDataOnDemand_Roo_DataOnDemand {
@@ -25,15 +23,21 @@ privileged aspect TipoJogoDataOnDemand_Roo_DataOnDemand {
     
     private List<TipoJogo> TipoJogoDataOnDemand.data;
     
-    @Autowired
-    UsuarioDataOnDemand TipoJogoDataOnDemand.usuarioDataOnDemand;
-    
     public TipoJogo TipoJogoDataOnDemand.getNewTransientTipoJogo(int index) {
         TipoJogo obj = new TipoJogo();
+        setAutor(obj, index);
         setDescricao(obj, index);
         setNome(obj, index);
         setPlataforma(obj, index);
         return obj;
+    }
+    
+    public void TipoJogoDataOnDemand.setAutor(TipoJogo obj, int index) {
+        String autor = "autor_" + index;
+        if (autor.length() > 100) {
+            autor = autor.substring(0, 100);
+        }
+        obj.setAutor(autor);
     }
     
     public void TipoJogoDataOnDemand.setDescricao(TipoJogo obj, int index) {
@@ -97,13 +101,13 @@ privileged aspect TipoJogoDataOnDemand_Roo_DataOnDemand {
             TipoJogo obj = getNewTransientTipoJogo(i);
             try {
                 obj.persist();
-            } catch (final ConstraintViolationException e) {
-                final StringBuilder msg = new StringBuilder();
+            } catch (ConstraintViolationException e) {
+                StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
-                    final ConstraintViolation<?> cv = iter.next();
-                    msg.append("[").append(cv.getRootBean().getClass().getName()).append(".").append(cv.getPropertyPath()).append(": ").append(cv.getMessage()).append(" (invalid value = ").append(cv.getInvalidValue()).append(")").append("]");
+                    ConstraintViolation<?> cv = iter.next();
+                    msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
-                throw new IllegalStateException(msg.toString(), e);
+                throw new RuntimeException(msg.toString(), e);
             }
             obj.flush();
             data.add(obj);

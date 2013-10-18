@@ -118,7 +118,7 @@ privileged aspect ApplicationConversionServiceFactoryBean_Roo_ConversionService 
     public Converter<TipoJogo, String> ApplicationConversionServiceFactoryBean.getTipoJogoToStringConverter() {
         return new org.springframework.core.convert.converter.Converter<br.ufpb.dce.bloomer.core.model.TipoJogo, java.lang.String>() {
             public String convert(TipoJogo tipoJogo) {
-                return new StringBuilder().append(tipoJogo.getNome()).append(' ').append(tipoJogo.getDescricao()).toString();
+                return new StringBuilder().append(tipoJogo.getNome()).append(' ').append(tipoJogo.getDescricao()).append(' ').append(tipoJogo.getAutor()).toString();
             }
         };
     }
