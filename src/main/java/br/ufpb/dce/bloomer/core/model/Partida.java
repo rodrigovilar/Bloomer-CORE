@@ -31,93 +31,96 @@ import flexjson.JSONSerializer;
 @RooJavaBean
 @RooToString
 @RooJson
-@RooJpaActiveRecord(finders = { "findPartidasByJogoAndUsuario", "findPartidasByJogo" })
+@RooJpaActiveRecord(finders = { "findPartidasByJogoAndUsuario",
+		"findPartidasByJogo" })
 public class Partida {
 
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
-    private Calendar dataHora;
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(style = "M-")
+	private Calendar dataHora;
 
-    @NotNull
-    @Min(0L)
-    @Max(100L)
-    private int acerto;
+	@NotNull
+	@Min(0L)
+	@Max(100L)
+	private int acerto;
 
-    @NotNull
-    private Boolean concluiu;
+	@NotNull
+	private Boolean concluiu;
 
-    @NotNull
-    private int escore;
+	@NotNull
+	private int escore;
 
-    @ManyToOne
-    private Usuario usuario;
+	@ManyToOne
+	private Usuario usuario;
 
-    @ManyToOne
-    private Jogo jogo;
+	@ManyToOne
+	private Jogo jogo;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "partida")
-    private Set<Resposta> respostas = new HashSet<Resposta>();
-    
-    public String toJson() {
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "partida")
+	private Set<Resposta> respostas = new HashSet<Resposta>();
+
+	public String toJson() {
 		ObjectNode noPartida = partida2json(this);
 		return noPartida.toString();
-    }
-    
-    public static String toJsonArray(Collection<Partida> collection) {
-    	ArrayNode arrayDePartidas = JsonNodeFactory.instance.arrayNode();
+	}
+
+	public static String toJsonArray(Collection<Partida> collection) {
+		ArrayNode arrayDePartidas = JsonNodeFactory.instance.arrayNode();
 
 		for (Partida partida : collection) {
 			ObjectNode noPartida = partida2json(partida);
 			arrayDePartidas.add(noPartida);
 		}
 
-    	return arrayDePartidas.toString();
-    }
-    
-    private static ObjectNode partida2json(Partida partida) {
+		return arrayDePartidas.toString();
+	}
+
+	private static ObjectNode partida2json(Partida partida) {
 		ObjectNode noPartida = JsonNodeFactory.instance.objectNode();
-		
+
 		noPartida.put("id", partida.getId());
-		
+
 		StringBuilder strBuilder = new StringBuilder();
 		strBuilder.append(partida.getDataHora().get(Calendar.DATE) + "/");
-		strBuilder.append(getMonthName((partida.getDataHora().get(Calendar.MONTH))) + "/");
+		strBuilder.append(getMonthName((partida.getDataHora()
+				.get(Calendar.MONTH))) + "/");
 		strBuilder.append(partida.getDataHora().get(Calendar.YEAR));
-		
-		noPartida.put("dataHora", strBuilder.toString());			
+
+		noPartida.put("dataHora", strBuilder.toString());
 		noPartida.put("acerto", partida.getAcerto());
 		noPartida.put("concluiu", partida.getConcluiu());
 		noPartida.put("escore", partida.getEscore());
 		noPartida.put("usuario", partida.getUsuario().getId());
 		noPartida.put("jogo", partida.getJogo().getId());
 		noPartida.put("version", partida.getVersion());
-		
+
 		return noPartida;
 	}
-    
-    public static Partida fromJsonToPartida(String json) {
-    	ObjectMapper objectMapper = new ObjectMapper();
-    	JsonFactory factory = objectMapper.getJsonFactory();
-    	try {
-			JsonNode partidaJSON = objectMapper.readTree(factory.createJsonParser(json));
-			
+
+	public static Partida fromJsonToPartida(String json) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonFactory factory = objectMapper.getJsonFactory();
+		try {
+			JsonNode partidaJSON = objectMapper.readTree(factory
+					.createJsonParser(json));
+
 			Partida partida = new Partida();
-			
+
 			if (partidaJSON.has("id")) {
 				partida.setId(partidaJSON.get("id").asLong());
 			}
-			
+
 			if (partidaJSON.has("dataHora")) {
-				
+
 				String data_str = partidaJSON.get("dataHora").asText();
-				String[] data = data_str.split("/"); 
-				
+				String[] data = data_str.split("/");
+
 				Calendar cal = Calendar.getInstance();
-				cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data[0]));  
-				cal.set(Calendar.MONTH, getMonthNumber(data[1]));  
-				cal.set(Calendar.YEAR, Integer.parseInt(data[2])); 
-				
+				cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data[0]));
+				cal.set(Calendar.MONTH, getMonthNumber(data[1]));
+				cal.set(Calendar.YEAR, Integer.parseInt(data[2]));
+
 				partida.setDataHora(cal);
 			}
 
@@ -132,9 +135,10 @@ public class Partida {
 			if (partidaJSON.has("escore")) {
 				partida.setEscore(partidaJSON.get("escore").asInt());
 			}
-			
+
 			if (partidaJSON.has("usuario")) {
-				Usuario usuario = Usuario.findUsuario(partidaJSON.get("usuario").asLong());
+				Usuario usuario = Usuario.findUsuario(partidaJSON
+						.get("usuario").asLong());
 				partida.setUsuario(usuario);
 			}
 
@@ -142,31 +146,32 @@ public class Partida {
 				Jogo jogo = Jogo.findJogo(partidaJSON.get("jogo").asLong());
 				partida.setJogo(jogo);
 			}
-			
+
 			if (partidaJSON.has("version")) {
 				partida.setVersion(partidaJSON.get("version").asInt());
 			}
 
 			return partida;
-			
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-    }
-    
-    // Retorna o nome dos meses: 0-11 to January-December
-    public static String getMonthName(int month) {
-        return new java.text.DateFormatSymbols().getMonths()[month];
-    }
-    
-    // Retorna o número dos meses: January-December to 0-11
-    public static int getMonthNumber(String month) {
-        Calendar cal = Calendar.getInstance();
-        try {
-			cal.setTime(new java.text.SimpleDateFormat("MMM", java.util.Locale.ENGLISH).parse(month));
+	}
+
+	// Retorna o nome dos meses: 0-11 to January-December
+	public static String getMonthName(int month) {
+		return new java.text.DateFormatSymbols().getMonths()[month];
+	}
+
+	// Retorna o número dos meses: January-December to 0-11
+	public static int getMonthNumber(String month) {
+		Calendar cal = Calendar.getInstance();
+		try {
+			cal.setTime(new java.text.SimpleDateFormat("MMM",
+					java.util.Locale.ENGLISH).parse(month));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-        return cal.get(Calendar.MONTH);
-    }
+		return cal.get(Calendar.MONTH);
+	}
 }

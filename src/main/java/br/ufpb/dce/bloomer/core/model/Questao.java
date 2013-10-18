@@ -29,27 +29,27 @@ import flexjson.JSONSerializer;
 @RooJson
 public class Questao {
 
-    @Size(max = 1000)
-    private String pergunta;
-    
-    @Size(max = 4000)
-    private String gabarito;
+	@Size(max = 1000)
+	private String pergunta;
 
-    @ManyToOne
-    private Jogo jogo;
+	@Size(max = 4000)
+	private String gabarito;
 
-    @ManyToOne
-    private TipoQuestao tipo;
+	@ManyToOne
+	private Jogo jogo;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questao")
-    private Set<Resposta> respostas = new HashSet<Resposta>();
-    
-    public String toJson() {
+	@ManyToOne
+	private TipoQuestao tipo;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "questao")
+	private Set<Resposta> respostas = new HashSet<Resposta>();
+
+	public String toJson() {
 		ObjectNode noQuestao = questao2json(this);
 		return noQuestao.toString();
-    }
-    
-    public static String toJsonArray(Collection<Questao> collection) {
+	}
+
+	public static String toJsonArray(Collection<Questao> collection) {
 		ArrayNode arrayDeQuestoes = JsonNodeFactory.instance.arrayNode();
 
 		for (Questao questao : collection) {
@@ -57,35 +57,36 @@ public class Questao {
 			arrayDeQuestoes.add(noQuestao);
 		}
 
-    	return arrayDeQuestoes.toString();
-    }
+		return arrayDeQuestoes.toString();
+	}
 
 	private static ObjectNode questao2json(Questao questao) {
 		ObjectNode noQuestao = JsonNodeFactory.instance.objectNode();
-		
+
 		noQuestao.put("id", questao.getId());
 		noQuestao.put("pergunta", questao.getPergunta());
 		noQuestao.put("gabarito", questao.getGabarito());
 		noQuestao.put("jogo", questao.getJogo().getId());
 		noQuestao.put("tipoquestao", questao.getTipo().getId());
-		noQuestao.put("version", questao.getVersion());	
-		
+		noQuestao.put("version", questao.getVersion());
+
 		return noQuestao;
 	}
-	
-    public static Questao fromJsonToQuestao(String json) {
-    	
-    	ObjectMapper objectMapper = new ObjectMapper();
-    	JsonFactory factory = objectMapper.getJsonFactory();
-    	try {
-			JsonNode questaoJSON = objectMapper.readTree(factory.createJsonParser(json));
-			
+
+	public static Questao fromJsonToQuestao(String json) {
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonFactory factory = objectMapper.getJsonFactory();
+		try {
+			JsonNode questaoJSON = objectMapper.readTree(factory
+					.createJsonParser(json));
+
 			Questao questao = new Questao();
-			
+
 			if (questaoJSON.has("id")) {
 				questao.setId(questaoJSON.get("id").asLong());
 			}
-			
+
 			if (questaoJSON.has("gabarito")) {
 				questao.setGabarito(questaoJSON.get("gabarito").asText());
 			}
@@ -93,14 +94,15 @@ public class Questao {
 			if (questaoJSON.has("pergunta")) {
 				questao.setPergunta(questaoJSON.get("pergunta").asText());
 			}
-			
+
 			if (questaoJSON.has("jogo")) {
 				Jogo jogo = Jogo.findJogo(questaoJSON.get("jogo").asLong());
 				questao.setJogo(jogo);
 			}
 
 			if (questaoJSON.has("tipoquestao")) {
-				TipoQuestao tipo = TipoQuestao.findTipoQuestao(questaoJSON.get("tipoquestao").asLong());
+				TipoQuestao tipo = TipoQuestao.findTipoQuestao(questaoJSON.get(
+						"tipoquestao").asLong());
 				questao.setTipo(tipo);
 			}
 
@@ -109,9 +111,9 @@ public class Questao {
 			}
 
 			return questao;
-			
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-    }
+	}
 }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 privileged aspect RelacaoController_Roo_Controller_Json {
     
-    @RequestMapping(value = "/{id}", headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
     public ResponseEntity<String> RelacaoController.showJson(@PathVariable("id") Long id) {
         Relacao relacao = Relacao.findRelacao(id);
@@ -59,25 +59,13 @@ privileged aspect RelacaoController_Roo_Controller_Json {
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
     
-    @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
-    public ResponseEntity<String> RelacaoController.updateFromJson(@RequestBody String json) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, headers = "Accept=application/json")
+    public ResponseEntity<String> RelacaoController.updateFromJson(@RequestBody String json, @PathVariable("id") Long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         Relacao relacao = Relacao.fromJsonToRelacao(json);
         if (relacao.merge() == null) {
             return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<String>(headers, HttpStatus.OK);
-    }
-    
-    @RequestMapping(value = "/jsonArray", method = RequestMethod.PUT, headers = "Accept=application/json")
-    public ResponseEntity<String> RelacaoController.updateFromJsonArray(@RequestBody String json) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        for (Relacao relacao: Relacao.fromJsonArrayToRelacaos(json)) {
-            if (relacao.merge() == null) {
-                return new ResponseEntity<String>(headers, HttpStatus.NOT_FOUND);
-            }
         }
         return new ResponseEntity<String>(headers, HttpStatus.OK);
     }

@@ -17,14 +17,14 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJpaActiveRecord(finders = { "findRelacaosByDestino" })
 public class Relacao {
 
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
-    private Calendar dataInicio;
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(style = "M-")
+	private Calendar dataInicio;
 
-    @ManyToOne
-    private Usuario destino;
-    
-    @ManyToOne
-    private Usuario origem;
+	@ManyToOne
+	private Usuario destino;
+
+	@ManyToOne
+	private Usuario origem;
 }

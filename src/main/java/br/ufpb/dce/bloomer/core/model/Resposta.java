@@ -26,22 +26,21 @@ import flexjson.JSONSerializer;
 @RooJson
 public class Resposta {
 
-    @Size(max = 4000)
-    private String conteudo;
+	@Size(max = 4000)
+	private String conteudo;
 
-    @ManyToOne
-    private Partida partida;
+	@ManyToOne
+	private Partida partida;
 
-    @ManyToOne
-    private Questao questao;
-    
+	@ManyToOne
+	private Questao questao;
 
-    public String toJson() {
+	public String toJson() {
 		ObjectNode noResposta = resposta2json(this);
 		return noResposta.toString();
-    }
-    
-    public static String toJsonArray(Collection<Resposta> collection) {
+	}
+
+	public static String toJsonArray(Collection<Resposta> collection) {
 		ArrayNode arrayDeRespostas = JsonNodeFactory.instance.arrayNode();
 
 		for (Resposta resposta : collection) {
@@ -49,45 +48,48 @@ public class Resposta {
 			arrayDeRespostas.add(noResposta);
 		}
 
-    	return arrayDeRespostas.toString();
-    }
-    
-    private static ObjectNode resposta2json(Resposta resposta){
+		return arrayDeRespostas.toString();
+	}
+
+	private static ObjectNode resposta2json(Resposta resposta) {
 		ObjectNode noResposta = JsonNodeFactory.instance.objectNode();
-		
+
 		noResposta.put("id", resposta.getId());
 		noResposta.put("conteudo", resposta.getConteudo());
 		noResposta.put("partida", resposta.getPartida().getId());
 		noResposta.put("questao", resposta.getQuestao().getId());
-		noResposta.put("version", resposta.getVersion());	
-		
+		noResposta.put("version", resposta.getVersion());
+
 		return noResposta;
-    }
-    
-    public static Resposta fromJsonToResposta(String json) {
-    	
-    	ObjectMapper objectMapper = new ObjectMapper();
-    	JsonFactory factory = objectMapper.getJsonFactory();
-    	try {
-			JsonNode respostaJSON = objectMapper.readTree(factory.createJsonParser(json));
-			
+	}
+
+	public static Resposta fromJsonToResposta(String json) {
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonFactory factory = objectMapper.getJsonFactory();
+		try {
+			JsonNode respostaJSON = objectMapper.readTree(factory
+					.createJsonParser(json));
+
 			Resposta resposta = new Resposta();
-			
+
 			if (respostaJSON.has("id")) {
 				resposta.setId(respostaJSON.get("id").asLong());
 			}
-			
+
 			if (respostaJSON.has("conteudo")) {
 				resposta.setConteudo(respostaJSON.get("conteudo").asText());
 			}
 
 			if (respostaJSON.has("partida")) {
-				Partida partida = Partida.findPartida(respostaJSON.get("partida").asLong());
+				Partida partida = Partida.findPartida(respostaJSON.get(
+						"partida").asLong());
 				resposta.setPartida(partida);
 			}
 
 			if (respostaJSON.has("questao")) {
-				Questao questao = Questao.findQuestao(respostaJSON.get("questao").asLong());
+				Questao questao = Questao.findQuestao(respostaJSON.get(
+						"questao").asLong());
 				resposta.setQuestao(questao);
 			}
 
@@ -96,9 +98,9 @@ public class Resposta {
 			}
 
 			return resposta;
-			
+
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-    }    
+	}
 }

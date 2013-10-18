@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RooWebScaffold(path = "usuarios", formBackingObject = Usuario.class)
 @RooWebJson(jsonObject = Usuario.class)
 public class UsuarioController {
-	//TODO
-	//Jogos configurados por esse cara
-	//Seguidores desse cara
+	// TODO
+	// Jogos configurados por esse cara
+	// Seguidores desse cara
 }
