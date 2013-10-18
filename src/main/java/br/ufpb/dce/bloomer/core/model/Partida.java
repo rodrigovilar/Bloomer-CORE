@@ -89,8 +89,8 @@ public class Partida {
 		noPartida.put("acerto", partida.getAcerto());
 		noPartida.put("concluiu", partida.getConcluiu());
 		noPartida.put("escore", partida.getEscore());
-		noPartida.put("usuario", partida.getUsuario().getId());
-		noPartida.put("jogo", partida.getJogo().getId());
+		noPartida.put("usuario", partida.getUsuario().getNome());
+		noPartida.put("jogo", partida.getJogo().getNome());
 		noPartida.put("version", partida.getVersion());
 		
 		return noPartida;

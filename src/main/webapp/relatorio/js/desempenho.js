@@ -86,25 +86,29 @@ function ajax(){
 
 function montarTabela(json){
 
-	ifExistsRemove($("#tabela"));
+	ifExistsRemove($(".table"));
 
 	var $div = $('<div /></br>').appendTo('body');
 	$div.attr('id', 'tabela_desempenho');
 
-	var table = $('<table widtd="1000" border="1" cellspacing="0" style="text-align:center"></table>').attr('id', 'tabela');
+	var table = $('<table border="1" cellspacing="0" style="text-align:center"></table>').attr('class', 'table table-striped');
+
 
 	var header = '<tr><th rowspan="2">Data/Hora</th><th rowspan="2">Acertos (%)</th><th rowspan="2">Concluiu</th><th rowspan="2">Escore</th>';
 
 	for (h = 0; h < json.questoes.length; h++){
-		header += '<th style="line-height:0" rowspan="2"><h4>Questão ' + (h + 1) + '</h4><h4>Gabarito: ' + json.questoes[h].gabarito + '</h4></th>';
+		header += '<th style="line-height:0" rowspan="2"><h5>Questão ' + (h + 1) + '</h5><h5>Gabarito: ' + json.questoes[h].gabarito + '</h5></th>';
 	}
 
 	header += '</tr><tr></tr>';
 	table.append(header);
 
 	for (j=0; j < json.partidas.length; j++){
+
+		var concluiu  = ((json.partidas[j].concluiu == true) ? "Sim" : "Não") ;
+
 	    var row = '<tr><td>' + json.partidas[j].dataHora + '</td><td>' + json.partidas[j].acerto +
-	    			'</td><td>' + json.partidas[j].concluiu + '</td><td>' + json.partidas[j].escore + '</td>';
+	    			'</td><td>' + concluiu + '</td><td>' + json.partidas[j].escore + '</td>';
 
 	    for (k=0; k < json.partidas[0].respostas.length; k++){
 	    	row += '<td>' + json.partidas[0].respostas[k].conteudo + '</td>';

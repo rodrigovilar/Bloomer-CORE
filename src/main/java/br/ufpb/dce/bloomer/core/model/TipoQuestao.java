@@ -65,7 +65,7 @@ public class TipoQuestao {
 		noTipoQuestao.put("id", tipoquestao.getId());
 		noTipoQuestao.put("nome", tipoquestao.getNome());
 		noTipoQuestao.put("descricao", tipoquestao.getDescricao());
-		noTipoQuestao.put("tipojogo", tipoquestao.getJogo().getId());
+		noTipoQuestao.put("tipojogo", tipoquestao.getJogo().getNome());
 		noTipoQuestao.put("version", tipoquestao.getVersion());	
 		
 		return noTipoQuestao;
