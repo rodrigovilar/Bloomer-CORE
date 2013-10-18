@@ -7,8 +7,8 @@
             <table:column id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_nome" property="nome" z="4za8o5gQHpPkyx05J7WsPFwnCYU="/>
             <table:column id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_descricao" property="descricao" z="w2WDrnkCs6EDf7dUP/qcphKWGhQ="/>
             <table:column id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_plataforma" property="plataforma" z="jNOFt+udYiWQC116cJEZ5ovkMkw="/>
-            <table:column id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_desenvolvedor" property="desenvolvedor" z="RvbeKy6UtMuS9Ai8V8qiYLoOtlo="/>
             <table:column id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_niveisTaxonomia" property="niveisTaxonomia" z="v2aUDqgVOBGLbvmo4aBpKxRVan4="/>
+            <table:column id="c_br_ufpb_dce_bloomer_core_model_TipoJogo_desenvolvedor" property="desenvolvedor" z="RvbeKy6UtMuS9Ai8V8qiYLoOtlo="/>
         </table:table>
     </page:list>
 </div>

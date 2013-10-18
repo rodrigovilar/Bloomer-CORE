@@ -8,6 +8,7 @@ import br.ufpb.dce.bloomer.core.model.NivelTaxonomia;
 import br.ufpb.dce.bloomer.core.model.Plafatorma;
 import br.ufpb.dce.bloomer.core.model.TipoJogo;
 import br.ufpb.dce.bloomer.core.model.TipoQuestao;
+import br.ufpb.dce.bloomer.core.model.Usuario;
 import java.util.Set;
 
 privileged aspect TipoJogo_Roo_JavaBean {
@@ -28,12 +29,12 @@ privileged aspect TipoJogo_Roo_JavaBean {
         this.descricao = descricao;
     }
     
-    public String TipoJogo.getAutor() {
-        return this.autor;
+    public Usuario TipoJogo.getDesenvolvedor() {
+        return this.desenvolvedor;
     }
     
-    public void TipoJogo.setAutor(String autor) {
-        this.autor = autor;
+    public void TipoJogo.setDesenvolvedor(Usuario desenvolvedor) {
+        this.desenvolvedor = desenvolvedor;
     }
     
     public Plafatorma TipoJogo.getPlataforma() {
