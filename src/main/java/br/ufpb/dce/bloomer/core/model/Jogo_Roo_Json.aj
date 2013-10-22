@@ -16,10 +16,6 @@ privileged aspect Jogo_Roo_Json {
         return new JSONSerializer().exclude("*.class").serialize(this);
     }
     
-    public String Jogo.toJson(String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(this);
-    }
-    
     public static Collection<Jogo> Jogo.fromJsonArrayToJogoes(String json) {
         return new JSONDeserializer<List<Jogo>>().use(null, ArrayList.class).use("values", Jogo.class).deserialize(json);
     }
