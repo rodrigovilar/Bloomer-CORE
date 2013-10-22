@@ -16,20 +16,12 @@ privileged aspect Relacao_Roo_Json {
         return new JSONSerializer().exclude("*.class").serialize(this);
     }
     
-    public String Relacao.toJson(String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(this);
-    }
-    
     public static Relacao Relacao.fromJsonToRelacao(String json) {
         return new JSONDeserializer<Relacao>().use(null, Relacao.class).deserialize(json);
     }
     
     public static String Relacao.toJsonArray(Collection<Relacao> collection) {
         return new JSONSerializer().exclude("*.class").serialize(collection);
-    }
-    
-    public static String Relacao.toJsonArray(Collection<Relacao> collection, String[] fields) {
-        return new JSONSerializer().include(fields).exclude("*.class").serialize(collection);
     }
     
     public static Collection<Relacao> Relacao.fromJsonArrayToRelacaos(String json) {

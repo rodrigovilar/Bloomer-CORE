@@ -6,10 +6,7 @@ package br.ufpb.dce.bloomer.core.model;
 import br.ufpb.dce.bloomer.core.model.TipoQuestao;
 import br.ufpb.dce.bloomer.core.model.TipoQuestaoDataOnDemand;
 import br.ufpb.dce.bloomer.core.model.TipoQuestaoIntegrationTest;
-import java.util.Iterator;
 import java.util.List;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,12 +19,12 @@ privileged aspect TipoQuestaoIntegrationTest_Roo_IntegrationTest {
     
     declare @type: TipoQuestaoIntegrationTest: @RunWith(SpringJUnit4ClassRunner.class);
     
-    declare @type: TipoQuestaoIntegrationTest: @ContextConfiguration(locations = "classpath*:/META-INF/spring/applicationContext*.xml");
+    declare @type: TipoQuestaoIntegrationTest: @ContextConfiguration(locations = "classpath:/META-INF/spring/applicationContext*.xml");
     
     declare @type: TipoQuestaoIntegrationTest: @Transactional;
     
     @Autowired
-    TipoQuestaoDataOnDemand TipoQuestaoIntegrationTest.dod;
+    private TipoQuestaoDataOnDemand TipoQuestaoIntegrationTest.dod;
     
     @Test
     public void TipoQuestaoIntegrationTest.testCountTipoQuestaos() {
@@ -104,16 +101,7 @@ privileged aspect TipoQuestaoIntegrationTest_Roo_IntegrationTest {
         TipoQuestao obj = dod.getNewTransientTipoQuestao(Integer.MAX_VALUE);
         Assert.assertNotNull("Data on demand for 'TipoQuestao' failed to provide a new transient entity", obj);
         Assert.assertNull("Expected 'TipoQuestao' identifier to be null", obj.getId());
-        try {
-            obj.persist();
-        } catch (final ConstraintViolationException e) {
-            final StringBuilder msg = new StringBuilder();
-            for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
-                final ConstraintViolation<?> cv = iter.next();
-                msg.append("[").append(cv.getRootBean().getClass().getName()).append(".").append(cv.getPropertyPath()).append(": ").append(cv.getMessage()).append(" (invalid value = ").append(cv.getInvalidValue()).append(")").append("]");
-            }
-            throw new IllegalStateException(msg.toString(), e);
-        }
+        obj.persist();
         obj.flush();
         Assert.assertNotNull("Expected 'TipoQuestao' identifier to no longer be null", obj.getId());
     }

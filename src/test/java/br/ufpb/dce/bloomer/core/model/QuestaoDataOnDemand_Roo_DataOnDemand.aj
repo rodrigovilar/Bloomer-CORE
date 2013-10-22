@@ -26,10 +26,10 @@ privileged aspect QuestaoDataOnDemand_Roo_DataOnDemand {
     private List<Questao> QuestaoDataOnDemand.data;
     
     @Autowired
-    JogoDataOnDemand QuestaoDataOnDemand.jogoDataOnDemand;
+    private JogoDataOnDemand QuestaoDataOnDemand.jogoDataOnDemand;
     
     @Autowired
-    TipoQuestaoDataOnDemand QuestaoDataOnDemand.tipoQuestaoDataOnDemand;
+    private TipoQuestaoDataOnDemand QuestaoDataOnDemand.tipoQuestaoDataOnDemand;
     
     public Questao QuestaoDataOnDemand.getNewTransientQuestao(int index) {
         Questao obj = new Questao();
@@ -94,13 +94,13 @@ privileged aspect QuestaoDataOnDemand_Roo_DataOnDemand {
             Questao obj = getNewTransientQuestao(i);
             try {
                 obj.persist();
-            } catch (final ConstraintViolationException e) {
-                final StringBuilder msg = new StringBuilder();
+            } catch (ConstraintViolationException e) {
+                StringBuilder msg = new StringBuilder();
                 for (Iterator<ConstraintViolation<?>> iter = e.getConstraintViolations().iterator(); iter.hasNext();) {
-                    final ConstraintViolation<?> cv = iter.next();
-                    msg.append("[").append(cv.getRootBean().getClass().getName()).append(".").append(cv.getPropertyPath()).append(": ").append(cv.getMessage()).append(" (invalid value = ").append(cv.getInvalidValue()).append(")").append("]");
+                    ConstraintViolation<?> cv = iter.next();
+                    msg.append("[").append(cv.getConstraintDescriptor()).append(":").append(cv.getMessage()).append("=").append(cv.getInvalidValue()).append("]");
                 }
-                throw new IllegalStateException(msg.toString(), e);
+                throw new RuntimeException(msg.toString(), e);
             }
             obj.flush();
             data.add(obj);
