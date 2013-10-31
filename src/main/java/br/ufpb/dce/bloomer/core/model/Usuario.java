@@ -1,12 +1,10 @@
 package br.ufpb.dce.bloomer.core.model;
 
-import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,6 +14,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -73,6 +72,11 @@ public class Usuario {
 		ObjectNode noUsuario = usuario2json(this);
 		return noUsuario.toString();
 	}
+	
+	public String toJsonTest() {
+		ObjectNode noUsuario = usuarioToTestjson(this);
+		return noUsuario.toString();
+	}
 
 	public static String toJsonArray(
 			Collection<br.ufpb.dce.bloomer.core.model.Usuario> collection) {
@@ -99,6 +103,21 @@ public class Usuario {
 		noUsuario.put("login", usuario.getLogin());
 		noUsuario.put("senha", usuario.getSenha());
 		noUsuario.put("version", usuario.getVersion());
+		return noUsuario;
+	}
+	
+	private static ObjectNode usuarioToTestjson(
+			br.ufpb.dce.bloomer.core.model.Usuario usuario) {
+		ObjectNode noUsuario = JsonNodeFactory.instance.objectNode();
+		noUsuario.put("nome", usuario.getNome());
+		StringBuilder strBuilder = new StringBuilder();
+		strBuilder.append(usuario.getDataNascimento().get(Calendar.DATE) + "/");
+		strBuilder.append(getMonthName((usuario.getDataNascimento().get(Calendar.MONTH))) + "/");
+		strBuilder.append(usuario.getDataNascimento().get(Calendar.YEAR));
+		noUsuario.put("dataNascimento", strBuilder.toString());
+		noUsuario.put("sexo", usuario.getSexo().name());
+		noUsuario.put("login", usuario.getLogin());
+		noUsuario.put("senha", usuario.getSenha());
 		return noUsuario;
 	}
 

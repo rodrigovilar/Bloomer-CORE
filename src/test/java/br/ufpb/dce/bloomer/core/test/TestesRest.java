@@ -1,9 +1,13 @@
 package br.ufpb.dce.bloomer.core.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.regex.Pattern;
-import junit.framework.Assert;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpDelete;
@@ -14,220 +18,71 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.junit.Before;
 import org.junit.Test;
+
+import br.ufpb.dce.bloomer.core.model.Sexo;
+import br.ufpb.dce.bloomer.core.model.Usuario;
 
 public class TestesRest {
 
-	public String DefaultURI;
-	public CloseableHttpClient httpclient;
-	public HttpGet httpget;
-	public HttpPost httppost;
-	public HttpDelete httpdelete;
-	public HttpPut httpput;
+	private static String USUARIOS = "http://localhost:8080/Bloomer-CORE/usuarios";
+	private CloseableHttpClient httpclient = HttpClients.createDefault();
 
-	@Before
-	public void initialize() {
-		DefaultURI = "/Bloomer-CORE/usuarios";
-		httpclient = HttpClients.createDefault();
-		httpget = new HttpGet("http://localhost:8080" + DefaultURI);
-		httppost = new HttpPost("http://localhost:8080" + DefaultURI);
-		httpput = new HttpPut("http://localhost:8080" + DefaultURI);
-	}
+	private HttpGet get = new HttpGet(USUARIOS);
+	private HttpPost post = new HttpPost(USUARIOS);
+	private HttpPut put = new HttpPut(USUARIOS);
+	private HttpDelete delete = new HttpDelete(USUARIOS);
+
+	private HttpResponse response;
 
 	@Test
-	public void testingGETDefault() {
+	public void testingRestMethods() {
+
 		try {
 
-			HttpResponse response = httpclient.execute(httpget);
-			response.setHeader("content-type", "application/json");
-			Assert.assertEquals("HTTP/1.1 200 OK", response.getStatusLine()
+			// Get without users
+			response = httpclient.execute(get);
+			assertEquals("[]", EntityUtils.toString(response.getEntity()));
+
+			// Post of user
+			Usuario user = new Usuario();
+			user.setNome("Rafael");
+			user.setDataNascimento(new GregorianCalendar(1992, 01, 22)); // YYYYMMDD
+			user.setSexo(Sexo.Masculino);
+			user.setLogin("marcusrafael");
+			user.setSenha("123456");
+
+			post.setEntity(new StringEntity(user.toJsonTest()));
+			response = httpclient.execute(post);
+			assertEquals("HTTP/1.1 201 Created", response.getStatusLine()
 					.toString());
 
+			// Verify user from get method
+			get.setURI(new URI(USUARIOS + "/18")); //TODO Make user id dynamic
+			response = httpclient.execute(get);
+			String json = EntityUtils.toString(response.getEntity());
+			Usuario newUser = Usuario.fromJsonToUsuario(json);
+			assertEquals(user.getNome(), newUser.getNome());
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(0);
+			cal.set(user.getDataNascimento().get(Calendar.YEAR), user
+					.getDataNascimento().get(Calendar.MONTH), user
+					.getDataNascimento().get(Calendar.DAY_OF_MONTH));
+			assertEquals(cal.get(Calendar.YEAR), newUser.getDataNascimento().get(Calendar.YEAR));
+			assertEquals(cal.get(Calendar.MONTH), newUser.getDataNascimento().get(Calendar.MONTH));
+			assertEquals(cal.get(Calendar.DAY_OF_MONTH), newUser.getDataNascimento().get(Calendar.DAY_OF_MONTH));
+			assertEquals(user.getSexo(), newUser.getSexo());
+			assertEquals(user.getLogin(), newUser.getLogin());
+			assertEquals(user.getSenha(), newUser.getSenha());
+
+			
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-	@Test
-	public void testingGETSpecific() {
-		try {
-
-			int userID = 1;
-			httpget = new HttpGet("http://localhost:8080"
-					+ "/Bloomer-CORE/usuarios/" + userID);
-			HttpResponse response = httpclient.execute(httpget);
-			response.setHeader("content-type", "application/json");
-			Assert.assertEquals("HTTP/1.1 200 OK", response.getStatusLine()
-					.toString());
-
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Test
-	public void testingDELETE() {
-
-		this.testingPOST();
-		try {
-
-			int last = this.findLastAdd();
-			httpdelete = new HttpDelete("http://localhost:8080" + DefaultURI
-					+ "/" + last);
-			HttpResponse response = httpclient.execute(httpdelete);
-			Assert.assertEquals("HTTP/1.1 200 OK", response.getStatusLine()
-					.toString());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	@Test
-	public void testingPOST() {
-
-		StringEntity params;
-
-		try {
-
-			params = new StringEntity("{\"nome\":\"MARCUS\","
-					+ "\"dataNascimento\":\"01/January/1980\","
-					+ "\"sexo\":\"Masculino\"," + "\"login\":\"rafa123\","
-					+ "\"senha\":\"123456\"}");
-
-			httppost.setHeader("content-type", "application/json");
-			httppost.setEntity(params);
-			HttpResponse response = httpclient.execute(httppost);
-			Assert.assertEquals("HTTP/1.1 201 Created", response
-					.getStatusLine().toString());
-
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	@Test
-	public void testingPUT() {
-
-		try {
-
-			int last = this.findLastAdd();
-			int lastVersion = this.findLastVersion();
-
-			StringEntity params = new StringEntity("{\"id\":" + (last) + ","
-					+ "\"nome\":\"XAVIER\","
-					+ "\"dataNascimento\":\"01/January/2000\","
-					+ "\"sexo\":\"Masculino\"," + "\"login\":\"rafa123\","
-					+ "\"senha\":\"123456\"," + "\"version\":" + (lastVersion)
-					+ "}");
-
-			httpput.setHeader("content-type", "application/json");
-			httpput.setEntity(params);
-
-			HttpResponse response = httpclient.execute(httpput);
-			Assert.assertEquals("HTTP/1.1 200 OK", response.getStatusLine()
-					.toString());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public int findLastVersion() throws Exception {
-
-		try {
-
-			HttpResponse response = httpclient.execute(httpget);
-			String usersJsons = EntityUtils.toString(response.getEntity());
-
-			if (!isJson(usersJsons)) {
-
-				throw new Exception("Is not a JSON collection!");
-			} else if (isEmptyJson(usersJsons)) {
-
-				throw new Exception(
-						"No USER on database or parser to json error!");
-			} else {
-
-				String editedJson = usersJsons.substring(2,
-						(usersJsons.length() - 2)); // Remove '[{' and '}]' of
-													// json array
-
-				int ID = Integer.parseInt(editedJson.substring(
-						(editedJson.length() - 1), editedJson.length()));
-
-				return ID;
-			}
-
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return -1;
-	}
-
-	public int findLastAdd() throws Exception {
-
-		try {
-
-			HttpResponse response = httpclient.execute(httpget);
-			String usersJsons = EntityUtils.toString(response.getEntity());
-
-			if (!isJson(usersJsons)) {
-
-				throw new Exception("Is not a JSON collection!");
-			} else if (isEmptyJson(usersJsons)) {
-
-				throw new Exception(
-						"No USER on database or parser to json error!");
-			} else {
-
-				String editedJson = usersJsons.substring(2,
-						(usersJsons.length() - 2)); // Remove '[{' and '}]' of
-													// json array
-
-				if (!(editedJson.contains("}"))) {
-					// Return user json ID
-					int ID = Integer.parseInt(editedJson.substring(5, 6));
-					return ID;
-				} else {
-					String json[] = editedJson.split(Pattern.quote("},{"));
-					String lastJson = json[json.length - 1];
-					// Return LAST user json ID
-					// First number caracther | It solves problem with numbers
-					// bigger than 9
-					int end = lastJson.indexOf(",");
-					int ID = Integer.parseInt(lastJson.substring(5, end));
-					return ID;
-				}
-			}
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return -1;
-	}
-
-	public boolean isJson(String json) {
-		return (json.startsWith("[")) && (json.endsWith("]"));
-	}
-
-	public boolean isEmptyJson(String json) {
-		return (json.equals("[]"));
 	}
 
 }
