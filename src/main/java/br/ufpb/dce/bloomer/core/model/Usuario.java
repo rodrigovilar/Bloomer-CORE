@@ -72,11 +72,6 @@ public class Usuario {
 		ObjectNode noUsuario = usuario2json(this);
 		return noUsuario.toString();
 	}
-	
-	public String toJsonTest() {
-		ObjectNode noUsuario = usuarioToTestjson(this);
-		return noUsuario.toString();
-	}
 
 	public static String toJsonArray(
 			Collection<br.ufpb.dce.bloomer.core.model.Usuario> collection) {
@@ -91,7 +86,9 @@ public class Usuario {
 	private static ObjectNode usuario2json(
 			br.ufpb.dce.bloomer.core.model.Usuario usuario) {
 		ObjectNode noUsuario = JsonNodeFactory.instance.objectNode();
-		noUsuario.put("id", usuario.getId());
+		if (usuario.getId() != null) {
+			noUsuario.put("id", usuario.getId());
+		}
 		noUsuario.put("nome", usuario.getNome());
 		StringBuilder strBuilder = new StringBuilder();
 		strBuilder.append(usuario.getDataNascimento().get(Calendar.DATE) + "/");
@@ -102,22 +99,9 @@ public class Usuario {
 		noUsuario.put("sexo", usuario.getSexo().name());
 		noUsuario.put("login", usuario.getLogin());
 		noUsuario.put("senha", usuario.getSenha());
-		noUsuario.put("version", usuario.getVersion());
-		return noUsuario;
-	}
-	
-	private static ObjectNode usuarioToTestjson(
-			br.ufpb.dce.bloomer.core.model.Usuario usuario) {
-		ObjectNode noUsuario = JsonNodeFactory.instance.objectNode();
-		noUsuario.put("nome", usuario.getNome());
-		StringBuilder strBuilder = new StringBuilder();
-		strBuilder.append(usuario.getDataNascimento().get(Calendar.DATE) + "/");
-		strBuilder.append(getMonthName((usuario.getDataNascimento().get(Calendar.MONTH))) + "/");
-		strBuilder.append(usuario.getDataNascimento().get(Calendar.YEAR));
-		noUsuario.put("dataNascimento", strBuilder.toString());
-		noUsuario.put("sexo", usuario.getSexo().name());
-		noUsuario.put("login", usuario.getLogin());
-		noUsuario.put("senha", usuario.getSenha());
+		if (usuario.getVersion() != null) {
+			noUsuario.put("version", usuario.getVersion());
+		}
 		return noUsuario;
 	}
 
@@ -176,4 +160,29 @@ public class Usuario {
 		}
 		return cal.get(Calendar.MONTH);
 	}
+
+	public boolean isEqualsUsuario(Usuario user) {
+		if (nome.equals(user.nome)) {
+			if (dataNascimento.get(Calendar.YEAR) == user.dataNascimento
+					.get(Calendar.YEAR)) {
+				if (dataNascimento.get(Calendar.MONTH) == user.dataNascimento
+						.get(Calendar.MONTH)) {
+					if (dataNascimento.get(Calendar.DAY_OF_MONTH) == user.dataNascimento
+							.get(Calendar.DAY_OF_MONTH)) {
+						if (sexo == user.sexo) {
+							if (senha.equals(user.senha)) {
+								if (login.equals(user.login)) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	
 }
