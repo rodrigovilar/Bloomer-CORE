@@ -1,12 +1,10 @@
 package br.ufpb.dce.bloomer.core.model;
 
-import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,6 +14,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -87,7 +86,9 @@ public class Usuario {
 	private static ObjectNode usuario2json(
 			br.ufpb.dce.bloomer.core.model.Usuario usuario) {
 		ObjectNode noUsuario = JsonNodeFactory.instance.objectNode();
-		noUsuario.put("id", usuario.getId());
+		if (usuario.getId() != null) {
+			noUsuario.put("id", usuario.getId());
+		}
 		noUsuario.put("nome", usuario.getNome());
 		StringBuilder strBuilder = new StringBuilder();
 		strBuilder.append(usuario.getDataNascimento().get(Calendar.DATE) + "/");
@@ -98,7 +99,9 @@ public class Usuario {
 		noUsuario.put("sexo", usuario.getSexo().name());
 		noUsuario.put("login", usuario.getLogin());
 		noUsuario.put("senha", usuario.getSenha());
-		noUsuario.put("version", usuario.getVersion());
+		if (usuario.getVersion() != null) {
+			noUsuario.put("version", usuario.getVersion());
+		}
 		return noUsuario;
 	}
 
@@ -157,4 +160,29 @@ public class Usuario {
 		}
 		return cal.get(Calendar.MONTH);
 	}
+
+	public boolean isEqualsUsuario(Usuario user) {
+		if (nome.equals(user.nome)) {
+			if (dataNascimento.get(Calendar.YEAR) == user.dataNascimento
+					.get(Calendar.YEAR)) {
+				if (dataNascimento.get(Calendar.MONTH) == user.dataNascimento
+						.get(Calendar.MONTH)) {
+					if (dataNascimento.get(Calendar.DAY_OF_MONTH) == user.dataNascimento
+							.get(Calendar.DAY_OF_MONTH)) {
+						if (sexo == user.sexo) {
+							if (senha.equals(user.senha)) {
+								if (login.equals(user.login)) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	
 }
