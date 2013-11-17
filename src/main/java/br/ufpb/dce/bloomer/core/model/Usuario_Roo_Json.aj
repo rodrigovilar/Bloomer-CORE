@@ -3,16 +3,9 @@
 
 package br.ufpb.dce.bloomer.core.model;
 
-import br.ufpb.dce.bloomer.core.model.Usuario;
-import flexjson.JSONDeserializer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 privileged aspect Usuario_Roo_Json {
     
-    public static Collection<Usuario> Usuario.fromJsonArrayToUsuarios(String json) {
-        return new JSONDeserializer<List<Usuario>>().use(null, ArrayList.class).use("values", Usuario.class).deserialize(json);
-    }
+
     
 }

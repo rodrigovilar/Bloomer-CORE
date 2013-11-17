@@ -5,7 +5,13 @@ import static org.junit.Assert.assertEquals;
 import java.net.URI;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
@@ -26,35 +32,61 @@ public class Resource {
 		getAll = new HttpGet(url);
 		post = new HttpPost(url);
 		put = new HttpPut(url);
-		delete = new HttpDelete(url);		
+		delete = new HttpDelete(url);
 	}
-	
+
 	public String get() {
-		httpclient = HttpClients.createDefault();
-		HttpResponse response = httpclient.execute(getAll);
-		return EntityUtils.toString(response.getEntity());
+		try {
+			httpclient = HttpClients.createDefault();
+			HttpResponse response = httpclient.execute(getAll);
+			return EntityUtils.toString(response.getEntity());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
-	
-	public String get(String id){
-		getUnique.setURI(new URI(url + "/" + id));
-		httpclient = HttpClients.createDefault();
-		response = httpclient.execute(getUnique);
-		return EntityUtils.toString(response.getEntity());
+
+	public String get(String id) {
+		try {
+			getUnique.setURI(new URI(url + "/" + id));
+			httpclient = HttpClients.createDefault();
+			HttpResponse response = httpclient.execute(getUnique);
+			return EntityUtils.toString(response.getEntity());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
-	
+
 	public int post(String json) {
-		post.setEntity(new StringEntity(json));
-		httpclient = HttpClients.createDefault();
-		HttpResponse response = httpclient.execute(post);
-		return response.getStatusLine().getStatusCode();
+		try {
+			post.setEntity(new StringEntity(json));
+			httpclient = HttpClients.createDefault();
+			HttpResponse response = httpclient.execute(post);
+			return response.getStatusLine().getStatusCode();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 	}
-	
-	public int put (String json){
-		
-		put.setEntity(new StringEntity(json));
-		httpclient = HttpClients.createDefault();
-		HttpResponse response = httpclient.execute(put);
-		return response.getStatusLine().getStatusCode();
-		
+
+	public int put(String json) {
+		try {
+			put.setEntity(new StringEntity(json));
+			httpclient = HttpClients.createDefault();
+			HttpResponse response = httpclient.execute(put);
+			return response.getStatusLine().getStatusCode();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public Object delete(String id) {
+		try {
+			delete.setURI(new URI(url + "/" + id));
+			httpclient = HttpClients.createDefault();
+			HttpResponse response = httpclient.execute(delete);
+			return response.getStatusLine().getStatusCode();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

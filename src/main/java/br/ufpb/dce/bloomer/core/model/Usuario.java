@@ -1,8 +1,10 @@
 package br.ufpb.dce.bloomer.core.model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -105,45 +107,67 @@ public class Usuario {
 		return noUsuario;
 	}
 
-	public static br.ufpb.dce.bloomer.core.model.Usuario fromJsonToUsuario(
+    public static Collection<Usuario> fromJsonArrayToUsuarios(String json) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			JsonFactory factory = objectMapper.getJsonFactory();
+			ArrayNode usuariosJSON = (ArrayNode) objectMapper.readTree(factory.createJsonParser(json));
+
+			List<Usuario> usuarios = new ArrayList<Usuario>();
+			for(JsonNode usuarioJSON : usuariosJSON) {
+				Usuario usuario = fromJsonToUsuario(usuarioJSON);
+				usuarios.add(usuario);
+			}
+			return usuarios;
+                } catch (Exception e) {
+                        throw new RuntimeException(e);
+                }		
+    }
+
+	public static Usuario fromJsonToUsuario(
 			String json) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonFactory factory = objectMapper.getJsonFactory();
 		try {
 			JsonNode usuarioJSON = objectMapper.readTree(factory
 					.createJsonParser(json));
-			Usuario usuario = new Usuario();
-			if (usuarioJSON.has("id")) {
-				usuario.setId(usuarioJSON.get("id").asLong());
-			}
-			if (usuarioJSON.has("nome")) {
-				usuario.setNome(usuarioJSON.get("nome").asText());
-			}
-			if (usuarioJSON.has("dataNascimento")) {
-				String data_str = usuarioJSON.get("dataNascimento").asText();
-				String[] data = data_str.split("/");
-				Calendar cal = Calendar.getInstance();
-				cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data[0]));
-				cal.set(Calendar.MONTH, getMonthNumber(data[1]));
-				cal.set(Calendar.YEAR, Integer.parseInt(data[2]));
-				usuario.setDataNascimento(cal);
-			}
-			if (usuarioJSON.has("sexo")) {
-				usuario.setSexo(Sexo.valueOf(usuarioJSON.get("sexo").asText()));
-			}
-			if (usuarioJSON.has("login")) {
-				usuario.setLogin(usuarioJSON.get("login").asText());
-			}
-			if (usuarioJSON.has("senha")) {
-				usuario.setSenha(usuarioJSON.get("senha").asText());
-			}
-			if (usuarioJSON.has("version")) {
-				usuario.setVersion(usuarioJSON.get("version").asInt());
-			}
-			return usuario;
+			return fromJsonToUsuario(usuarioJSON);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private static br.ufpb.dce.bloomer.core.model.Usuario fromJsonToUsuario(
+			JsonNode usuarioJSON) {
+		Usuario usuario = new Usuario();
+		if (usuarioJSON.has("id")) {
+			usuario.setId(usuarioJSON.get("id").asLong());
+		}
+		if (usuarioJSON.has("nome")) {
+			usuario.setNome(usuarioJSON.get("nome").asText());
+		}
+		if (usuarioJSON.has("dataNascimento")) {
+			String data_str = usuarioJSON.get("dataNascimento").asText();
+			String[] data = data_str.split("/");
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(data[0]));
+			cal.set(Calendar.MONTH, getMonthNumber(data[1]));
+			cal.set(Calendar.YEAR, Integer.parseInt(data[2]));
+			usuario.setDataNascimento(cal);
+		}
+		if (usuarioJSON.has("sexo")) {
+			usuario.setSexo(Sexo.valueOf(usuarioJSON.get("sexo").asText()));
+		}
+		if (usuarioJSON.has("login")) {
+			usuario.setLogin(usuarioJSON.get("login").asText());
+		}
+		if (usuarioJSON.has("senha")) {
+			usuario.setSenha(usuarioJSON.get("senha").asText());
+		}
+		if (usuarioJSON.has("version")) {
+			usuario.setVersion(usuarioJSON.get("version").asInt());
+		}
+		return usuario;
 	}
 
 	public static String getMonthName(int month) {
@@ -161,28 +185,4 @@ public class Usuario {
 		return cal.get(Calendar.MONTH);
 	}
 
-	public boolean isEqualsUsuario(Usuario user) {
-		if (nome.equals(user.nome)) {
-			if (dataNascimento.get(Calendar.YEAR) == user.dataNascimento
-					.get(Calendar.YEAR)) {
-				if (dataNascimento.get(Calendar.MONTH) == user.dataNascimento
-						.get(Calendar.MONTH)) {
-					if (dataNascimento.get(Calendar.DAY_OF_MONTH) == user.dataNascimento
-							.get(Calendar.DAY_OF_MONTH)) {
-						if (sexo == user.sexo) {
-							if (senha.equals(user.senha)) {
-								if (login.equals(user.login)) {
-									return true;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	
-	
 }
