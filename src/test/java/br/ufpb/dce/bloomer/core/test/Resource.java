@@ -1,11 +1,8 @@
 package br.ufpb.dce.bloomer.core.test;
 
-import static org.junit.Assert.assertEquals;
-
 import java.net.URI;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -79,7 +76,7 @@ public class Resource {
 		}
 	}
 
-	public Object delete(String id) {
+	public int delete(String id) {
 		try {
 			delete.setURI(new URI(url + "/" + id));
 			httpclient = HttpClients.createDefault();

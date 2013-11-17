@@ -13,39 +13,32 @@ import br.ufpb.dce.bloomer.core.model.Usuario;
 
 public class TestesRest {
 
-	private static String USUARIOS = "http://localhost:8080/Bloomer-CORE/usuarios";
 
-	private Resource resource;
+	private UsuarioResource resource;
 
 	@Before
 	public void init() {
-		resource = new Resource(USUARIOS);
+		resource = new UsuarioResource();
 	}
 
 	@Test
 	public void testingRestMethods() {
-		assertEquals("[]", resource.get());
+		assertEquals(0, resource.get().size());
 
 		Usuario user = criarUsuarioPadrao();
-		assertEquals(201, resource.post(user.toJson()));
+		assertEquals(201, resource.post(user));
 
-		String jsonArray = resource.get();
-		List<Usuario> usuarios = (List<Usuario>) Usuario
-				.fromJsonArrayToUsuarios(jsonArray);
+		List<Usuario> usuarios = resource.get();
 
 		Long ID = usuarios.get(0).getId();
-		String json = resource.get(ID.toString());
-		Usuario newUser = Usuario.fromJsonToUsuario(json);
+		Usuario newUser = resource.get(ID.toString());
 		assertEquals(user, newUser);
 
 		Usuario editedUser = editarUsuario(newUser);
-		assertEquals(200, resource.put(user.toJson()));
+		assertEquals(200, resource.put(user));
 
-		String jsonArray2 = resource.get();
-		List<Usuario> usuarios2 = (List<Usuario>) Usuario
-				.fromJsonArrayToUsuarios(jsonArray2);
-		String json2 = resource.get(ID.toString());
-		Usuario editedUser2 = Usuario.fromJsonToUsuario(json2);
+		List<Usuario> usuarios2 = resource.get();
+		Usuario editedUser2 = resource.get(ID.toString());
 		assertEquals(editedUser, editedUser2);
 
 		assertEquals(200, resource.delete(ID.toString()));
