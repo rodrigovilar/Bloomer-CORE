@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 
 import org.apache.http.HttpResponse;
@@ -35,83 +36,60 @@ public class TestesRest {
 	private HttpDelete delete = new HttpDelete(USUARIOS);
 
 	private HttpResponse response;
+	
+	private Resource resource;
 
+	@Before
+	public void init() {
+		resource = new Resource(USUARIOS);
+	}
+	
 	@Test
 	public void testingRestMethods() {
 
-		try {
-			// GET without users
-			httpclient = HttpClients.createDefault();
-			response = httpclient.execute(get);
-			assertEquals("[]", EntityUtils.toString(response.getEntity()));
+			assertEquals("[]", resource.get());
+			
+			Usuario user = criarUsuarioPadrao();			
+			assertEquals(201, resource.post(user.toJson()));
+			
+			String jsonArray = resource.get();
+			List<Usuario> usuarios = Usuario.fromJsonArrayToUsuarios(jsonArray);
 
-			// POST an user
-			Usuario user = new Usuario();
-			user.setNome("Rafael");
-			user.setDataNascimento(new GregorianCalendar(1992, 01, 22)); // yyyyMMdd
-			user.setSexo(Sexo.Masculino);
-			user.setLogin("marcusrafael");
-			user.setSenha("123456");
-			post.setEntity(new StringEntity(user.toJson()));
-			httpclient = HttpClients.createDefault();
-			response = httpclient.execute(post);
-			assertEquals("HTTP/1.1 201 Created", response.getStatusLine()
-					.toString());
-
-			// GET 'id' from user added
-			httpclient = HttpClients.createDefault();
-			response = httpclient.execute(get);
-			String jsonArray = EntityUtils.toString(response.getEntity());
-			String jsonFromUser = jsonArray.substring(1,
-					(jsonArray.length() - 1)); // Remove '[' and ']' from array
-			Usuario userFromJson = Usuario.fromJsonToUsuario(jsonFromUser);
-			long ID = userFromJson.getId(); // Id of last user added
-
-			// Compare two users
-			get.setURI(new URI(USUARIOS + "/" + ID));
-			httpclient = HttpClients.createDefault();
-			response = httpclient.execute(get);
-			String json = EntityUtils.toString(response.getEntity());
+			Long ID = usuarios.get(0).getId();
+			String json = resource.get(ID.toString());
 			Usuario newUser = Usuario.fromJsonToUsuario(json);
-			assertTrue(newUser.isEqualsUsuario(user));
+			assertEquals(user, newUser);
 
 			// PUT edited user
-			Usuario editedUser = newUser;
-			editedUser.setNome("Rodrigo");
-			editedUser.setDataNascimento(new GregorianCalendar(1981, 02, 05)); // YYYYMMDD
-			editedUser.setSexo(Sexo.Masculino);
-			editedUser.setLogin("rodrigovilar");
-			editedUser.setSenha("654321");
-			put.setEntity(new StringEntity(editedUser.toJson()));
-			httpclient = HttpClients.createDefault();
-			response = httpclient.execute(put);
-			assertEquals("HTTP/1.1 200 OK", response.getStatusLine().toString());
+			Usuario editedUser = editarUsuario(newUser);
+			assertEquals (200, resource.put(user.toJson()));
+			
+			String jsonArray2 = resource.get();
+			List<Usuario> usuarios2 = Usuario.fromJsonArrayToUsuarios(jsonArray2);
+			String json2 = resource.get(ID.toString());
+			Usuario editedUser2 = Usuario.fromJsonToUsuario(json2);
+			assertTrue(editedUser.isEqualsUsuario(editedUser2));
 
-			// GET 'id' from user added
-			get.setURI(new URI(USUARIOS));
-			httpclient = HttpClients.createDefault();
-			response = httpclient.execute(get);
-			String jsonArray2 = EntityUtils.toString(response.getEntity());
-			String jsonFromUser2 = jsonArray2.substring(1,
-					(jsonArray2.length() - 1)); // Remove '[' and ']' from array
-			Usuario userFromJson2 = Usuario.fromJsonToUsuario(jsonFromUser2);
-			long ID2 = userFromJson2.getId(); // Id of last user added
+	}
 
-			// Compare two users
-			get.setURI(new URI(USUARIOS + "/" + ID2));
-			httpclient = HttpClients.createDefault();
-			response = httpclient.execute(get);
-			String json2 = EntityUtils.toString(response.getEntity());
-			Usuario newUser2 = Usuario.fromJsonToUsuario(json2);
-			assertTrue(editedUser.isEqualsUsuario(newUser2));
+	private Usuario editarUsuario(Usuario newUser) {
+		Usuario editedUser = newUser;
+		editedUser.setNome("Rodrigo");
+		editedUser.setDataNascimento(new GregorianCalendar(1981, 02, 05)); // YYYYMMDD
+		editedUser.setSexo(Sexo.Masculino);
+		editedUser.setLogin("rodrigovilar");
+		editedUser.setSenha("654321");
+		return editedUser;
+	}
 
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
+	private Usuario criarUsuarioPadrao() {
+		Usuario user = new Usuario();
+		user.setNome("Rafael");
+		user.setDataNascimento(new GregorianCalendar(1992, 01, 22)); // yyyyMMdd
+		user.setSexo(Sexo.Masculino);
+		user.setLogin("marcusrafael");
+		user.setSenha("123456");
+		return user;
 	}
 
 	@After
@@ -149,3 +127,4 @@ public class TestesRest {
 	}
 
 }
+
